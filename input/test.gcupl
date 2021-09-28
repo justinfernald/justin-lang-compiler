@@ -1,0 +1,4 @@
+int hello;
+bool main() {
+    hello = 3;
+}
