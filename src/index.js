@@ -1,4 +1,6 @@
-const nearley = require("nearley");
+// created by Justin Fernald
+
+const nearley = require("nearley"); // importing earley cfg parser
 const grammar = require("../dist/grammar");
 const fs = require("fs")
 
@@ -11,4 +13,5 @@ const input = fs.readFileSync(process.argv[2]).toString()
 
 parser.feed(input);
 
-console.log(parser.results); // [[[[ "foo" ],"\n" ]]]
+// release parser output
+console.log(parser.results);

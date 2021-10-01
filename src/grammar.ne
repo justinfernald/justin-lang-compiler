@@ -1,6 +1,10 @@
 @{%
+// grammar modified and inspired from: http://marvin.cs.uidaho.edu/Teaching/CS445/c-Grammar.pdf
+// created by Justin Fernald
+
 const moo = require("moo");
 
+// list out all terminal tokens
 const lexer = moo.compile({
     ws: {match: /\s+/, lineBreaks: true},
     lte: "<=",
@@ -25,6 +29,7 @@ const lexer = moo.compile({
     int: "int",
     char: "char",
     bool: "bool",
+    voidd: "void",
     whilee: "while",
     elsee: "else",
     iff: "if",
@@ -34,26 +39,32 @@ const lexer = moo.compile({
     or: "||",
     true: "true",
     false: "false",
-    comment: {
+    comment: { // find all comments and removes them
         match: /#[^\n]*/,
         value: s => s.substring(1)
     },
-    number_literal: {
+    number_literal: { // finds all number tokens
         match: /[0-9]+(?:\.[0-9]+)?/,
         value: s => Number(s)
     },
-    identifier: {
+    identifier: { // finds all identifiers for variables and functions
         match: /[a-z_][a-z_0-9]*/
     }
 });
 
+// custom edited lexer from moo for next such that it ignores all white space
 lexer.next = (next => () => {
     let token;
     while ((token = next.call(lexer)) && token.type === "ws") {}
     return token;
 })(lexer.next);
 
+// function to propogate ast data throughout the program
+function ast(part) {
+    return part
+}
 
+// gets start of tokens
 function tokenStart(token) {
     return {
         line: token.line,
@@ -61,6 +72,7 @@ function tokenStart(token) {
     };
 }
 
+// gets end of tokens
 function tokenEnd(token) {
     const lastNewLine = token.text.lastIndexOf("\n");
     if (lastNewLine !== -1) {
@@ -72,6 +84,7 @@ function tokenEnd(token) {
     };
 }
 
+// converts tokens to ast data
 function convertToken(token) {
     return {
         type: token.type,
@@ -81,6 +94,7 @@ function convertToken(token) {
     };
 }
 
+// gets token id
 function convertTokenId(data) {
     return convertToken(data[0]);
 }
@@ -89,94 +103,186 @@ function convertTokenId(data) {
 
 @lexer lexer
 
-program -> declList
+# program which is starting symbol
+program -> declList {% (data) => ({type: "program", parts: ast(data)}) %}
 
-declList -> declList decl | decl
+#  list of declarations
+declList -> declList decl  {% (data) => ({type: "declList", parts: ast(data)}) %}
+    | decl  {% (data) => ({type: "declList", parts: ast(data)}) %}
 
-decl -> varDecl | funcDecl
+#  declaration
+decl -> varDecl {% (data) => ({type: "decl", parts: ast(data)}) %}
+    | funcDecl {% (data) => ({type: "decl", parts: ast(data)}) %}
 
-varDecl -> typeSpec varDeclList %scolon
+#  variable declaration
+varDecl -> typeSpec varDeclList %scolon {% (data) => ({type: "varDecl", parts: ast(data)}) %}
 
-scopedVarDecl -> typeSpec varDeclList %scolon
+#  scoped variable declaration
+scopedVarDecl -> typeSpec varDeclList %scolon {% (data) => ({type: "scopedVarDecl", parts: ast(data)}) %}
 
-varDeclList -> varDeclList %comma varDeclInit | varDeclInit
+#  variable declaration list
+varDeclList -> varDeclList %comma varDeclInit {% (data) => ({type: "varDeclList", parts: ast(data)}) %}
+    | varDeclInit {% (data) => ({type: "varDeclList", parts: ast(data)}) %}
 
-varDeclInit -> varDeclId | varDeclId %assignment simpleExp
+# variable declaration init
+varDeclInit -> varDeclId {% (data) => ({type: "varDeclInit", parts: ast(data)}) %}
+    | varDeclId %assignment simpleExp {% (data) => ({type: "varDeclInit", parts: ast(data)}) %}
 
-varDeclId -> identifier | identifier %lbracket number %rbracket
+# variable declaration id
+varDeclId -> identifier {% (data) => ({type: "varDeclId", parts: ast(data)}) %}
+    | identifier %lbracket number %rbracket {% (data) => ({type: "varDeclId", parts: ast(data)}) %}
 
-typeSpec -> %int | %char | %bool
+# type specifier
+typeSpec -> %int {% (data) => ({type: "typeSpec", parts: ast(data)}) %}
+    | %char {% (data) => ({type: "typeSpec", parts: ast(data)}) %}
+    | %bool {% (data) => ({type: "typeSpec", parts: ast(data)}) %}
+    | %voidd {% (data) => ({type: "typeSpec", parts: ast(data)}) %}
 
-funcDecl -> typeSpec identifier %lparan parms %rparan stmt | identifier %lparan parms %rparan stmt
+# function declaration
+funcDecl -> typeSpec identifier %lparan parms %rparan stmt {% (data) => ({type: "funcDecl", parts: ast(data)}) %}
+    | identifier %lparan parms %rparan stmt {% (data) => ({type: "funcDecl", parts: ast(data)}) %}
 
-parms -> parmList | null
+# function parameters
+parms -> parmList {% (data) => ({type: "parms", parts: ast(data)}) %}
+    | null {% (data) => ({type: "parms", parts: ast(data)}) %}
 
-parmList -> parmList %comma parmTypeList | parmTypeList
+# function parameter list
+parmList -> parmList %comma parmTypeList {% (data) => ({type: "parmList", parts: ast(data)}) %}
+    | parmTypeList {% (data) => ({type: "parmList", parts: ast(data)}) %}
 
-parmTypeList -> typeSpec parmIdList
+#  function parameter type list
+parmTypeList -> typeSpec parmIdList {% (data) => ({type: "parmTypeList", parts: ast(data)}) %}
 
-parmIdList -> parmIdList %comma parmId | parmId
+# function parameter id list
+parmIdList -> parmIdList %comma parmId {% (data) => ({type: "parmIdList", parts: ast(data)}) %}
+    | parmId {% (data) => ({type: "parmIdList", parts: ast(data)}) %}
 
-parmId -> identifier | identifier %lbracket number %rbracket
+# function parameter id
+parmId -> identifier {% (data) => ({type: "parmId", parts: ast(data)}) %}
+    | identifier %lbracket number %rbracket {% (data) => ({type: "parmId", parts: ast(data)}) %}
 
-stmt -> expStmt | compoundStmt | selectStmt | iterStmt | returnStmt
+# statement
+stmt -> expStmt {% (data) => ({type: "stmt", parts: ast(data)}) %}
+    | compoundStmt {% (data) => ({type: "stmt", parts: ast(data)}) %}
+    | selectStmt {% (data) => ({type: "stmt", parts: ast(data)}) %}
+    | iterStmt {% (data) => ({type: "stmt", parts: ast(data)}) %}
+    | returnStmt {% (data) => ({type: "stmt", parts: ast(data)}) %}
 
-expStmt -> exp %scolon  | %scolon
+# expression statement
+expStmt -> exp %scolon {% (data) => ({type: "expStmt", parts: ast(data)}) %}
+    | %scolon {% (data) => ({type: "expStmt", parts: ast(data)}) %}
 
-compoundStmt -> %lbrace localDecls stmtList %rbrace
+# compound statement
+compoundStmt -> %lbrace localDecls stmtList %rbrace {% (data) => ({type: "compoundStmt", parts: ast(data)}) %}
 
-localDecls -> localDecls scopedVarDecl | null
+# local declarations
+localDecls -> localDecls scopedVarDecl {% (data) => ({type: "localDecls", parts: ast(data)}) %}
+    | null {% (data) => ({type: "localDecls", parts: ast(data)}) %}
 
-stmtList -> stmtList stmt | null
+# statement list
+stmtList -> stmtList stmt {% (data) => ({type: "stmtList", parts: ast(data)}) %}
+    | null {% (data) => ({type: "stmtList", parts: ast(data)}) %}
 
-selectStmt -> %iff simpleExp %then stmt | %iff simpleExp %then stmt %elsee stmt
+# selection statement
+selectStmt -> %iff simpleExp stmt %elsee stmt {% (data) => ({type: "selectStmt", parts: ast(data)}) %}
+    | %iff simpleExp stmt %elsee stmt {% (data) => ({type: "selectStmt", parts: ast(data)}) %}
 
-iterStmt -> %whilee %lparan simpleExp %rparan stmt
+# iteration statement
+iterStmt -> %whilee %lparan simpleExp %rparan stmt {% (data) => ({type: "iterStmt", parts: ast(data)}) %}
 
-returnStmt -> %returnn %scolon | %returnn exp %scolon
+# return statement
+returnStmt -> %returnn %scolon {% (data) => ({type: "returnStmt", parts: ast(data)}) %}
+    | %returnn exp %scolon {% (data) => ({type: "returnStmt", parts: ast(data)}) %}
 
-breakStmt -> %breakk %scolon
+# break statement
+breakStmt -> %breakk %scolon {% (data) => ({type: "breakStmt", parts: ast(data)}) %}
 
-exp -> mutable  %assignment exp | simpleExp
+# expression
+exp -> mutable  %assignment exp {% (data) => ({type: "exp", parts: ast(data)}) %}
+    | simpleExp {% (data) => ({type: "exp", parts: ast(data)}) %}
 
-simpleExp -> simpleExp %or andExp | andExp
+# simple expression
+simpleExp -> simpleExp %or andExp {% (data) => ({type: "simpleExp", parts: ast(data)}) %}
+    | andExp {% (data) => ({type: "simpleExp", parts: ast(data)}) %}
 
-andExp -> andExp %and unaryRelExp | unaryRelExp
+# and expression
+andExp -> andExp %and unaryRelExp {% (data) => ({type: "andExp", parts: ast(data)}) %}
+    | unaryRelExp {% (data) => ({type: "andExp", parts: ast(data)}) %}
 
-unaryRelExp -> %not unaryRelExp | relExp
+# unary relational expression
+unaryRelExp -> %not unaryRelExp {% (data) => ({type: "unaryRelExp", parts: ast(data)}) %}
+    | relExp {% (data) => ({type: "unaryRelExp", parts: ast(data)}) %}
 
-relExp -> sumExp %relOp sumExp | sumExp
+# relational expression
+relExp -> sumExp relOp sumExp {% (data) => ({type: "relExp", parts: ast(data)}) %}
+    | sumExp {% (data) => ({type: "relExp", parts: ast(data)}) %}
 
-relop -> %lte | %lt | %gte | %gt | %eq | %neq
+# relational operator
+relOp -> %lte {% (data) => ({type: "relOp", parts: ast(data)}) %}
+    | %lt {% (data) => ({type: "relOp", parts: ast(data)}) %}
+    | %gte {% (data) => ({type: "relOp", parts: ast(data)}) %}
+    | %gt {% (data) => ({type: "relOp", parts: ast(data)}) %}
+    | %eq {% (data) => ({type: "relOp", parts: ast(data)}) %}
+    | %neq {% (data) => ({type: "relOp", parts: ast(data)}) %}
 
-sumExp -> sumExp sumop mulExp | mulExp
+# sum expression
+sumExp -> sumExp sumop mulExp {% (data) => ({type: "sumExp", parts: ast(data)}) %}
+    | mulExp {% (data) => ({type: "sumExp", parts: ast(data)}) %}
 
-sumop -> %plus | %minus
+# sum operator
+sumop -> %plus {% (data) => ({type: "sumop", parts: ast(data)}) %}
+    | %minus {% (data) => ({type: "sumop", parts: ast(data)}) %}
 
-mulExp -> mulExp mulop unaryExp | unaryExp
+# multiplication expression
+mulExp -> mulExp mulop unaryExp {% (data) => ({type: "mulExp", parts: ast(data)}) %}
+    | unaryExp {% (data) => ({type: "mulExp", parts: ast(data)}) %}
 
-mulop -> %multiply | %divide
+# multiplication operator
+mulop -> %multiply {% (data) => ({type: "mulop", parts: ast(data)}) %}
+    | %divide {% (data) => ({type: "mulop", parts: ast(data)}) %}
 
-unaryExp -> unaryop unaryExp | factor
+# unary expression
+unaryExp -> unaryop unaryExp {% (data) => ({type: "unaryExp", parts: ast(data)}) %}
+    | factor {% (data) => ({type: "unaryExp", parts: ast(data)}) %}
 
-unaryop -> %minus | %multiply
+# unary operator
+unaryop -> %minus {% (data) => ({type: "unaryop", parts: ast(data)}) %}
+    | %multiply {% (data) => ({type: "unaryop", parts: ast(data)}) %}
 
-factor -> immutable | mutable
+# factor
+factor -> immutable {% (data) => ({type: "factor", parts: ast(data)}) %}
+    | mutable {% (data) => ({type: "factor", parts: ast(data)}) %}
 
-mutable -> identifier | identifier %lbracket number %rbracket
+# mutable
+mutable -> identifier {% (data) => ({type: "mutable", parts: ast(data)}) %}
+    | identifier %lbracket number %rbracket {% (data) => ({type: "mutable", parts: ast(data)}) %}
 
-immutable -> %lparan exp %rparan | call | constant
+# immutable
+immutable -> %lparan exp %rparan {% (data) => ({type: "immutable", parts: ast(data)}) %}
+    | call {% (data) => ({type: "immutable", parts: ast(data)}) %}
+    | constant {% (data) => ({type: "immutable", parts: ast(data)}) %}
 
-call -> identifier %lparan args %rparan
+# call
+call -> identifier %lparan args %rparan {% (data) => ({type: "call", parts: ast(data)}) %}
 
-args -> argList | null
+# arguments
+args -> argList {% (data) => ({type: "args", parts: ast(data)}) %}
+    | null {% (data) => ({type: "args", parts: ast(data)}) %}
 
-argList -> argList %comma exp | exp
+# argument list
+argList -> argList %comma exp {% (data) => ({type: "argList", parts: ast(data)}) %}
+    | exp {% (data) => ({type: "argList", parts: ast(data)}) %}
 
-constant -> number | %true | %false
+# constant
+constant -> number {% (data) => ({type: "constant", parts: ast(data)}) %}
+    | %true {% (data) => ({type: "constant", parts: ast(data)}) %}
+    | %false {% (data) => ({type: "constant", parts: ast(data)}) %}
 
+# line comment
 line_comment -> %comment {% convertTokenId %}
 
+# number
 number -> %number_literal {% convertTokenId %}
 
+# identifier
 identifier -> %identifier {% convertTokenId %}

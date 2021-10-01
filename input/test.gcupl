@@ -1,4 +1,9 @@
 int hello;
 bool main() {
     hello = 3;
+    if (hello >= 3) {
+        return true;
+    } else {
+        return 45;
+    }
 }
