@@ -9,7 +9,7 @@
     "devDependencies": {},
     "scripts": {
         "build": "nearleyc src/grammar.ne -o dist/grammar.js",
-        "start": "node src/index.js input/testProg.gcupl",
+        "start": "node src/index.js input/test.gcupl",
         "go": "npm run build & npm run start"
     },
     "author": "Justin Fernald",

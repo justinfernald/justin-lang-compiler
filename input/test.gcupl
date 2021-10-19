@@ -1,4 +1,5 @@
 int hello;
+char bruhMoment;
 bool main() {
     hello = 3;
     if (hello >= 3) {

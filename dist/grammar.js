@@ -52,7 +52,7 @@ const lexer = moo.compile({
         value: s => Number(s)
     },
     identifier: { // finds all identifiers for variables and functions
-        match: /[a-z_][a-z_0-9]*/
+        match: /[a-zA-Z_][a-zA-Z_0-9]*/
     }
 });
 
@@ -64,8 +64,28 @@ lexer.next = (next => () => {
 })(lexer.next);
 
 // function to propogate ast data throughout the program
-function ast(part) {
-    return part
+function ast(part, debug = false) {
+    // if (debug)
+    //    console.log(part);
+    const valueList = parts => {
+        if (Array.isArray(parts)){
+            return parts.flatMap(x => x.value || x.parts.map(valueList))
+        } else {
+            return parts.value || parts.parts.flatMap(valueList)
+        }
+    };
+    // if (part.filter(x => x.value).length > 0)   
+    //console.log({fullText: valueList(part)});
+    const fullText = valueList(part);
+    return part.map(x => ({...x, fullText, dataText: fullText.flat(Infinity).join(" ")}));;
+}
+
+function symbol(type, name, scope) {
+    return {
+        type: type,
+        name: name,
+        scope: scope
+    }
 }
 
 // gets start of tokens
@@ -106,19 +126,19 @@ function convertTokenId(data) {
 var grammar = {
     Lexer: lexer,
     ParserRules: [
-    {"name": "program", "symbols": ["declList"], "postprocess": (data) => ({type: "program", parts: ast(data)})},
+    {"name": "program", "symbols": ["declList"], "postprocess": (data) => ({type: "program", parts: ast(data, true)})},
     {"name": "declList", "symbols": ["declList", "decl"], "postprocess": (data) => ({type: "declList", parts: ast(data)})},
     {"name": "declList", "symbols": ["decl"], "postprocess": (data) => ({type: "declList", parts: ast(data)})},
     {"name": "decl", "symbols": ["varDecl"], "postprocess": (data) => ({type: "decl", parts: ast(data)})},
     {"name": "decl", "symbols": ["funcDecl"], "postprocess": (data) => ({type: "decl", parts: ast(data)})},
-    {"name": "varDecl", "symbols": ["typeSpec", "varDeclList", (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "varDecl", parts: ast(data)})},
+    {"name": "varDecl", "symbols": ["typeSpec", "varDeclList", (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "varDecl", parts: ast(data), symbol: symbol(data[0], data[1], ...data)})},
     {"name": "scopedVarDecl", "symbols": ["typeSpec", "varDeclList", (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "scopedVarDecl", parts: ast(data)})},
     {"name": "varDeclList", "symbols": ["varDeclList", (lexer.has("comma") ? {type: "comma"} : comma), "varDeclInit"], "postprocess": (data) => ({type: "varDeclList", parts: ast(data)})},
     {"name": "varDeclList", "symbols": ["varDeclInit"], "postprocess": (data) => ({type: "varDeclList", parts: ast(data)})},
-    {"name": "varDeclInit", "symbols": ["varDeclId"], "postprocess": (data) => ({type: "varDeclInit", parts: ast(data)})},
-    {"name": "varDeclInit", "symbols": ["varDeclId", (lexer.has("assignment") ? {type: "assignment"} : assignment), "simpleExp"], "postprocess": (data) => ({type: "varDeclInit", parts: ast(data)})},
-    {"name": "varDeclId", "symbols": ["identifier"], "postprocess": (data) => ({type: "varDeclId", parts: ast(data)})},
-    {"name": "varDeclId", "symbols": ["identifier", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "number", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket)], "postprocess": (data) => ({type: "varDeclId", parts: ast(data)})},
+    {"name": "varDeclInit", "symbols": ["varDeclId"], "postprocess": (data) => ({type: "varDeclInit", parts: ast(data), symbol: symbol(data[0])})},
+    {"name": "varDeclInit", "symbols": ["varDeclId", (lexer.has("assignment") ? {type: "assignment"} : assignment), "simpleExp"], "postprocess": (data) => ({type: "varDeclInit", parts: ast(data), symbol: symbol(data[0])})},
+    {"name": "varDeclId", "symbols": ["identifier"], "postprocess": (data) => ({type: "varDeclId", parts: ast(data), symbol: symbol(data[0])})},
+    {"name": "varDeclId", "symbols": ["identifier", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "number", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket)], "postprocess": (data) => ({type: "varDeclId", parts: ast(data), symbol: symbol(data[0])})},
     {"name": "typeSpec", "symbols": [(lexer.has("int") ? {type: "int"} : int)], "postprocess": (data) => ({type: "typeSpec", parts: ast(data)})},
     {"name": "typeSpec", "symbols": [(lexer.has("char") ? {type: "char"} : char)], "postprocess": (data) => ({type: "typeSpec", parts: ast(data)})},
     {"name": "typeSpec", "symbols": [(lexer.has("bool") ? {type: "bool"} : bool)], "postprocess": (data) => ({type: "typeSpec", parts: ast(data)})},

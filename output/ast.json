@@ -1,0 +1,2764 @@
+{
+  "type": "program",
+  "parts": [
+    {
+      "type": "declList",
+      "parts": [
+        {
+          "type": "declList",
+          "parts": [
+            {
+              "type": "declList",
+              "parts": [
+                {
+                  "type": "decl",
+                  "parts": [
+                    {
+                      "type": "varDecl",
+                      "parts": [
+                        {
+                          "type": "typeSpec",
+                          "parts": [
+                            {
+                              "type": "int",
+                              "value": "int",
+                              "text": "int",
+                              "offset": 0,
+                              "lineBreaks": 0,
+                              "line": 1,
+                              "col": 1,
+                              "fullText": [
+                                "int"
+                              ],
+                              "dataText": "int"
+                            }
+                          ],
+                          "fullText": [
+                            "int",
+                            [
+                              "hello"
+                            ],
+                            ";"
+                          ],
+                          "dataText": "int hello ;"
+                        },
+                        {
+                          "type": "varDeclList",
+                          "parts": [
+                            {
+                              "type": "varDeclInit",
+                              "parts": [
+                                {
+                                  "type": "varDeclId",
+                                  "parts": [
+                                    {
+                                      "type": "identifier",
+                                      "value": "hello",
+                                      "start": {
+                                        "line": 1,
+                                        "col": 4
+                                      },
+                                      "end": {
+                                        "line": 1,
+                                        "col": 9
+                                      },
+                                      "fullText": [
+                                        "hello"
+                                      ],
+                                      "dataText": "hello"
+                                    }
+                                  ],
+                                  "symbol": {
+                                    "type": {
+                                      "type": "identifier",
+                                      "value": "hello",
+                                      "start": {
+                                        "line": 1,
+                                        "col": 4
+                                      },
+                                      "end": {
+                                        "line": 1,
+                                        "col": 9
+                                      }
+                                    }
+                                  },
+                                  "fullText": [
+                                    "hello"
+                                  ],
+                                  "dataText": "hello"
+                                }
+                              ],
+                              "symbol": {
+                                "type": {
+                                  "type": "varDeclId",
+                                  "parts": [
+                                    {
+                                      "type": "identifier",
+                                      "value": "hello",
+                                      "start": {
+                                        "line": 1,
+                                        "col": 4
+                                      },
+                                      "end": {
+                                        "line": 1,
+                                        "col": 9
+                                      },
+                                      "fullText": [
+                                        "hello"
+                                      ],
+                                      "dataText": "hello"
+                                    }
+                                  ],
+                                  "symbol": {
+                                    "type": {
+                                      "type": "identifier",
+                                      "value": "hello",
+                                      "start": {
+                                        "line": 1,
+                                        "col": 4
+                                      },
+                                      "end": {
+                                        "line": 1,
+                                        "col": 9
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "fullText": [
+                                [
+                                  "hello"
+                                ]
+                              ],
+                              "dataText": "hello"
+                            }
+                          ],
+                          "fullText": [
+                            "int",
+                            [
+                              "hello"
+                            ],
+                            ";"
+                          ],
+                          "dataText": "int hello ;"
+                        },
+                        {
+                          "type": "scolon",
+                          "value": ";",
+                          "text": ";",
+                          "offset": 9,
+                          "lineBreaks": 0,
+                          "line": 1,
+                          "col": 10,
+                          "fullText": [
+                            "int",
+                            [
+                              "hello"
+                            ],
+                            ";"
+                          ],
+                          "dataText": "int hello ;"
+                        }
+                      ],
+                      "symbol": {
+                        "type": {
+                          "type": "typeSpec",
+                          "parts": [
+                            {
+                              "type": "int",
+                              "value": "int",
+                              "text": "int",
+                              "offset": 0,
+                              "lineBreaks": 0,
+                              "line": 1,
+                              "col": 1,
+                              "fullText": [
+                                "int"
+                              ],
+                              "dataText": "int"
+                            }
+                          ]
+                        },
+                        "name": {
+                          "type": "varDeclList",
+                          "parts": [
+                            {
+                              "type": "varDeclInit",
+                              "parts": [
+                                {
+                                  "type": "varDeclId",
+                                  "parts": [
+                                    {
+                                      "type": "identifier",
+                                      "value": "hello",
+                                      "start": {
+                                        "line": 1,
+                                        "col": 4
+                                      },
+                                      "end": {
+                                        "line": 1,
+                                        "col": 9
+                                      },
+                                      "fullText": [
+                                        "hello"
+                                      ],
+                                      "dataText": "hello"
+                                    }
+                                  ],
+                                  "symbol": {
+                                    "type": {
+                                      "type": "identifier",
+                                      "value": "hello",
+                                      "start": {
+                                        "line": 1,
+                                        "col": 4
+                                      },
+                                      "end": {
+                                        "line": 1,
+                                        "col": 9
+                                      }
+                                    }
+                                  },
+                                  "fullText": [
+                                    "hello"
+                                  ],
+                                  "dataText": "hello"
+                                }
+                              ],
+                              "symbol": {
+                                "type": {
+                                  "type": "varDeclId",
+                                  "parts": [
+                                    {
+                                      "type": "identifier",
+                                      "value": "hello",
+                                      "start": {
+                                        "line": 1,
+                                        "col": 4
+                                      },
+                                      "end": {
+                                        "line": 1,
+                                        "col": 9
+                                      },
+                                      "fullText": [
+                                        "hello"
+                                      ],
+                                      "dataText": "hello"
+                                    }
+                                  ],
+                                  "symbol": {
+                                    "type": {
+                                      "type": "identifier",
+                                      "value": "hello",
+                                      "start": {
+                                        "line": 1,
+                                        "col": 4
+                                      },
+                                      "end": {
+                                        "line": 1,
+                                        "col": 9
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "fullText": [
+                                [
+                                  "hello"
+                                ]
+                              ],
+                              "dataText": "hello"
+                            }
+                          ]
+                        },
+                        "scope": {
+                          "type": "typeSpec",
+                          "parts": [
+                            {
+                              "type": "int",
+                              "value": "int",
+                              "text": "int",
+                              "offset": 0,
+                              "lineBreaks": 0,
+                              "line": 1,
+                              "col": 1,
+                              "fullText": [
+                                "int"
+                              ],
+                              "dataText": "int"
+                            }
+                          ]
+                        }
+                      },
+                      "fullText": [
+                        [
+                          "int"
+                        ],
+                        [
+                          "hello"
+                        ],
+                        ";"
+                      ],
+                      "dataText": "int hello ;"
+                    }
+                  ],
+                  "fullText": [
+                    [
+                      "int",
+                      "hello",
+                      ";"
+                    ]
+                  ],
+                  "dataText": "int hello ;"
+                }
+              ],
+              "fullText": [
+                [
+                  "int",
+                  "hello",
+                  ";"
+                ],
+                [
+                  "char",
+                  "bruhMoment",
+                  ";"
+                ]
+              ],
+              "dataText": "int hello ; char bruhMoment ;"
+            },
+            {
+              "type": "decl",
+              "parts": [
+                {
+                  "type": "varDecl",
+                  "parts": [
+                    {
+                      "type": "typeSpec",
+                      "parts": [
+                        {
+                          "type": "char",
+                          "value": "char",
+                          "text": "char",
+                          "offset": 12,
+                          "lineBreaks": 0,
+                          "line": 2,
+                          "col": 1,
+                          "fullText": [
+                            "char"
+                          ],
+                          "dataText": "char"
+                        }
+                      ],
+                      "fullText": [
+                        "char",
+                        [
+                          "bruhMoment"
+                        ],
+                        ";"
+                      ],
+                      "dataText": "char bruhMoment ;"
+                    },
+                    {
+                      "type": "varDeclList",
+                      "parts": [
+                        {
+                          "type": "varDeclInit",
+                          "parts": [
+                            {
+                              "type": "varDeclId",
+                              "parts": [
+                                {
+                                  "type": "identifier",
+                                  "value": "bruhMoment",
+                                  "start": {
+                                    "line": 2,
+                                    "col": 5
+                                  },
+                                  "end": {
+                                    "line": 2,
+                                    "col": 15
+                                  },
+                                  "fullText": [
+                                    "bruhMoment"
+                                  ],
+                                  "dataText": "bruhMoment"
+                                }
+                              ],
+                              "symbol": {
+                                "type": {
+                                  "type": "identifier",
+                                  "value": "bruhMoment",
+                                  "start": {
+                                    "line": 2,
+                                    "col": 5
+                                  },
+                                  "end": {
+                                    "line": 2,
+                                    "col": 15
+                                  }
+                                }
+                              },
+                              "fullText": [
+                                "bruhMoment"
+                              ],
+                              "dataText": "bruhMoment"
+                            }
+                          ],
+                          "symbol": {
+                            "type": {
+                              "type": "varDeclId",
+                              "parts": [
+                                {
+                                  "type": "identifier",
+                                  "value": "bruhMoment",
+                                  "start": {
+                                    "line": 2,
+                                    "col": 5
+                                  },
+                                  "end": {
+                                    "line": 2,
+                                    "col": 15
+                                  },
+                                  "fullText": [
+                                    "bruhMoment"
+                                  ],
+                                  "dataText": "bruhMoment"
+                                }
+                              ],
+                              "symbol": {
+                                "type": {
+                                  "type": "identifier",
+                                  "value": "bruhMoment",
+                                  "start": {
+                                    "line": 2,
+                                    "col": 5
+                                  },
+                                  "end": {
+                                    "line": 2,
+                                    "col": 15
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "fullText": [
+                            [
+                              "bruhMoment"
+                            ]
+                          ],
+                          "dataText": "bruhMoment"
+                        }
+                      ],
+                      "fullText": [
+                        "char",
+                        [
+                          "bruhMoment"
+                        ],
+                        ";"
+                      ],
+                      "dataText": "char bruhMoment ;"
+                    },
+                    {
+                      "type": "scolon",
+                      "value": ";",
+                      "text": ";",
+                      "offset": 27,
+                      "lineBreaks": 0,
+                      "line": 2,
+                      "col": 16,
+                      "fullText": [
+                        "char",
+                        [
+                          "bruhMoment"
+                        ],
+                        ";"
+                      ],
+                      "dataText": "char bruhMoment ;"
+                    }
+                  ],
+                  "symbol": {
+                    "type": {
+                      "type": "typeSpec",
+                      "parts": [
+                        {
+                          "type": "char",
+                          "value": "char",
+                          "text": "char",
+                          "offset": 12,
+                          "lineBreaks": 0,
+                          "line": 2,
+                          "col": 1,
+                          "fullText": [
+                            "char"
+                          ],
+                          "dataText": "char"
+                        }
+                      ]
+                    },
+                    "name": {
+                      "type": "varDeclList",
+                      "parts": [
+                        {
+                          "type": "varDeclInit",
+                          "parts": [
+                            {
+                              "type": "varDeclId",
+                              "parts": [
+                                {
+                                  "type": "identifier",
+                                  "value": "bruhMoment",
+                                  "start": {
+                                    "line": 2,
+                                    "col": 5
+                                  },
+                                  "end": {
+                                    "line": 2,
+                                    "col": 15
+                                  },
+                                  "fullText": [
+                                    "bruhMoment"
+                                  ],
+                                  "dataText": "bruhMoment"
+                                }
+                              ],
+                              "symbol": {
+                                "type": {
+                                  "type": "identifier",
+                                  "value": "bruhMoment",
+                                  "start": {
+                                    "line": 2,
+                                    "col": 5
+                                  },
+                                  "end": {
+                                    "line": 2,
+                                    "col": 15
+                                  }
+                                }
+                              },
+                              "fullText": [
+                                "bruhMoment"
+                              ],
+                              "dataText": "bruhMoment"
+                            }
+                          ],
+                          "symbol": {
+                            "type": {
+                              "type": "varDeclId",
+                              "parts": [
+                                {
+                                  "type": "identifier",
+                                  "value": "bruhMoment",
+                                  "start": {
+                                    "line": 2,
+                                    "col": 5
+                                  },
+                                  "end": {
+                                    "line": 2,
+                                    "col": 15
+                                  },
+                                  "fullText": [
+                                    "bruhMoment"
+                                  ],
+                                  "dataText": "bruhMoment"
+                                }
+                              ],
+                              "symbol": {
+                                "type": {
+                                  "type": "identifier",
+                                  "value": "bruhMoment",
+                                  "start": {
+                                    "line": 2,
+                                    "col": 5
+                                  },
+                                  "end": {
+                                    "line": 2,
+                                    "col": 15
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "fullText": [
+                            [
+                              "bruhMoment"
+                            ]
+                          ],
+                          "dataText": "bruhMoment"
+                        }
+                      ]
+                    },
+                    "scope": {
+                      "type": "typeSpec",
+                      "parts": [
+                        {
+                          "type": "char",
+                          "value": "char",
+                          "text": "char",
+                          "offset": 12,
+                          "lineBreaks": 0,
+                          "line": 2,
+                          "col": 1,
+                          "fullText": [
+                            "char"
+                          ],
+                          "dataText": "char"
+                        }
+                      ]
+                    }
+                  },
+                  "fullText": [
+                    [
+                      "char"
+                    ],
+                    [
+                      "bruhMoment"
+                    ],
+                    ";"
+                  ],
+                  "dataText": "char bruhMoment ;"
+                }
+              ],
+              "fullText": [
+                [
+                  "int",
+                  "hello",
+                  ";"
+                ],
+                [
+                  "char",
+                  "bruhMoment",
+                  ";"
+                ]
+              ],
+              "dataText": "int hello ; char bruhMoment ;"
+            }
+          ],
+          "fullText": [
+            [
+              "int",
+              "hello",
+              ";"
+            ],
+            [
+              "char",
+              "bruhMoment",
+              ";"
+            ],
+            [
+              "bool",
+              "main",
+              "(",
+              ")",
+              "{",
+              "hello",
+              "=",
+              3,
+              ";",
+              "if",
+              "(",
+              "hello",
+              ">=",
+              3,
+              ")",
+              "{",
+              "return",
+              "true",
+              ";",
+              "}",
+              "else",
+              "{",
+              "return",
+              45,
+              ";",
+              "}",
+              "}"
+            ]
+          ],
+          "dataText": "int hello ; char bruhMoment ; bool main ( ) { hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+        },
+        {
+          "type": "decl",
+          "parts": [
+            {
+              "type": "funcDecl",
+              "parts": [
+                {
+                  "type": "typeSpec",
+                  "parts": [
+                    {
+                      "type": "bool",
+                      "value": "bool",
+                      "text": "bool",
+                      "offset": 30,
+                      "lineBreaks": 0,
+                      "line": 3,
+                      "col": 1,
+                      "fullText": [
+                        "bool"
+                      ],
+                      "dataText": "bool"
+                    }
+                  ],
+                  "fullText": [
+                    "bool",
+                    "main",
+                    "(",
+                    ")",
+                    [
+                      "{",
+                      "hello",
+                      "=",
+                      3,
+                      ";",
+                      "if",
+                      "(",
+                      "hello",
+                      ">=",
+                      3,
+                      ")",
+                      "{",
+                      "return",
+                      "true",
+                      ";",
+                      "}",
+                      "else",
+                      "{",
+                      "return",
+                      45,
+                      ";",
+                      "}",
+                      "}"
+                    ]
+                  ],
+                  "dataText": "bool main ( ) { hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                },
+                {
+                  "type": "identifier",
+                  "value": "main",
+                  "start": {
+                    "line": 3,
+                    "col": 5
+                  },
+                  "end": {
+                    "line": 3,
+                    "col": 9
+                  },
+                  "fullText": [
+                    "bool",
+                    "main",
+                    "(",
+                    ")",
+                    [
+                      "{",
+                      "hello",
+                      "=",
+                      3,
+                      ";",
+                      "if",
+                      "(",
+                      "hello",
+                      ">=",
+                      3,
+                      ")",
+                      "{",
+                      "return",
+                      "true",
+                      ";",
+                      "}",
+                      "else",
+                      "{",
+                      "return",
+                      45,
+                      ";",
+                      "}",
+                      "}"
+                    ]
+                  ],
+                  "dataText": "bool main ( ) { hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                },
+                {
+                  "type": "lparan",
+                  "value": "(",
+                  "text": "(",
+                  "offset": 39,
+                  "lineBreaks": 0,
+                  "line": 3,
+                  "col": 10,
+                  "fullText": [
+                    "bool",
+                    "main",
+                    "(",
+                    ")",
+                    [
+                      "{",
+                      "hello",
+                      "=",
+                      3,
+                      ";",
+                      "if",
+                      "(",
+                      "hello",
+                      ">=",
+                      3,
+                      ")",
+                      "{",
+                      "return",
+                      "true",
+                      ";",
+                      "}",
+                      "else",
+                      "{",
+                      "return",
+                      45,
+                      ";",
+                      "}",
+                      "}"
+                    ]
+                  ],
+                  "dataText": "bool main ( ) { hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                },
+                {
+                  "type": "parms",
+                  "parts": [],
+                  "fullText": [
+                    "bool",
+                    "main",
+                    "(",
+                    ")",
+                    [
+                      "{",
+                      "hello",
+                      "=",
+                      3,
+                      ";",
+                      "if",
+                      "(",
+                      "hello",
+                      ">=",
+                      3,
+                      ")",
+                      "{",
+                      "return",
+                      "true",
+                      ";",
+                      "}",
+                      "else",
+                      "{",
+                      "return",
+                      45,
+                      ";",
+                      "}",
+                      "}"
+                    ]
+                  ],
+                  "dataText": "bool main ( ) { hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                },
+                {
+                  "type": "rparan",
+                  "value": ")",
+                  "text": ")",
+                  "offset": 40,
+                  "lineBreaks": 0,
+                  "line": 3,
+                  "col": 11,
+                  "fullText": [
+                    "bool",
+                    "main",
+                    "(",
+                    ")",
+                    [
+                      "{",
+                      "hello",
+                      "=",
+                      3,
+                      ";",
+                      "if",
+                      "(",
+                      "hello",
+                      ">=",
+                      3,
+                      ")",
+                      "{",
+                      "return",
+                      "true",
+                      ";",
+                      "}",
+                      "else",
+                      "{",
+                      "return",
+                      45,
+                      ";",
+                      "}",
+                      "}"
+                    ]
+                  ],
+                  "dataText": "bool main ( ) { hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                },
+                {
+                  "type": "stmt",
+                  "parts": [
+                    {
+                      "type": "compoundStmt",
+                      "parts": [
+                        {
+                          "type": "lbrace",
+                          "value": "{",
+                          "text": "{",
+                          "offset": 42,
+                          "lineBreaks": 0,
+                          "line": 3,
+                          "col": 13,
+                          "fullText": [
+                            "{",
+                            [
+                              "hello",
+                              "=",
+                              3,
+                              ";"
+                            ],
+                            [
+                              "if",
+                              "(",
+                              "hello",
+                              ">=",
+                              3,
+                              ")",
+                              "{",
+                              "return",
+                              "true",
+                              ";",
+                              "}",
+                              "else",
+                              "{",
+                              "return",
+                              45,
+                              ";",
+                              "}"
+                            ],
+                            "}"
+                          ],
+                          "dataText": "{ hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                        },
+                        {
+                          "type": "localDecls",
+                          "parts": [],
+                          "fullText": [
+                            "{",
+                            [
+                              "hello",
+                              "=",
+                              3,
+                              ";"
+                            ],
+                            [
+                              "if",
+                              "(",
+                              "hello",
+                              ">=",
+                              3,
+                              ")",
+                              "{",
+                              "return",
+                              "true",
+                              ";",
+                              "}",
+                              "else",
+                              "{",
+                              "return",
+                              45,
+                              ";",
+                              "}"
+                            ],
+                            "}"
+                          ],
+                          "dataText": "{ hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                        },
+                        {
+                          "type": "stmtList",
+                          "parts": [
+                            {
+                              "type": "stmtList",
+                              "parts": [
+                                {
+                                  "type": "stmtList",
+                                  "parts": [],
+                                  "fullText": [
+                                    [
+                                      "hello",
+                                      "=",
+                                      3,
+                                      ";"
+                                    ]
+                                  ],
+                                  "dataText": "hello = 3 ;"
+                                },
+                                {
+                                  "type": "stmt",
+                                  "parts": [
+                                    {
+                                      "type": "expStmt",
+                                      "parts": [
+                                        {
+                                          "type": "exp",
+                                          "parts": [
+                                            {
+                                              "type": "mutable",
+                                              "parts": [
+                                                {
+                                                  "type": "identifier",
+                                                  "value": "hello",
+                                                  "start": {
+                                                    "line": 4,
+                                                    "col": 4
+                                                  },
+                                                  "end": {
+                                                    "line": 4,
+                                                    "col": 9
+                                                  },
+                                                  "fullText": [
+                                                    "hello"
+                                                  ],
+                                                  "dataText": "hello"
+                                                }
+                                              ],
+                                              "fullText": [
+                                                "hello",
+                                                "=",
+                                                [
+                                                  3
+                                                ]
+                                              ],
+                                              "dataText": "hello = 3"
+                                            },
+                                            {
+                                              "type": "assignment",
+                                              "value": "=",
+                                              "text": "=",
+                                              "offset": 55,
+                                              "lineBreaks": 0,
+                                              "line": 4,
+                                              "col": 11,
+                                              "fullText": [
+                                                "hello",
+                                                "=",
+                                                [
+                                                  3
+                                                ]
+                                              ],
+                                              "dataText": "hello = 3"
+                                            },
+                                            {
+                                              "type": "exp",
+                                              "parts": [
+                                                {
+                                                  "type": "simpleExp",
+                                                  "parts": [
+                                                    {
+                                                      "type": "andExp",
+                                                      "parts": [
+                                                        {
+                                                          "type": "unaryRelExp",
+                                                          "parts": [
+                                                            {
+                                                              "type": "relExp",
+                                                              "parts": [
+                                                                {
+                                                                  "type": "sumExp",
+                                                                  "parts": [
+                                                                    {
+                                                                      "type": "mulExp",
+                                                                      "parts": [
+                                                                        {
+                                                                          "type": "unaryExp",
+                                                                          "parts": [
+                                                                            {
+                                                                              "type": "factor",
+                                                                              "parts": [
+                                                                                {
+                                                                                  "type": "immutable",
+                                                                                  "parts": [
+                                                                                    {
+                                                                                      "type": "constant",
+                                                                                      "parts": [
+                                                                                        {
+                                                                                          "type": "number_literal",
+                                                                                          "value": 3,
+                                                                                          "start": {
+                                                                                            "line": 4,
+                                                                                            "col": 12
+                                                                                          },
+                                                                                          "end": {
+                                                                                            "line": 4,
+                                                                                            "col": 13
+                                                                                          },
+                                                                                          "fullText": [
+                                                                                            3
+                                                                                          ],
+                                                                                          "dataText": "3"
+                                                                                        }
+                                                                                      ],
+                                                                                      "fullText": [
+                                                                                        3
+                                                                                      ],
+                                                                                      "dataText": "3"
+                                                                                    }
+                                                                                  ],
+                                                                                  "fullText": [
+                                                                                    [
+                                                                                      3
+                                                                                    ]
+                                                                                  ],
+                                                                                  "dataText": "3"
+                                                                                }
+                                                                              ],
+                                                                              "fullText": [
+                                                                                [
+                                                                                  3
+                                                                                ]
+                                                                              ],
+                                                                              "dataText": "3"
+                                                                            }
+                                                                          ],
+                                                                          "fullText": [
+                                                                            [
+                                                                              3
+                                                                            ]
+                                                                          ],
+                                                                          "dataText": "3"
+                                                                        }
+                                                                      ],
+                                                                      "fullText": [
+                                                                        [
+                                                                          3
+                                                                        ]
+                                                                      ],
+                                                                      "dataText": "3"
+                                                                    }
+                                                                  ],
+                                                                  "fullText": [
+                                                                    [
+                                                                      3
+                                                                    ]
+                                                                  ],
+                                                                  "dataText": "3"
+                                                                }
+                                                              ],
+                                                              "fullText": [
+                                                                [
+                                                                  3
+                                                                ]
+                                                              ],
+                                                              "dataText": "3"
+                                                            }
+                                                          ],
+                                                          "fullText": [
+                                                            [
+                                                              3
+                                                            ]
+                                                          ],
+                                                          "dataText": "3"
+                                                        }
+                                                      ],
+                                                      "fullText": [
+                                                        [
+                                                          3
+                                                        ]
+                                                      ],
+                                                      "dataText": "3"
+                                                    }
+                                                  ],
+                                                  "fullText": [
+                                                    [
+                                                      3
+                                                    ]
+                                                  ],
+                                                  "dataText": "3"
+                                                }
+                                              ],
+                                              "fullText": [
+                                                "hello",
+                                                "=",
+                                                [
+                                                  3
+                                                ]
+                                              ],
+                                              "dataText": "hello = 3"
+                                            }
+                                          ],
+                                          "fullText": [
+                                            [
+                                              "hello"
+                                            ],
+                                            "=",
+                                            [
+                                              3
+                                            ],
+                                            ";"
+                                          ],
+                                          "dataText": "hello = 3 ;"
+                                        },
+                                        {
+                                          "type": "scolon",
+                                          "value": ";",
+                                          "text": ";",
+                                          "offset": 58,
+                                          "lineBreaks": 0,
+                                          "line": 4,
+                                          "col": 14,
+                                          "fullText": [
+                                            [
+                                              "hello"
+                                            ],
+                                            "=",
+                                            [
+                                              3
+                                            ],
+                                            ";"
+                                          ],
+                                          "dataText": "hello = 3 ;"
+                                        }
+                                      ],
+                                      "fullText": [
+                                        [
+                                          "hello",
+                                          "=",
+                                          3
+                                        ],
+                                        ";"
+                                      ],
+                                      "dataText": "hello = 3 ;"
+                                    }
+                                  ],
+                                  "fullText": [
+                                    [
+                                      "hello",
+                                      "=",
+                                      3,
+                                      ";"
+                                    ]
+                                  ],
+                                  "dataText": "hello = 3 ;"
+                                }
+                              ],
+                              "fullText": [
+                                [],
+                                [
+                                  "hello",
+                                  "=",
+                                  3,
+                                  ";"
+                                ],
+                                [
+                                  "if",
+                                  "(",
+                                  "hello",
+                                  ">=",
+                                  3,
+                                  ")",
+                                  "{",
+                                  "return",
+                                  "true",
+                                  ";",
+                                  "}",
+                                  "else",
+                                  "{",
+                                  "return",
+                                  45,
+                                  ";",
+                                  "}"
+                                ]
+                              ],
+                              "dataText": "hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; }"
+                            },
+                            {
+                              "type": "stmt",
+                              "parts": [
+                                {
+                                  "type": "selectStmt",
+                                  "parts": [
+                                    {
+                                      "type": "iff",
+                                      "value": "if",
+                                      "text": "if",
+                                      "offset": 65,
+                                      "lineBreaks": 0,
+                                      "line": 5,
+                                      "col": 5,
+                                      "fullText": [
+                                        "if",
+                                        [
+                                          "(",
+                                          "hello",
+                                          ">=",
+                                          3,
+                                          ")"
+                                        ],
+                                        [
+                                          "{",
+                                          "return",
+                                          "true",
+                                          ";",
+                                          "}"
+                                        ],
+                                        "else",
+                                        [
+                                          "{",
+                                          "return",
+                                          45,
+                                          ";",
+                                          "}"
+                                        ]
+                                      ],
+                                      "dataText": "if ( hello >= 3 ) { return true ; } else { return 45 ; }"
+                                    },
+                                    {
+                                      "type": "simpleExp",
+                                      "parts": [
+                                        {
+                                          "type": "andExp",
+                                          "parts": [
+                                            {
+                                              "type": "unaryRelExp",
+                                              "parts": [
+                                                {
+                                                  "type": "relExp",
+                                                  "parts": [
+                                                    {
+                                                      "type": "sumExp",
+                                                      "parts": [
+                                                        {
+                                                          "type": "mulExp",
+                                                          "parts": [
+                                                            {
+                                                              "type": "unaryExp",
+                                                              "parts": [
+                                                                {
+                                                                  "type": "factor",
+                                                                  "parts": [
+                                                                    {
+                                                                      "type": "immutable",
+                                                                      "parts": [
+                                                                        {
+                                                                          "type": "lparan",
+                                                                          "value": "(",
+                                                                          "text": "(",
+                                                                          "offset": 68,
+                                                                          "lineBreaks": 0,
+                                                                          "line": 5,
+                                                                          "col": 8,
+                                                                          "fullText": [
+                                                                            "(",
+                                                                            [
+                                                                              "hello",
+                                                                              ">=",
+                                                                              3
+                                                                            ],
+                                                                            ")"
+                                                                          ],
+                                                                          "dataText": "( hello >= 3 )"
+                                                                        },
+                                                                        {
+                                                                          "type": "exp",
+                                                                          "parts": [
+                                                                            {
+                                                                              "type": "simpleExp",
+                                                                              "parts": [
+                                                                                {
+                                                                                  "type": "andExp",
+                                                                                  "parts": [
+                                                                                    {
+                                                                                      "type": "unaryRelExp",
+                                                                                      "parts": [
+                                                                                        {
+                                                                                          "type": "relExp",
+                                                                                          "parts": [
+                                                                                            {
+                                                                                              "type": "sumExp",
+                                                                                              "parts": [
+                                                                                                {
+                                                                                                  "type": "mulExp",
+                                                                                                  "parts": [
+                                                                                                    {
+                                                                                                      "type": "unaryExp",
+                                                                                                      "parts": [
+                                                                                                        {
+                                                                                                          "type": "factor",
+                                                                                                          "parts": [
+                                                                                                            {
+                                                                                                              "type": "mutable",
+                                                                                                              "parts": [
+                                                                                                                {
+                                                                                                                  "type": "identifier",
+                                                                                                                  "value": "hello",
+                                                                                                                  "start": {
+                                                                                                                    "line": 5,
+                                                                                                                    "col": 8
+                                                                                                                  },
+                                                                                                                  "end": {
+                                                                                                                    "line": 5,
+                                                                                                                    "col": 13
+                                                                                                                  },
+                                                                                                                  "fullText": [
+                                                                                                                    "hello"
+                                                                                                                  ],
+                                                                                                                  "dataText": "hello"
+                                                                                                                }
+                                                                                                              ],
+                                                                                                              "fullText": [
+                                                                                                                "hello"
+                                                                                                              ],
+                                                                                                              "dataText": "hello"
+                                                                                                            }
+                                                                                                          ],
+                                                                                                          "fullText": [
+                                                                                                            [
+                                                                                                              "hello"
+                                                                                                            ]
+                                                                                                          ],
+                                                                                                          "dataText": "hello"
+                                                                                                        }
+                                                                                                      ],
+                                                                                                      "fullText": [
+                                                                                                        [
+                                                                                                          "hello"
+                                                                                                        ]
+                                                                                                      ],
+                                                                                                      "dataText": "hello"
+                                                                                                    }
+                                                                                                  ],
+                                                                                                  "fullText": [
+                                                                                                    [
+                                                                                                      "hello"
+                                                                                                    ]
+                                                                                                  ],
+                                                                                                  "dataText": "hello"
+                                                                                                }
+                                                                                              ],
+                                                                                              "fullText": [
+                                                                                                [
+                                                                                                  "hello"
+                                                                                                ],
+                                                                                                ">=",
+                                                                                                [
+                                                                                                  3
+                                                                                                ]
+                                                                                              ],
+                                                                                              "dataText": "hello >= 3"
+                                                                                            },
+                                                                                            {
+                                                                                              "type": "relOp",
+                                                                                              "parts": [
+                                                                                                {
+                                                                                                  "type": "gte",
+                                                                                                  "value": ">=",
+                                                                                                  "text": ">=",
+                                                                                                  "offset": 75,
+                                                                                                  "lineBreaks": 0,
+                                                                                                  "line": 5,
+                                                                                                  "col": 15,
+                                                                                                  "fullText": [
+                                                                                                    ">="
+                                                                                                  ],
+                                                                                                  "dataText": ">="
+                                                                                                }
+                                                                                              ],
+                                                                                              "fullText": [
+                                                                                                [
+                                                                                                  "hello"
+                                                                                                ],
+                                                                                                ">=",
+                                                                                                [
+                                                                                                  3
+                                                                                                ]
+                                                                                              ],
+                                                                                              "dataText": "hello >= 3"
+                                                                                            },
+                                                                                            {
+                                                                                              "type": "sumExp",
+                                                                                              "parts": [
+                                                                                                {
+                                                                                                  "type": "mulExp",
+                                                                                                  "parts": [
+                                                                                                    {
+                                                                                                      "type": "unaryExp",
+                                                                                                      "parts": [
+                                                                                                        {
+                                                                                                          "type": "factor",
+                                                                                                          "parts": [
+                                                                                                            {
+                                                                                                              "type": "immutable",
+                                                                                                              "parts": [
+                                                                                                                {
+                                                                                                                  "type": "constant",
+                                                                                                                  "parts": [
+                                                                                                                    {
+                                                                                                                      "type": "number_literal",
+                                                                                                                      "value": 3,
+                                                                                                                      "start": {
+                                                                                                                        "line": 5,
+                                                                                                                        "col": 17
+                                                                                                                      },
+                                                                                                                      "end": {
+                                                                                                                        "line": 5,
+                                                                                                                        "col": 18
+                                                                                                                      },
+                                                                                                                      "fullText": [
+                                                                                                                        3
+                                                                                                                      ],
+                                                                                                                      "dataText": "3"
+                                                                                                                    }
+                                                                                                                  ],
+                                                                                                                  "fullText": [
+                                                                                                                    3
+                                                                                                                  ],
+                                                                                                                  "dataText": "3"
+                                                                                                                }
+                                                                                                              ],
+                                                                                                              "fullText": [
+                                                                                                                [
+                                                                                                                  3
+                                                                                                                ]
+                                                                                                              ],
+                                                                                                              "dataText": "3"
+                                                                                                            }
+                                                                                                          ],
+                                                                                                          "fullText": [
+                                                                                                            [
+                                                                                                              3
+                                                                                                            ]
+                                                                                                          ],
+                                                                                                          "dataText": "3"
+                                                                                                        }
+                                                                                                      ],
+                                                                                                      "fullText": [
+                                                                                                        [
+                                                                                                          3
+                                                                                                        ]
+                                                                                                      ],
+                                                                                                      "dataText": "3"
+                                                                                                    }
+                                                                                                  ],
+                                                                                                  "fullText": [
+                                                                                                    [
+                                                                                                      3
+                                                                                                    ]
+                                                                                                  ],
+                                                                                                  "dataText": "3"
+                                                                                                }
+                                                                                              ],
+                                                                                              "fullText": [
+                                                                                                [
+                                                                                                  "hello"
+                                                                                                ],
+                                                                                                ">=",
+                                                                                                [
+                                                                                                  3
+                                                                                                ]
+                                                                                              ],
+                                                                                              "dataText": "hello >= 3"
+                                                                                            }
+                                                                                          ],
+                                                                                          "fullText": [
+                                                                                            [
+                                                                                              "hello"
+                                                                                            ],
+                                                                                            [
+                                                                                              ">="
+                                                                                            ],
+                                                                                            [
+                                                                                              3
+                                                                                            ]
+                                                                                          ],
+                                                                                          "dataText": "hello >= 3"
+                                                                                        }
+                                                                                      ],
+                                                                                      "fullText": [
+                                                                                        [
+                                                                                          "hello",
+                                                                                          ">=",
+                                                                                          3
+                                                                                        ]
+                                                                                      ],
+                                                                                      "dataText": "hello >= 3"
+                                                                                    }
+                                                                                  ],
+                                                                                  "fullText": [
+                                                                                    [
+                                                                                      "hello",
+                                                                                      ">=",
+                                                                                      3
+                                                                                    ]
+                                                                                  ],
+                                                                                  "dataText": "hello >= 3"
+                                                                                }
+                                                                              ],
+                                                                              "fullText": [
+                                                                                [
+                                                                                  "hello",
+                                                                                  ">=",
+                                                                                  3
+                                                                                ]
+                                                                              ],
+                                                                              "dataText": "hello >= 3"
+                                                                            }
+                                                                          ],
+                                                                          "fullText": [
+                                                                            "(",
+                                                                            [
+                                                                              "hello",
+                                                                              ">=",
+                                                                              3
+                                                                            ],
+                                                                            ")"
+                                                                          ],
+                                                                          "dataText": "( hello >= 3 )"
+                                                                        },
+                                                                        {
+                                                                          "type": "rparan",
+                                                                          "value": ")",
+                                                                          "text": ")",
+                                                                          "offset": 79,
+                                                                          "lineBreaks": 0,
+                                                                          "line": 5,
+                                                                          "col": 19,
+                                                                          "fullText": [
+                                                                            "(",
+                                                                            [
+                                                                              "hello",
+                                                                              ">=",
+                                                                              3
+                                                                            ],
+                                                                            ")"
+                                                                          ],
+                                                                          "dataText": "( hello >= 3 )"
+                                                                        }
+                                                                      ],
+                                                                      "fullText": [
+                                                                        "(",
+                                                                        [
+                                                                          "hello",
+                                                                          ">=",
+                                                                          3
+                                                                        ],
+                                                                        ")"
+                                                                      ],
+                                                                      "dataText": "( hello >= 3 )"
+                                                                    }
+                                                                  ],
+                                                                  "fullText": [
+                                                                    [
+                                                                      "(",
+                                                                      "hello",
+                                                                      ">=",
+                                                                      3,
+                                                                      ")"
+                                                                    ]
+                                                                  ],
+                                                                  "dataText": "( hello >= 3 )"
+                                                                }
+                                                              ],
+                                                              "fullText": [
+                                                                [
+                                                                  "(",
+                                                                  "hello",
+                                                                  ">=",
+                                                                  3,
+                                                                  ")"
+                                                                ]
+                                                              ],
+                                                              "dataText": "( hello >= 3 )"
+                                                            }
+                                                          ],
+                                                          "fullText": [
+                                                            [
+                                                              "(",
+                                                              "hello",
+                                                              ">=",
+                                                              3,
+                                                              ")"
+                                                            ]
+                                                          ],
+                                                          "dataText": "( hello >= 3 )"
+                                                        }
+                                                      ],
+                                                      "fullText": [
+                                                        [
+                                                          "(",
+                                                          "hello",
+                                                          ">=",
+                                                          3,
+                                                          ")"
+                                                        ]
+                                                      ],
+                                                      "dataText": "( hello >= 3 )"
+                                                    }
+                                                  ],
+                                                  "fullText": [
+                                                    [
+                                                      "(",
+                                                      "hello",
+                                                      ">=",
+                                                      3,
+                                                      ")"
+                                                    ]
+                                                  ],
+                                                  "dataText": "( hello >= 3 )"
+                                                }
+                                              ],
+                                              "fullText": [
+                                                [
+                                                  "(",
+                                                  "hello",
+                                                  ">=",
+                                                  3,
+                                                  ")"
+                                                ]
+                                              ],
+                                              "dataText": "( hello >= 3 )"
+                                            }
+                                          ],
+                                          "fullText": [
+                                            [
+                                              "(",
+                                              "hello",
+                                              ">=",
+                                              3,
+                                              ")"
+                                            ]
+                                          ],
+                                          "dataText": "( hello >= 3 )"
+                                        }
+                                      ],
+                                      "fullText": [
+                                        "if",
+                                        [
+                                          "(",
+                                          "hello",
+                                          ">=",
+                                          3,
+                                          ")"
+                                        ],
+                                        [
+                                          "{",
+                                          "return",
+                                          "true",
+                                          ";",
+                                          "}"
+                                        ],
+                                        "else",
+                                        [
+                                          "{",
+                                          "return",
+                                          45,
+                                          ";",
+                                          "}"
+                                        ]
+                                      ],
+                                      "dataText": "if ( hello >= 3 ) { return true ; } else { return 45 ; }"
+                                    },
+                                    {
+                                      "type": "stmt",
+                                      "parts": [
+                                        {
+                                          "type": "compoundStmt",
+                                          "parts": [
+                                            {
+                                              "type": "lbrace",
+                                              "value": "{",
+                                              "text": "{",
+                                              "offset": 81,
+                                              "lineBreaks": 0,
+                                              "line": 5,
+                                              "col": 21,
+                                              "fullText": [
+                                                "{",
+                                                [],
+                                                [
+                                                  "return",
+                                                  "true",
+                                                  ";"
+                                                ],
+                                                "}"
+                                              ],
+                                              "dataText": "{ return true ; }"
+                                            },
+                                            {
+                                              "type": "localDecls",
+                                              "parts": [],
+                                              "fullText": [
+                                                "{",
+                                                [],
+                                                [
+                                                  "return",
+                                                  "true",
+                                                  ";"
+                                                ],
+                                                "}"
+                                              ],
+                                              "dataText": "{ return true ; }"
+                                            },
+                                            {
+                                              "type": "stmtList",
+                                              "parts": [
+                                                {
+                                                  "type": "stmtList",
+                                                  "parts": [],
+                                                  "fullText": [
+                                                    [
+                                                      "return",
+                                                      "true",
+                                                      ";"
+                                                    ]
+                                                  ],
+                                                  "dataText": "return true ;"
+                                                },
+                                                {
+                                                  "type": "stmt",
+                                                  "parts": [
+                                                    {
+                                                      "type": "returnStmt",
+                                                      "parts": [
+                                                        {
+                                                          "type": "returnn",
+                                                          "value": "return",
+                                                          "text": "return",
+                                                          "offset": 92,
+                                                          "lineBreaks": 0,
+                                                          "line": 6,
+                                                          "col": 9,
+                                                          "fullText": [
+                                                            "return",
+                                                            [
+                                                              "true"
+                                                            ],
+                                                            ";"
+                                                          ],
+                                                          "dataText": "return true ;"
+                                                        },
+                                                        {
+                                                          "type": "exp",
+                                                          "parts": [
+                                                            {
+                                                              "type": "simpleExp",
+                                                              "parts": [
+                                                                {
+                                                                  "type": "andExp",
+                                                                  "parts": [
+                                                                    {
+                                                                      "type": "unaryRelExp",
+                                                                      "parts": [
+                                                                        {
+                                                                          "type": "relExp",
+                                                                          "parts": [
+                                                                            {
+                                                                              "type": "sumExp",
+                                                                              "parts": [
+                                                                                {
+                                                                                  "type": "mulExp",
+                                                                                  "parts": [
+                                                                                    {
+                                                                                      "type": "unaryExp",
+                                                                                      "parts": [
+                                                                                        {
+                                                                                          "type": "factor",
+                                                                                          "parts": [
+                                                                                            {
+                                                                                              "type": "immutable",
+                                                                                              "parts": [
+                                                                                                {
+                                                                                                  "type": "constant",
+                                                                                                  "parts": [
+                                                                                                    {
+                                                                                                      "type": "true",
+                                                                                                      "value": "true",
+                                                                                                      "text": "true",
+                                                                                                      "offset": 99,
+                                                                                                      "lineBreaks": 0,
+                                                                                                      "line": 6,
+                                                                                                      "col": 16,
+                                                                                                      "fullText": [
+                                                                                                        "true"
+                                                                                                      ],
+                                                                                                      "dataText": "true"
+                                                                                                    }
+                                                                                                  ],
+                                                                                                  "fullText": [
+                                                                                                    "true"
+                                                                                                  ],
+                                                                                                  "dataText": "true"
+                                                                                                }
+                                                                                              ],
+                                                                                              "fullText": [
+                                                                                                [
+                                                                                                  "true"
+                                                                                                ]
+                                                                                              ],
+                                                                                              "dataText": "true"
+                                                                                            }
+                                                                                          ],
+                                                                                          "fullText": [
+                                                                                            [
+                                                                                              "true"
+                                                                                            ]
+                                                                                          ],
+                                                                                          "dataText": "true"
+                                                                                        }
+                                                                                      ],
+                                                                                      "fullText": [
+                                                                                        [
+                                                                                          "true"
+                                                                                        ]
+                                                                                      ],
+                                                                                      "dataText": "true"
+                                                                                    }
+                                                                                  ],
+                                                                                  "fullText": [
+                                                                                    [
+                                                                                      "true"
+                                                                                    ]
+                                                                                  ],
+                                                                                  "dataText": "true"
+                                                                                }
+                                                                              ],
+                                                                              "fullText": [
+                                                                                [
+                                                                                  "true"
+                                                                                ]
+                                                                              ],
+                                                                              "dataText": "true"
+                                                                            }
+                                                                          ],
+                                                                          "fullText": [
+                                                                            [
+                                                                              "true"
+                                                                            ]
+                                                                          ],
+                                                                          "dataText": "true"
+                                                                        }
+                                                                      ],
+                                                                      "fullText": [
+                                                                        [
+                                                                          "true"
+                                                                        ]
+                                                                      ],
+                                                                      "dataText": "true"
+                                                                    }
+                                                                  ],
+                                                                  "fullText": [
+                                                                    [
+                                                                      "true"
+                                                                    ]
+                                                                  ],
+                                                                  "dataText": "true"
+                                                                }
+                                                              ],
+                                                              "fullText": [
+                                                                [
+                                                                  "true"
+                                                                ]
+                                                              ],
+                                                              "dataText": "true"
+                                                            }
+                                                          ],
+                                                          "fullText": [
+                                                            "return",
+                                                            [
+                                                              "true"
+                                                            ],
+                                                            ";"
+                                                          ],
+                                                          "dataText": "return true ;"
+                                                        },
+                                                        {
+                                                          "type": "scolon",
+                                                          "value": ";",
+                                                          "text": ";",
+                                                          "offset": 103,
+                                                          "lineBreaks": 0,
+                                                          "line": 6,
+                                                          "col": 20,
+                                                          "fullText": [
+                                                            "return",
+                                                            [
+                                                              "true"
+                                                            ],
+                                                            ";"
+                                                          ],
+                                                          "dataText": "return true ;"
+                                                        }
+                                                      ],
+                                                      "fullText": [
+                                                        "return",
+                                                        [
+                                                          "true"
+                                                        ],
+                                                        ";"
+                                                      ],
+                                                      "dataText": "return true ;"
+                                                    }
+                                                  ],
+                                                  "fullText": [
+                                                    [
+                                                      "return",
+                                                      "true",
+                                                      ";"
+                                                    ]
+                                                  ],
+                                                  "dataText": "return true ;"
+                                                }
+                                              ],
+                                              "fullText": [
+                                                "{",
+                                                [],
+                                                [
+                                                  "return",
+                                                  "true",
+                                                  ";"
+                                                ],
+                                                "}"
+                                              ],
+                                              "dataText": "{ return true ; }"
+                                            },
+                                            {
+                                              "type": "rbrace",
+                                              "value": "}",
+                                              "text": "}",
+                                              "offset": 110,
+                                              "lineBreaks": 0,
+                                              "line": 7,
+                                              "col": 5,
+                                              "fullText": [
+                                                "{",
+                                                [],
+                                                [
+                                                  "return",
+                                                  "true",
+                                                  ";"
+                                                ],
+                                                "}"
+                                              ],
+                                              "dataText": "{ return true ; }"
+                                            }
+                                          ],
+                                          "fullText": [
+                                            "{",
+                                            [],
+                                            [
+                                              "return",
+                                              "true",
+                                              ";"
+                                            ],
+                                            "}"
+                                          ],
+                                          "dataText": "{ return true ; }"
+                                        }
+                                      ],
+                                      "fullText": [
+                                        "if",
+                                        [
+                                          "(",
+                                          "hello",
+                                          ">=",
+                                          3,
+                                          ")"
+                                        ],
+                                        [
+                                          "{",
+                                          "return",
+                                          "true",
+                                          ";",
+                                          "}"
+                                        ],
+                                        "else",
+                                        [
+                                          "{",
+                                          "return",
+                                          45,
+                                          ";",
+                                          "}"
+                                        ]
+                                      ],
+                                      "dataText": "if ( hello >= 3 ) { return true ; } else { return 45 ; }"
+                                    },
+                                    {
+                                      "type": "elsee",
+                                      "value": "else",
+                                      "text": "else",
+                                      "offset": 112,
+                                      "lineBreaks": 0,
+                                      "line": 7,
+                                      "col": 7,
+                                      "fullText": [
+                                        "if",
+                                        [
+                                          "(",
+                                          "hello",
+                                          ">=",
+                                          3,
+                                          ")"
+                                        ],
+                                        [
+                                          "{",
+                                          "return",
+                                          "true",
+                                          ";",
+                                          "}"
+                                        ],
+                                        "else",
+                                        [
+                                          "{",
+                                          "return",
+                                          45,
+                                          ";",
+                                          "}"
+                                        ]
+                                      ],
+                                      "dataText": "if ( hello >= 3 ) { return true ; } else { return 45 ; }"
+                                    },
+                                    {
+                                      "type": "stmt",
+                                      "parts": [
+                                        {
+                                          "type": "compoundStmt",
+                                          "parts": [
+                                            {
+                                              "type": "lbrace",
+                                              "value": "{",
+                                              "text": "{",
+                                              "offset": 117,
+                                              "lineBreaks": 0,
+                                              "line": 7,
+                                              "col": 12,
+                                              "fullText": [
+                                                "{",
+                                                [],
+                                                [
+                                                  "return",
+                                                  45,
+                                                  ";"
+                                                ],
+                                                "}"
+                                              ],
+                                              "dataText": "{ return 45 ; }"
+                                            },
+                                            {
+                                              "type": "localDecls",
+                                              "parts": [],
+                                              "fullText": [
+                                                "{",
+                                                [],
+                                                [
+                                                  "return",
+                                                  45,
+                                                  ";"
+                                                ],
+                                                "}"
+                                              ],
+                                              "dataText": "{ return 45 ; }"
+                                            },
+                                            {
+                                              "type": "stmtList",
+                                              "parts": [
+                                                {
+                                                  "type": "stmtList",
+                                                  "parts": [],
+                                                  "fullText": [
+                                                    [
+                                                      "return",
+                                                      45,
+                                                      ";"
+                                                    ]
+                                                  ],
+                                                  "dataText": "return 45 ;"
+                                                },
+                                                {
+                                                  "type": "stmt",
+                                                  "parts": [
+                                                    {
+                                                      "type": "returnStmt",
+                                                      "parts": [
+                                                        {
+                                                          "type": "returnn",
+                                                          "value": "return",
+                                                          "text": "return",
+                                                          "offset": 128,
+                                                          "lineBreaks": 0,
+                                                          "line": 8,
+                                                          "col": 9,
+                                                          "fullText": [
+                                                            "return",
+                                                            [
+                                                              45
+                                                            ],
+                                                            ";"
+                                                          ],
+                                                          "dataText": "return 45 ;"
+                                                        },
+                                                        {
+                                                          "type": "exp",
+                                                          "parts": [
+                                                            {
+                                                              "type": "simpleExp",
+                                                              "parts": [
+                                                                {
+                                                                  "type": "andExp",
+                                                                  "parts": [
+                                                                    {
+                                                                      "type": "unaryRelExp",
+                                                                      "parts": [
+                                                                        {
+                                                                          "type": "relExp",
+                                                                          "parts": [
+                                                                            {
+                                                                              "type": "sumExp",
+                                                                              "parts": [
+                                                                                {
+                                                                                  "type": "mulExp",
+                                                                                  "parts": [
+                                                                                    {
+                                                                                      "type": "unaryExp",
+                                                                                      "parts": [
+                                                                                        {
+                                                                                          "type": "factor",
+                                                                                          "parts": [
+                                                                                            {
+                                                                                              "type": "immutable",
+                                                                                              "parts": [
+                                                                                                {
+                                                                                                  "type": "constant",
+                                                                                                  "parts": [
+                                                                                                    {
+                                                                                                      "type": "number_literal",
+                                                                                                      "value": 45,
+                                                                                                      "start": {
+                                                                                                        "line": 8,
+                                                                                                        "col": 15
+                                                                                                      },
+                                                                                                      "end": {
+                                                                                                        "line": 8,
+                                                                                                        "col": 17
+                                                                                                      },
+                                                                                                      "fullText": [
+                                                                                                        45
+                                                                                                      ],
+                                                                                                      "dataText": "45"
+                                                                                                    }
+                                                                                                  ],
+                                                                                                  "fullText": [
+                                                                                                    45
+                                                                                                  ],
+                                                                                                  "dataText": "45"
+                                                                                                }
+                                                                                              ],
+                                                                                              "fullText": [
+                                                                                                [
+                                                                                                  45
+                                                                                                ]
+                                                                                              ],
+                                                                                              "dataText": "45"
+                                                                                            }
+                                                                                          ],
+                                                                                          "fullText": [
+                                                                                            [
+                                                                                              45
+                                                                                            ]
+                                                                                          ],
+                                                                                          "dataText": "45"
+                                                                                        }
+                                                                                      ],
+                                                                                      "fullText": [
+                                                                                        [
+                                                                                          45
+                                                                                        ]
+                                                                                      ],
+                                                                                      "dataText": "45"
+                                                                                    }
+                                                                                  ],
+                                                                                  "fullText": [
+                                                                                    [
+                                                                                      45
+                                                                                    ]
+                                                                                  ],
+                                                                                  "dataText": "45"
+                                                                                }
+                                                                              ],
+                                                                              "fullText": [
+                                                                                [
+                                                                                  45
+                                                                                ]
+                                                                              ],
+                                                                              "dataText": "45"
+                                                                            }
+                                                                          ],
+                                                                          "fullText": [
+                                                                            [
+                                                                              45
+                                                                            ]
+                                                                          ],
+                                                                          "dataText": "45"
+                                                                        }
+                                                                      ],
+                                                                      "fullText": [
+                                                                        [
+                                                                          45
+                                                                        ]
+                                                                      ],
+                                                                      "dataText": "45"
+                                                                    }
+                                                                  ],
+                                                                  "fullText": [
+                                                                    [
+                                                                      45
+                                                                    ]
+                                                                  ],
+                                                                  "dataText": "45"
+                                                                }
+                                                              ],
+                                                              "fullText": [
+                                                                [
+                                                                  45
+                                                                ]
+                                                              ],
+                                                              "dataText": "45"
+                                                            }
+                                                          ],
+                                                          "fullText": [
+                                                            "return",
+                                                            [
+                                                              45
+                                                            ],
+                                                            ";"
+                                                          ],
+                                                          "dataText": "return 45 ;"
+                                                        },
+                                                        {
+                                                          "type": "scolon",
+                                                          "value": ";",
+                                                          "text": ";",
+                                                          "offset": 137,
+                                                          "lineBreaks": 0,
+                                                          "line": 8,
+                                                          "col": 18,
+                                                          "fullText": [
+                                                            "return",
+                                                            [
+                                                              45
+                                                            ],
+                                                            ";"
+                                                          ],
+                                                          "dataText": "return 45 ;"
+                                                        }
+                                                      ],
+                                                      "fullText": [
+                                                        "return",
+                                                        [
+                                                          45
+                                                        ],
+                                                        ";"
+                                                      ],
+                                                      "dataText": "return 45 ;"
+                                                    }
+                                                  ],
+                                                  "fullText": [
+                                                    [
+                                                      "return",
+                                                      45,
+                                                      ";"
+                                                    ]
+                                                  ],
+                                                  "dataText": "return 45 ;"
+                                                }
+                                              ],
+                                              "fullText": [
+                                                "{",
+                                                [],
+                                                [
+                                                  "return",
+                                                  45,
+                                                  ";"
+                                                ],
+                                                "}"
+                                              ],
+                                              "dataText": "{ return 45 ; }"
+                                            },
+                                            {
+                                              "type": "rbrace",
+                                              "value": "}",
+                                              "text": "}",
+                                              "offset": 144,
+                                              "lineBreaks": 0,
+                                              "line": 9,
+                                              "col": 5,
+                                              "fullText": [
+                                                "{",
+                                                [],
+                                                [
+                                                  "return",
+                                                  45,
+                                                  ";"
+                                                ],
+                                                "}"
+                                              ],
+                                              "dataText": "{ return 45 ; }"
+                                            }
+                                          ],
+                                          "fullText": [
+                                            "{",
+                                            [],
+                                            [
+                                              "return",
+                                              45,
+                                              ";"
+                                            ],
+                                            "}"
+                                          ],
+                                          "dataText": "{ return 45 ; }"
+                                        }
+                                      ],
+                                      "fullText": [
+                                        "if",
+                                        [
+                                          "(",
+                                          "hello",
+                                          ">=",
+                                          3,
+                                          ")"
+                                        ],
+                                        [
+                                          "{",
+                                          "return",
+                                          "true",
+                                          ";",
+                                          "}"
+                                        ],
+                                        "else",
+                                        [
+                                          "{",
+                                          "return",
+                                          45,
+                                          ";",
+                                          "}"
+                                        ]
+                                      ],
+                                      "dataText": "if ( hello >= 3 ) { return true ; } else { return 45 ; }"
+                                    }
+                                  ],
+                                  "fullText": [
+                                    "if",
+                                    [
+                                      "(",
+                                      "hello",
+                                      ">=",
+                                      3,
+                                      ")"
+                                    ],
+                                    [
+                                      "{",
+                                      "return",
+                                      "true",
+                                      ";",
+                                      "}"
+                                    ],
+                                    "else",
+                                    [
+                                      "{",
+                                      "return",
+                                      45,
+                                      ";",
+                                      "}"
+                                    ]
+                                  ],
+                                  "dataText": "if ( hello >= 3 ) { return true ; } else { return 45 ; }"
+                                }
+                              ],
+                              "fullText": [
+                                [],
+                                [
+                                  "hello",
+                                  "=",
+                                  3,
+                                  ";"
+                                ],
+                                [
+                                  "if",
+                                  "(",
+                                  "hello",
+                                  ">=",
+                                  3,
+                                  ")",
+                                  "{",
+                                  "return",
+                                  "true",
+                                  ";",
+                                  "}",
+                                  "else",
+                                  "{",
+                                  "return",
+                                  45,
+                                  ";",
+                                  "}"
+                                ]
+                              ],
+                              "dataText": "hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; }"
+                            }
+                          ],
+                          "fullText": [
+                            "{",
+                            [
+                              "hello",
+                              "=",
+                              3,
+                              ";"
+                            ],
+                            [
+                              "if",
+                              "(",
+                              "hello",
+                              ">=",
+                              3,
+                              ")",
+                              "{",
+                              "return",
+                              "true",
+                              ";",
+                              "}",
+                              "else",
+                              "{",
+                              "return",
+                              45,
+                              ";",
+                              "}"
+                            ],
+                            "}"
+                          ],
+                          "dataText": "{ hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                        },
+                        {
+                          "type": "rbrace",
+                          "value": "}",
+                          "text": "}",
+                          "offset": 147,
+                          "lineBreaks": 0,
+                          "line": 10,
+                          "col": 1,
+                          "fullText": [
+                            "{",
+                            [
+                              "hello",
+                              "=",
+                              3,
+                              ";"
+                            ],
+                            [
+                              "if",
+                              "(",
+                              "hello",
+                              ">=",
+                              3,
+                              ")",
+                              "{",
+                              "return",
+                              "true",
+                              ";",
+                              "}",
+                              "else",
+                              "{",
+                              "return",
+                              45,
+                              ";",
+                              "}"
+                            ],
+                            "}"
+                          ],
+                          "dataText": "{ hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                        }
+                      ],
+                      "fullText": [
+                        "{",
+                        [],
+                        [
+                          "hello",
+                          "=",
+                          3,
+                          ";",
+                          "if",
+                          "(",
+                          "hello",
+                          ">=",
+                          3,
+                          ")",
+                          "{",
+                          "return",
+                          "true",
+                          ";",
+                          "}",
+                          "else",
+                          "{",
+                          "return",
+                          45,
+                          ";",
+                          "}"
+                        ],
+                        "}"
+                      ],
+                      "dataText": "{ hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                    }
+                  ],
+                  "fullText": [
+                    "bool",
+                    "main",
+                    "(",
+                    ")",
+                    [
+                      "{",
+                      "hello",
+                      "=",
+                      3,
+                      ";",
+                      "if",
+                      "(",
+                      "hello",
+                      ">=",
+                      3,
+                      ")",
+                      "{",
+                      "return",
+                      "true",
+                      ";",
+                      "}",
+                      "else",
+                      "{",
+                      "return",
+                      45,
+                      ";",
+                      "}",
+                      "}"
+                    ]
+                  ],
+                  "dataText": "bool main ( ) { hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+                }
+              ],
+              "fullText": [
+                [
+                  "bool"
+                ],
+                "main",
+                "(",
+                [],
+                ")",
+                [
+                  "{",
+                  "hello",
+                  "=",
+                  3,
+                  ";",
+                  "if",
+                  "(",
+                  "hello",
+                  ">=",
+                  3,
+                  ")",
+                  "{",
+                  "return",
+                  "true",
+                  ";",
+                  "}",
+                  "else",
+                  "{",
+                  "return",
+                  45,
+                  ";",
+                  "}",
+                  "}"
+                ]
+              ],
+              "dataText": "bool main ( ) { hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+            }
+          ],
+          "fullText": [
+            [
+              "int",
+              "hello",
+              ";"
+            ],
+            [
+              "char",
+              "bruhMoment",
+              ";"
+            ],
+            [
+              "bool",
+              "main",
+              "(",
+              ")",
+              "{",
+              "hello",
+              "=",
+              3,
+              ";",
+              "if",
+              "(",
+              "hello",
+              ">=",
+              3,
+              ")",
+              "{",
+              "return",
+              "true",
+              ";",
+              "}",
+              "else",
+              "{",
+              "return",
+              45,
+              ";",
+              "}",
+              "}"
+            ]
+          ],
+          "dataText": "int hello ; char bruhMoment ; bool main ( ) { hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+        }
+      ],
+      "fullText": [
+        [
+          "int",
+          "hello",
+          ";",
+          "char",
+          "bruhMoment",
+          ";"
+        ],
+        [
+          "bool",
+          "main",
+          "(",
+          ")",
+          "{",
+          "hello",
+          "=",
+          3,
+          ";",
+          "if",
+          "(",
+          "hello",
+          ">=",
+          3,
+          ")",
+          "{",
+          "return",
+          "true",
+          ";",
+          "}",
+          "else",
+          "{",
+          "return",
+          45,
+          ";",
+          "}",
+          "}"
+        ]
+      ],
+      "dataText": "int hello ; char bruhMoment ; bool main ( ) { hello = 3 ; if ( hello >= 3 ) { return true ; } else { return 45 ; } }"
+    }
+  ]
+}

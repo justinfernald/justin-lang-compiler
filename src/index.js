@@ -14,4 +14,5 @@ const input = fs.readFileSync(process.argv[2]).toString()
 parser.feed(input);
 
 // release parser output
-console.log(parser.results);
+// console.log(parser.results[0]);
+fs.writeFileSync("output/ast.json", JSON.stringify(parser.results[0], null, 2))

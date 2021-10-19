@@ -48,7 +48,7 @@ const lexer = moo.compile({
         value: s => Number(s)
     },
     identifier: { // finds all identifiers for variables and functions
-        match: /[a-z_][a-z_0-9]*/
+        match: /[a-zA-Z_][a-zA-Z_0-9]*/
     }
 });
 
@@ -60,8 +60,28 @@ lexer.next = (next => () => {
 })(lexer.next);
 
 // function to propogate ast data throughout the program
-function ast(part) {
-    return part
+function ast(part, debug = false) {
+    // if (debug)
+    //    console.log(part);
+    const valueList = parts => {
+        if (Array.isArray(parts)){
+            return parts.flatMap(x => x.value || x.parts.map(valueList))
+        } else {
+            return parts.value || parts.parts.flatMap(valueList)
+        }
+    };
+    // if (part.filter(x => x.value).length > 0)   
+    //console.log({fullText: valueList(part)});
+    const fullText = valueList(part);
+    return part.map(x => ({...x, fullText, dataText: fullText.flat(Infinity).join(" ")}));;
+}
+
+function symbol(type, name, scope) {
+    return {
+        type: type,
+        name: name,
+        scope: scope
+    }
 }
 
 // gets start of tokens
@@ -104,7 +124,7 @@ function convertTokenId(data) {
 @lexer lexer
 
 # program which is starting symbol
-program -> declList {% (data) => ({type: "program", parts: ast(data)}) %}
+program -> declList {% (data) => ({type: "program", parts: ast(data, true)}) %}
 
 #  list of declarations
 declList -> declList decl  {% (data) => ({type: "declList", parts: ast(data)}) %}
@@ -115,7 +135,7 @@ decl -> varDecl {% (data) => ({type: "decl", parts: ast(data)}) %}
     | funcDecl {% (data) => ({type: "decl", parts: ast(data)}) %}
 
 #  variable declaration
-varDecl -> typeSpec varDeclList %scolon {% (data) => ({type: "varDecl", parts: ast(data)}) %}
+varDecl -> typeSpec varDeclList %scolon {% (data) => ({type: "varDecl", parts: ast(data), symbol: symbol(data[0], data[1], ...data)}) %}
 
 #  scoped variable declaration
 scopedVarDecl -> typeSpec varDeclList %scolon {% (data) => ({type: "scopedVarDecl", parts: ast(data)}) %}
@@ -125,12 +145,12 @@ varDeclList -> varDeclList %comma varDeclInit {% (data) => ({type: "varDeclList"
     | varDeclInit {% (data) => ({type: "varDeclList", parts: ast(data)}) %}
 
 # variable declaration init
-varDeclInit -> varDeclId {% (data) => ({type: "varDeclInit", parts: ast(data)}) %}
-    | varDeclId %assignment simpleExp {% (data) => ({type: "varDeclInit", parts: ast(data)}) %}
+varDeclInit -> varDeclId {% (data) => ({type: "varDeclInit", parts: ast(data), symbol: symbol(data[0])}) %}
+    | varDeclId %assignment simpleExp {% (data) => ({type: "varDeclInit", parts: ast(data), symbol: symbol(data[0])}) %}
 
 # variable declaration id
-varDeclId -> identifier {% (data) => ({type: "varDeclId", parts: ast(data)}) %}
-    | identifier %lbracket number %rbracket {% (data) => ({type: "varDeclId", parts: ast(data)}) %}
+varDeclId -> identifier {% (data) => ({type: "varDeclId", parts: ast(data), symbol: symbol(data[0])}) %}
+    | identifier %lbracket number %rbracket {% (data) => ({type: "varDeclId", parts: ast(data), symbol: symbol(data[0])}) %}
 
 # type specifier
 typeSpec -> %int {% (data) => ({type: "typeSpec", parts: ast(data)}) %}
