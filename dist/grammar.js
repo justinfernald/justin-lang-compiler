@@ -74,10 +74,19 @@ function ast(part, debug = false) {
             return parts.value || parts.parts.flatMap(valueList)
         }
     };
+
+    const termList = parts => {
+        if (Array.isArray(parts)){
+            return parts.map(x => [x.type, ...x?.parts?.flatMap?.(termList) || []])
+        } else {
+            return [parts.type, ...parts?.parts?.flatMap?.(termList) || []]
+        }
+    };
     // if (part.filter(x => x.value).length > 0)   
     //console.log({fullText: valueList(part)});
     const fullText = valueList(part);
-    return part.map(x => ({...x, fullText, dataText: fullText.flat(Infinity).join(" ")}));;
+    const terms = termList(part);
+    return part.map(x => ({fullText, terms, dataText: fullText.flat(Infinity).join(" "), ...x}));;
 }
 
 function symbol(type, name, scope) {
