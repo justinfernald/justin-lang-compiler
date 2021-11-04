@@ -60,29 +60,41 @@ lexer.next = (next => () => {
 })(lexer.next);
 
 // function to propogate ast data throughout the program
-function ast(part, debug = false) {
-    // if (debug)
-    //    console.log(part);
-    const valueList = parts => {
-        if (Array.isArray(parts)){
-            return parts.flatMap(x => x.value || x.parts.map(valueList))
-        } else {
-            return parts.value || parts.parts.flatMap(valueList)
+function ast(part, scopeHead = false) {
+    const grammarData = parts => {
+
+        if (!Array.isArray(parts)){
+            if (!parts) return [];
+            parts = [parts];
         }
+        return parts.map(x => ({type: x.type, value: x.value, parts: grammarData(x.parts) || []}));
+            
     };
 
-    const termList = parts => {
-        if (Array.isArray(parts)){
-            return parts.map(x => [x.type, ...x?.parts?.flatMap?.(termList) || []])
-        } else {
-            return [parts.type, ...parts?.parts?.flatMap?.(termList) || []]
+    const build = parts => {
+        
+        const output = [];
+
+        for (let part of parts) {
+            if (part.value) {
+                output.push({type: [part.type], value: part.value});
+            } else {
+                let sub = build(part.parts);
+                for (let subPart of sub) {
+                    subPart.type = [part.type, ...subPart.type];
+                    output.push(subPart);
+                }
+            }
         }
-    };
-    // if (part.filter(x => x.value).length > 0)   
-    //console.log({fullText: valueList(part)});
-    const fullText = valueList(part);
-    const terms = termList(part);
-    return part.map(x => ({fullText, terms, dataText: fullText.flat(Infinity).join(" "), ...x}));;
+        
+        return output;
+    }
+
+    const context = build(grammarData(part));
+    const values = context.map(x => x.value);
+    const startTypes = context.map(x => x.type[0]);
+    const endTypes = context.map(x => x.type[x.type.length - 1]);
+    return part.map(x => ({context, values, startTypes, endTypes, scopeHead, ...x}));;
 }
 
 function symbol(type, name, scope) {
@@ -135,21 +147,21 @@ function convertTokenId(data) {
 # program which is starting symbol
 program -> declList {% (data) => ({type: "program", parts: ast(data, true)}) %}
 
-#  list of declarations
+# list of declarations
 declList -> declList decl  {% (data) => ({type: "declList", parts: ast(data)}) %}
     | decl  {% (data) => ({type: "declList", parts: ast(data)}) %}
 
-#  declaration
+# declaration
 decl -> varDecl {% (data) => ({type: "decl", parts: ast(data)}) %}
     | funcDecl {% (data) => ({type: "decl", parts: ast(data)}) %}
 
-#  variable declaration
+# variable declaration
 varDecl -> typeSpec varDeclList %scolon {% (data) => ({type: "varDecl", parts: ast(data), symbol: symbol(data[0], data[1], ...data)}) %}
 
-#  scoped variable declaration
+# scoped variable declaration
 scopedVarDecl -> typeSpec varDeclList %scolon {% (data) => ({type: "scopedVarDecl", parts: ast(data)}) %}
 
-#  variable declaration list
+# variable declaration list
 varDeclList -> varDeclList %comma varDeclInit {% (data) => ({type: "varDeclList", parts: ast(data)}) %}
     | varDeclInit {% (data) => ({type: "varDeclList", parts: ast(data)}) %}
 
@@ -168,8 +180,8 @@ typeSpec -> %int {% (data) => ({type: "typeSpec", parts: ast(data)}) %}
     | %voidd {% (data) => ({type: "typeSpec", parts: ast(data)}) %}
 
 # function declaration
-funcDecl -> typeSpec identifier %lparan parms %rparan stmt {% (data) => ({type: "funcDecl", parts: ast(data)}) %}
-    | identifier %lparan parms %rparan stmt {% (data) => ({type: "funcDecl", parts: ast(data)}) %}
+funcDecl -> typeSpec identifier %lparan parms %rparan stmt {% (data) => ({type: "funcDecl", parts: ast(data, true)}) %}
+    | identifier %lparan parms %rparan stmt {% (data) => ({type: "funcDecl", parts: ast(data, true)}) %}
 
 # function parameters
 parms -> parmList {% (data) => ({type: "parms", parts: ast(data)}) %}
@@ -179,7 +191,7 @@ parms -> parmList {% (data) => ({type: "parms", parts: ast(data)}) %}
 parmList -> parmList %comma parmTypeList {% (data) => ({type: "parmList", parts: ast(data)}) %}
     | parmTypeList {% (data) => ({type: "parmList", parts: ast(data)}) %}
 
-#  function parameter type list
+# function parameter type list
 parmTypeList -> typeSpec parmIdList {% (data) => ({type: "parmTypeList", parts: ast(data)}) %}
 
 # function parameter id list
@@ -213,11 +225,11 @@ stmtList -> stmtList stmt {% (data) => ({type: "stmtList", parts: ast(data)}) %}
     | null {% (data) => ({type: "stmtList", parts: ast(data)}) %}
 
 # selection statement
-selectStmt -> %iff simpleExp stmt %elsee stmt {% (data) => ({type: "selectStmt", parts: ast(data)}) %}
-    | %iff simpleExp stmt %elsee stmt {% (data) => ({type: "selectStmt", parts: ast(data)}) %}
+selectStmt -> %iff simpleExp stmt %elsee stmt {% (data) => ({type: "selectStmt", parts: ast(data, true)}) %}
+    | %iff simpleExp stmt %elsee stmt {% (data) => ({type: "selectStmt", parts: ast(data, true)}) %}
 
 # iteration statement
-iterStmt -> %whilee %lparan simpleExp %rparan stmt {% (data) => ({type: "iterStmt", parts: ast(data)}) %}
+iterStmt -> %whilee %lparan simpleExp %rparan stmt {% (data) => ({type: "iterStmt", parts: ast(data, true)}) %}
 
 # return statement
 returnStmt -> %returnn %scolon {% (data) => ({type: "returnStmt", parts: ast(data)}) %}

@@ -64,29 +64,41 @@ lexer.next = (next => () => {
 })(lexer.next);
 
 // function to propogate ast data throughout the program
-function ast(part, debug = false) {
-    // if (debug)
-    //    console.log(part);
-    const valueList = parts => {
-        if (Array.isArray(parts)){
-            return parts.flatMap(x => x.value || x.parts.map(valueList))
-        } else {
-            return parts.value || parts.parts.flatMap(valueList)
+function ast(part, scopeHead = false) {
+    const grammarData = parts => {
+
+        if (!Array.isArray(parts)){
+            if (!parts) return [];
+            parts = [parts];
         }
+        return parts.map(x => ({type: x.type, value: x.value, parts: grammarData(x.parts) || []}));
+            
     };
 
-    const termList = parts => {
-        if (Array.isArray(parts)){
-            return parts.map(x => [x.type, ...x?.parts?.flatMap?.(termList) || []])
-        } else {
-            return [parts.type, ...parts?.parts?.flatMap?.(termList) || []]
+    const build = parts => {
+        
+        const output = [];
+
+        for (let part of parts) {
+            if (part.value) {
+                output.push({type: [part.type], value: part.value});
+            } else {
+                let sub = build(part.parts);
+                for (let subPart of sub) {
+                    subPart.type = [part.type, ...subPart.type];
+                    output.push(subPart);
+                }
+            }
         }
-    };
-    // if (part.filter(x => x.value).length > 0)   
-    //console.log({fullText: valueList(part)});
-    const fullText = valueList(part);
-    const terms = termList(part);
-    return part.map(x => ({fullText, terms, dataText: fullText.flat(Infinity).join(" "), ...x}));;
+        
+        return output;
+    }
+
+    const context = build(grammarData(part));
+    const values = context.map(x => x.value);
+    const startTypes = context.map(x => x.type[0]);
+    const endTypes = context.map(x => x.type[x.type.length - 1]);
+    return part.map(x => ({context, values, startTypes, endTypes, scopeHead, ...x}));;
 }
 
 function symbol(type, name, scope) {
@@ -152,8 +164,8 @@ var grammar = {
     {"name": "typeSpec", "symbols": [(lexer.has("char") ? {type: "char"} : char)], "postprocess": (data) => ({type: "typeSpec", parts: ast(data)})},
     {"name": "typeSpec", "symbols": [(lexer.has("bool") ? {type: "bool"} : bool)], "postprocess": (data) => ({type: "typeSpec", parts: ast(data)})},
     {"name": "typeSpec", "symbols": [(lexer.has("voidd") ? {type: "voidd"} : voidd)], "postprocess": (data) => ({type: "typeSpec", parts: ast(data)})},
-    {"name": "funcDecl", "symbols": ["typeSpec", "identifier", (lexer.has("lparan") ? {type: "lparan"} : lparan), "parms", (lexer.has("rparan") ? {type: "rparan"} : rparan), "stmt"], "postprocess": (data) => ({type: "funcDecl", parts: ast(data)})},
-    {"name": "funcDecl", "symbols": ["identifier", (lexer.has("lparan") ? {type: "lparan"} : lparan), "parms", (lexer.has("rparan") ? {type: "rparan"} : rparan), "stmt"], "postprocess": (data) => ({type: "funcDecl", parts: ast(data)})},
+    {"name": "funcDecl", "symbols": ["typeSpec", "identifier", (lexer.has("lparan") ? {type: "lparan"} : lparan), "parms", (lexer.has("rparan") ? {type: "rparan"} : rparan), "stmt"], "postprocess": (data) => ({type: "funcDecl", parts: ast(data, true)})},
+    {"name": "funcDecl", "symbols": ["identifier", (lexer.has("lparan") ? {type: "lparan"} : lparan), "parms", (lexer.has("rparan") ? {type: "rparan"} : rparan), "stmt"], "postprocess": (data) => ({type: "funcDecl", parts: ast(data, true)})},
     {"name": "parms", "symbols": ["parmList"], "postprocess": (data) => ({type: "parms", parts: ast(data)})},
     {"name": "parms", "symbols": [], "postprocess": (data) => ({type: "parms", parts: ast(data)})},
     {"name": "parmList", "symbols": ["parmList", (lexer.has("comma") ? {type: "comma"} : comma), "parmTypeList"], "postprocess": (data) => ({type: "parmList", parts: ast(data)})},
@@ -175,9 +187,9 @@ var grammar = {
     {"name": "localDecls", "symbols": [], "postprocess": (data) => ({type: "localDecls", parts: ast(data)})},
     {"name": "stmtList", "symbols": ["stmtList", "stmt"], "postprocess": (data) => ({type: "stmtList", parts: ast(data)})},
     {"name": "stmtList", "symbols": [], "postprocess": (data) => ({type: "stmtList", parts: ast(data)})},
-    {"name": "selectStmt", "symbols": [(lexer.has("iff") ? {type: "iff"} : iff), "simpleExp", "stmt", (lexer.has("elsee") ? {type: "elsee"} : elsee), "stmt"], "postprocess": (data) => ({type: "selectStmt", parts: ast(data)})},
-    {"name": "selectStmt", "symbols": [(lexer.has("iff") ? {type: "iff"} : iff), "simpleExp", "stmt", (lexer.has("elsee") ? {type: "elsee"} : elsee), "stmt"], "postprocess": (data) => ({type: "selectStmt", parts: ast(data)})},
-    {"name": "iterStmt", "symbols": [(lexer.has("whilee") ? {type: "whilee"} : whilee), (lexer.has("lparan") ? {type: "lparan"} : lparan), "simpleExp", (lexer.has("rparan") ? {type: "rparan"} : rparan), "stmt"], "postprocess": (data) => ({type: "iterStmt", parts: ast(data)})},
+    {"name": "selectStmt", "symbols": [(lexer.has("iff") ? {type: "iff"} : iff), "simpleExp", "stmt", (lexer.has("elsee") ? {type: "elsee"} : elsee), "stmt"], "postprocess": (data) => ({type: "selectStmt", parts: ast(data, true)})},
+    {"name": "selectStmt", "symbols": [(lexer.has("iff") ? {type: "iff"} : iff), "simpleExp", "stmt", (lexer.has("elsee") ? {type: "elsee"} : elsee), "stmt"], "postprocess": (data) => ({type: "selectStmt", parts: ast(data, true)})},
+    {"name": "iterStmt", "symbols": [(lexer.has("whilee") ? {type: "whilee"} : whilee), (lexer.has("lparan") ? {type: "lparan"} : lparan), "simpleExp", (lexer.has("rparan") ? {type: "rparan"} : rparan), "stmt"], "postprocess": (data) => ({type: "iterStmt", parts: ast(data, true)})},
     {"name": "returnStmt", "symbols": [(lexer.has("returnn") ? {type: "returnn"} : returnn), (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "returnStmt", parts: ast(data)})},
     {"name": "returnStmt", "symbols": [(lexer.has("returnn") ? {type: "returnn"} : returnn), "exp", (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "returnStmt", parts: ast(data)})},
     {"name": "breakStmt", "symbols": [(lexer.has("breakk") ? {type: "breakk"} : breakk), (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "breakStmt", parts: ast(data)})},
