@@ -234,7 +234,6 @@ var grammar = {
     {"name": "unaryExp", "symbols": ["unaryop", "unaryExp"], "postprocess": (data) => ({type: "unaryExp", rule: 0, ...ast(data)})},
     {"name": "unaryExp", "symbols": ["factor"], "postprocess": (data) => ({type: "unaryExp", rule: 1, ...ast(data)})},
     {"name": "unaryop", "symbols": [(lexer.has("minus") ? {type: "minus"} : minus)], "postprocess": (data) => ({type: "unaryop", rule: 0, ...ast(data)})},
-    {"name": "unaryop", "symbols": [(lexer.has("multiply") ? {type: "multiply"} : multiply)], "postprocess": (data) => ({type: "unaryop", rule: 1, ...ast(data)})},
     {"name": "factor", "symbols": ["immutable"], "postprocess": (data) => ({type: "factor", rule: 0, ...ast(data)})},
     {"name": "factor", "symbols": ["mutable"], "postprocess": (data) => ({type: "factor", rule: 1, ...ast(data)})},
     {"name": "mutable", "symbols": ["identifier"], "postprocess": (data) => ({type: "mutable", rule: 0, ...ast(data)})},

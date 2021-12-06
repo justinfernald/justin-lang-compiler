@@ -306,7 +306,7 @@ unaryExp -> unaryop unaryExp {% (data) => ({type: "unaryExp", rule: 0, ...ast(da
 
 # unary operator
 unaryop -> %minus {% (data) => ({type: "unaryop", rule: 0, ...ast(data)}) %}
-    | %multiply {% (data) => ({type: "unaryop", rule: 1, ...ast(data)}) %}
+    #| %multiply {% (data) => ({type: "unaryop", rule: 1, ...ast(data)}) %}
 
 # factor
 factor -> immutable {% (data) => ({type: "factor", rule: 0, ...ast(data)}) %}

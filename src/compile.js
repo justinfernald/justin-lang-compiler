@@ -345,7 +345,7 @@ const semanticCheckDFS = (node) => {
         scopePath.pop();
 }
 
-const codeGenDFS = (node) => {
+const codeGenDFS = (node, scope) => {
     const terminals = {
         "program": {
             pre: (node) => `(module\n    (import "console" "log" (func $output (param i32)))`,
@@ -364,7 +364,7 @@ const codeGenDFS = (node) => {
             post: (node) => ``
         },
         "scopedVarDecl": {
-            pre: (node) => `(local $${indexer(node, 1, 0, 0).value} i32)`,
+            pre: (node) => ``,
             post: (node) => ``
         },
         "varDeclList": {
@@ -384,10 +384,27 @@ const codeGenDFS = (node) => {
             post: (node) => ``
         },
         "funcDecl": {
-            order: (node) => [(node) => `(func $${indexer(node, 1).value}`
-                , 3, (node) =>
-                indexer(node, 0, 0).value === "void" ? '' : `(result i32)`
-                , 0, 5, `)(export "${indexer(node, 1).value}" (func $${indexer(node, 1).value}))\n`]
+            order: (node) => [(node) => `(func $${indexer(node, 1).value}`,
+                3,
+            (node) => indexer(node, 0, 0).value === "void" ? '' : `(result i32)`,
+            (node) => {
+                const getLocalDecls = (scope, skip = false) => {
+                    const output = skip ? [] : scope.symbols.map(symbol => ({ type: symbol.type, name: symbol.name/* + "_" + scope.index.join('') */ }));
+                    for (const child of scope.scopes) {
+                        output.push(...getLocalDecls(child));
+                    }
+                    return output;
+                }
+
+                const localDecls = getLocalDecls(findSymbol(indexer(node, 1).value).scope, true);
+                let output = "";
+                for (const decl of localDecls) {
+                    output += `(local $${decl.name} i32)`
+                }
+                return output;
+            },
+                5,
+            `)(export "${indexer(node, 1).value}" (func $${indexer(node, 1).value}))\n`]
         },
         "parms": {
             pre: (node) => ``,
@@ -430,16 +447,17 @@ const codeGenDFS = (node) => {
             post: (node) => ``
         },
         "selectStmt": {
-            pre: (node) => ``,
-            post: (node) => ``
+            order: {
+                0: [(node) => `;; start if`, 2, `(if (then`, 4, `))`],
+                1: [(node) => `;; start if`, 2, `(if (then`, 4, `)(else`, 6, '))']
+            }
         },
         "iterStmt": {
-            pre: (node) => ``,
-            post: (node) => ``
+            order: [(node) => `(loop $loop_${node.index.join("")}`, 2, `(if (then`, 4, (node) => `br $loop_${node.index.join("")}`, `)))`]
         },
         "returnStmt": {
-            pre: (node) => ``,
-            post: (node) => ``
+            pre: (node) => `;; returning`,
+            post: (node) => `return`
         },
         "breakStmt": {
             pre: (node) => ``,
@@ -462,15 +480,21 @@ const codeGenDFS = (node) => {
             post: (node) => ``
         },
         "relExp": {
-            pre: (node) => ``,
-            post: (node) => ``
+            order: { 0: ['(', 1, 0, 2, ')'] }
         },
         "relOp": {
-            pre: (node) => ``,
+            pre: (node) => 'i32.' + {
+                lte: 'le_s',
+                lt: 'lt_s',
+                gte: 'ge_s',
+                gt: 'gt_s',
+                eq: 'eq',
+                neq: 'ne',
+            }[indexer(node, 0).type],
             post: (node) => ``
         },
         "sumExp": {
-            pre: [(node) => `(i32.add`, (node) => ``],
+            pre: [(node) => `(i32.${indexer(node, 1, 0).type === "plus" ? "add" : "sub"}`, (node) => ``],
             post: [(node) => `)`, (node) => ``]
         },
         "sumop": {
@@ -478,7 +502,7 @@ const codeGenDFS = (node) => {
             post: (node) => ``
         },
         "mulExp": {
-            pre: [(node) => `(i32.mul`, (node) => ``],
+            pre: [(node) => `(i32.${indexer(node, 1, 0).type === "multiply" ? "mul" : "div_s"}`, (node) => ``],
             post: [(node) => `)`, (node) => ``]
         },
         "mulop": {
@@ -486,8 +510,8 @@ const codeGenDFS = (node) => {
             post: (node) => ``
         },
         "unaryExp": {
-            pre: (node) => ``,
-            post: (node) => ``
+            pre: [(node) => `(i32.sub (i32.const 0)`, (node) => ``],
+            post: [(node) => `)`, (node) => ``]
         },
         "unaryop": {
             pre: (node) => ``,
@@ -495,7 +519,7 @@ const codeGenDFS = (node) => {
         },
         "factor": {
             pre: [(node) => ``, (node) => `(local.get $${indexer(node, 0, 0).value})`],
-            post: [(node) => ``, node => ``]
+            post: [(node) => ``, (node) => ``]
         },
         "mutable": {
             pre: (node) => ``,
@@ -529,11 +553,11 @@ const codeGenDFS = (node) => {
     if (node.type in terminals) {
         const terminal = terminals[node.type];
         if (terminal.order) {
-            const orderOutput = [];
+            let orderOutput = [];
 
             const order = terminal.order;
             const rule = node.rule;
-            if (typeof order === "object") {
+            if (typeof order === "object" && !Array.isArray(order)) {
                 const orderRule = order[rule];
                 if (typeof orderRule === "function") {
                     const result = orderRule(node);
@@ -542,7 +566,7 @@ const codeGenDFS = (node) => {
                             orderOutput.push(part(node));
                         } else if (typeof part === "number") {
                             if (node?.parts?.[part]) {
-                                const outputPart = codeGenDFS(node.parts[part]);
+                                const outputPart = codeGenDFS(node.parts[part], scope);
                                 orderOutput.push(outputPart);
                             } else {
                                 throw new Error(`No part at index ${part}`);
@@ -551,9 +575,22 @@ const codeGenDFS = (node) => {
                             orderOutput.push(part);
                         }
                     }
+                } else if (!orderRule) {
+                    orderOutput = ['', ''];
                 } else {
-                    for (const part of result) {
-                        orderOutput.push(part);
+                    for (const part of orderRule) {
+                        if (typeof part === "function") {
+                            orderOutput.push(part(node));
+                        } else if (typeof part === "number") {
+                            if (node?.parts?.[part]) {
+                                const outputPart = codeGenDFS(node.parts[part], scope);
+                                orderOutput.push(outputPart);
+                            } else {
+                                throw new Error(`No part at index ${part}`);
+                            }
+                        } else {
+                            orderOutput.push(part);
+                        }
                     }
                 }
             } else if (Array.isArray(order)) {
@@ -561,8 +598,8 @@ const codeGenDFS = (node) => {
                     if (typeof part === "function") {
                         orderOutput.push(part(node));
                     } else if (typeof part === "number") {
-                        if (node?.parts?.[0]) {
-                            const outputPart = codeGenDFS(node.parts[0]);
+                        if (node?.parts?.[part]) {
+                            const outputPart = codeGenDFS(node.parts[part], scope);
                             orderOutput.push(outputPart);
                         } else {
                             throw new Error(`No part at index ${part}`);
@@ -579,7 +616,7 @@ const codeGenDFS = (node) => {
                         orderOutput.push(part(node));
                     } else if (typeof part === "number") {
                         if (node?.parts?.[part]) {
-                            const outputPart = codeGenDFS(node.parts[part]);
+                            const outputPart = codeGenDFS(node.parts[part], scope);
                             orderOutput.push(outputPart);
                         } else {
                             throw new Error(`No part at index ${part}`);
@@ -592,8 +629,8 @@ const codeGenDFS = (node) => {
                 throw new Error(`Invalid order for terminal ${node.type}`);
             }
 
-            output.pre = orderOutput[0];
-            output.post = orderOutput[orderOutput.length - 1];
+            output.pre = orderOutput.length === 0 ? '' : orderOutput[0];
+            output.post = orderOutput.length === 1 ? '' : orderOutput[orderOutput.length - 1];
             output.children = orderOutput.slice(1, orderOutput.length - 1);
         } else {
             if (terminal.pre) {
@@ -618,7 +655,7 @@ const codeGenDFS = (node) => {
 
             if (node.parts) {
                 for (const part of node.parts) {
-                    const outputPart = codeGenDFS(part);
+                    const outputPart = codeGenDFS(part, scope);
                     output.children.push(outputPart);
                 }
             }
@@ -683,9 +720,21 @@ const codeTreeToString = (node, level = 0) => {
 }
 
 semanticCheckDFS(ast);
-const codeTree = codeGenDFS(ast);
+
+const addIndex = (node, index = [0]) => {
+    node.index = index;
+    if (node.scopes) {
+        for (let i = 0; i < node.scopes.length; i++) {
+            addIndex(node.scopes[i], [...index, i]);
+        }
+    }
+}
+
+addIndex(scope);
+
+const codeTree = codeGenDFS(ast, scope);
 const codeOutput = codeTreeToString(codeTree);
-console.log(codeOutput);
+// console.log(codeOutput);
 
 // write code to file
 fs.writeFileSync('./output/output.wat', codeOutput);

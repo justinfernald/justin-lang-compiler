@@ -9,9 +9,23 @@ console.log = (...args) =>
 
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 
+
+const addIndex = (node, index = [0]) => {
+    node.index = index;
+    if (node.parts) {
+        for (let i = 0; i < node.parts.length; i++) {
+            addIndex(node.parts[i], [...index, i]);
+        }
+    }
+}
+
+
+
 const input = fs.readFileSync(process.argv[2]).toString()
 
 parser.feed(input);
+
+addIndex(parser.results[0]);
 
 // release parser output
 // console.log(parser.results[0]);
