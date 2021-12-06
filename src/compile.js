@@ -1,3 +1,4 @@
+const fs = require("fs");
 const ast = require("../output/ast.json");
 
 console.full = (...args) => console.dir(...args, { depth: null });
@@ -383,17 +384,10 @@ const codeGenDFS = (node) => {
             post: (node) => ``
         },
         "funcDecl": {
-            order: {
-                0: (node) => [((node) => {
-                    let output = `(func $${indexer(node, 1).value}`;
-
-                    const type = indexer(node, 0, 0).value;
-                    if (type !== "void") {
-                        output += ` (result i32)`;
-                    }
-                    return output;
-                })(node), 3, 0, 5, `)(export "${indexer(node, 1).value}" (func $${indexer(node, 1).value}))\n`]
-            },
+            order: (node) => [(node) => `(func $${indexer(node, 1).value}`
+                , 3, (node) =>
+                indexer(node, 0, 0).value === "void" ? '' : `(result i32)`
+                , 0, 5, `)(export "${indexer(node, 1).value}" (func $${indexer(node, 1).value}))\n`]
         },
         "parms": {
             pre: (node) => ``,
@@ -651,7 +645,7 @@ const codeGenDFS = (node) => {
         }
     } else {
         if (!node.value)
-            console.log("Unrecognized node type: " + node.type);
+            throw new Error(`No value for node ${node.type}`);
     }
 
     return output;
@@ -690,5 +684,8 @@ const codeTreeToString = (node, level = 0) => {
 
 semanticCheckDFS(ast);
 const codeTree = codeGenDFS(ast);
-// console.full(codeTree);
-console.log(codeTreeToString(codeTree));
+const codeOutput = codeTreeToString(codeTree);
+console.log(codeOutput);
+
+// write code to file
+fs.writeFileSync('./output/output.wat', codeOutput);
