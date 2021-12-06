@@ -9,8 +9,10 @@
     "devDependencies": {},
     "scripts": {
         "build": "nearleyc src/grammar.ne -o dist/grammar.js",
-        "start": "node src/index.js input/test.gcupl",
-        "go": "npm run build & npm run start"
+        "start": "node src/index.js input/testProg.gcupl",
+        "go": "npm run build & npm run start",
+        "compile": "node src/compile.js",
+        "full": "npm run go & npm run compile"
     },
     "author": "Justin Fernald",
     "license": "ISC"

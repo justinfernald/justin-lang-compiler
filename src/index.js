@@ -15,4 +15,4 @@ parser.feed(input);
 
 // release parser output
 // console.log(parser.results[0]);
-fs.writeFileSync("output/ast.json", JSON.stringify(parser.results[0], null, 2))
+fs.writeFileSync("output/ast.json", JSON.stringify(parser.results[0], null, 1))

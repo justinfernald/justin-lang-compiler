@@ -1,5 +1,5 @@
 int x[10];
- 
+
 int minloc(int a, int low, int high)
 {
     int i; int x; int k;
@@ -17,38 +17,38 @@ int minloc(int a, int low, int high)
     }
     return k;
 }
-  
+
 void sort(int a, int low, int high) 
- {
-      int i;
-      int k;
-      i = low;
-      while (i < high-1)
-      {
-  	int t;
-  	k = minloc(a,i,high);
-  	t = a;
-  	a = a;
-  	a = t;
-  	i = i + 1;
-      }
-  }
+{
+    int i;
+    int k;
+    i = low;
+    while (i < high-1)
+    {
+        int t;
+        k = minloc(a,i,high);
+        t = a;
+        a = a;
+        a = t;
+        i = i + 1;
+    }
+}
 
 void main()
- {
-      int i;
-      i = 0;
- 
-      while (i < 10)
-      {
-  	x = input();
-  	i = i + 1;
-      }
-      sort(x, 0, 10);
-      i = 0;
-      while (i < 10)
-      {
- 	output(x);
-  	i = i + 1;
-      }
+{
+    int i;
+    i = 0;
+
+    while (i < 10)
+    {
+        x = input();
+        i = i + 1;
+    }
+    sort(x, 0, 10);
+    i = 0;
+    while (i < 10)
+    {
+        output(x);
+        i = i + 1;
+    }
 }
