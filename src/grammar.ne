@@ -111,7 +111,8 @@ function ast(part, scopeHead = false, title = "default") {
     const startTypes = context.map(x => x.terms[0]);
     const endTypes = context.map(x => x.terms[x.terms.length - 1]);
 
-    return { scopeHead, title, values, context, parts: part};  
+    return { scopeHead, title, values, parts: part};  
+    // return { scopeHead, title, values, context, parts: part};  
 }
 
 function symbol(type, name, scope) {
@@ -251,7 +252,7 @@ iterStmt -> %whilee %lparan simpleExp %rparan stmt {% (data) => ({type: "iterStm
 
 # return statement
 returnStmt -> %returnn %scolon {% (data) => ({type: "returnStmt", rule: 0, ...ast(data)}) %}
-    | %returnn exp %scolon {% (data) => ({type: "returnStmt", rule: 1, ...ast(data)}) %}
+    | %returnn simpleExp %scolon {% (data) => ({type: "returnStmt", rule: 1, ...ast(data)}) %}
 
 # break statement
 breakStmt -> %breakk %scolon {% (data) => ({type: "breakStmt", rule: 0, ...ast(data)}) %}

@@ -115,7 +115,8 @@ function ast(part, scopeHead = false, title = "default") {
     const startTypes = context.map(x => x.terms[0]);
     const endTypes = context.map(x => x.terms[x.terms.length - 1]);
 
-    return { scopeHead, title, values, context, parts: part};  
+    return { scopeHead, title, values, parts: part};  
+    // return { scopeHead, title, values, context, parts: part};  
 }
 
 function symbol(type, name, scope) {
@@ -205,7 +206,7 @@ var grammar = {
     {"name": "selectStmt", "symbols": [(lexer.has("iff") ? {type: "iff"} : iff), (lexer.has("lparan") ? {type: "lparan"} : lparan), "simpleExp", (lexer.has("rparan") ? {type: "rparan"} : rparan), "stmt", (lexer.has("elsee") ? {type: "elsee"} : elsee), "stmt"], "postprocess": (data) => ({type: "selectStmt", rule: 1, ...ast(data, true, "select")})},
     {"name": "iterStmt", "symbols": [(lexer.has("whilee") ? {type: "whilee"} : whilee), (lexer.has("lparan") ? {type: "lparan"} : lparan), "simpleExp", (lexer.has("rparan") ? {type: "rparan"} : rparan), "stmt"], "postprocess": (data) => ({type: "iterStmt", rule: 0, ...ast(data, true, "while")})},
     {"name": "returnStmt", "symbols": [(lexer.has("returnn") ? {type: "returnn"} : returnn), (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "returnStmt", rule: 0, ...ast(data)})},
-    {"name": "returnStmt", "symbols": [(lexer.has("returnn") ? {type: "returnn"} : returnn), "exp", (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "returnStmt", rule: 1, ...ast(data)})},
+    {"name": "returnStmt", "symbols": [(lexer.has("returnn") ? {type: "returnn"} : returnn), "simpleExp", (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "returnStmt", rule: 1, ...ast(data)})},
     {"name": "breakStmt", "symbols": [(lexer.has("breakk") ? {type: "breakk"} : breakk), (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "breakStmt", rule: 0, ...ast(data)})},
     {"name": "exp", "symbols": ["mutable", (lexer.has("assignment") ? {type: "assignment"} : assignment), "exp"], "postprocess": (data) => ({type: "exp", rule: 0, ...ast(data)})},
     {"name": "exp", "symbols": ["simpleExp"], "postprocess": (data) => ({type: "exp", rule: 1, ...ast(data)})},

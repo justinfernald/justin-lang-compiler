@@ -12,10 +12,12 @@ const scope = {
     scopes: [],
 };
 
-const scopePath = [scope];
+let scopePath = [scope];
 const currentScope = () => scopePath[scopePath.length - 1];
 
 const findSymbol = (id, scopes = scopePath) => scopes.length ? scopes[scopes.length - 1].symbols.find(symbol => symbol.name === id) || findSymbol(id, scopes.slice(0, -1)) : undefined;
+
+const findScopeFromSymbol = (id, scopes = scopePath) => scopes.length ? scopes[scopes.length - 1].symbols.find(symbol => symbol.name === id) ? scopes[scopes.length - 1] : findScopeFromSymbol(id, scopes.slice(0, -1)) : undefined;
 
 const findFunctionSymbol = (scopes = scopePath) => scopes.length ? scopes[scopes.length - 1].symbols.find(symbol => symbol.function) || findFunctionSymbol(scopes.slice(0, -1)) : undefined;
 
@@ -325,6 +327,7 @@ const semanticCheckDFS = (node) => {
     if (node.scopeHead) {
         const scope = {
             name: node.title,
+            nodeIndex: node.index,
             symbols: [],
             scopes: [],
         }
@@ -348,7 +351,7 @@ const semanticCheckDFS = (node) => {
 const codeGenDFS = (node, scope) => {
     const terminals = {
         "program": {
-            pre: (node) => `(module\n    (import "console" "log" (func $output (param i32)))`,
+            pre: (node) => `(module\n    (import "console" "log" (func $output (param i32)))\n    (import "prompt" "alert" (func $input (result i32)))`,
             post: (node) => `)`
         },
         "declList": {
@@ -360,7 +363,7 @@ const codeGenDFS = (node, scope) => {
             post: (node) => ``
         },
         "varDecl": {
-            pre: (node) => `(global $${indexer(node, 1, 0, 0).value} i32)`,
+            pre: (node) => `(global $${indexer(node, 1, 0, 0).value} (mut i32) (i32.const 0))`,
             post: (node) => ``
         },
         "scopedVarDecl": {
@@ -456,15 +459,15 @@ const codeGenDFS = (node, scope) => {
             order: [(node) => `(loop $loop_${node.index.join("")}`, 2, `(if (then`, 4, (node) => `br $loop_${node.index.join("")}`, `)))`]
         },
         "returnStmt": {
-            pre: (node) => `;; returning`,
-            post: (node) => `return`
+            pre: (node) => `(return`,
+            post: (node) => `)`
         },
         "breakStmt": {
             pre: (node) => ``,
             post: (node) => ``
         },
         "exp": {
-            pre: [(node) => `(local.set $${indexer(node, 0, 0).value}`, (node) => ``],
+            pre: [(node) => `(${findScopeFromSymbol(indexer(node, 0, 0).value).name === "global" ? "global" : "local"}.set $${indexer(node, 0, 0).value}`, (node) => ``],
             post: [(node) => `)`, (node) => ``]
         },
         "simpleExp": {
@@ -518,7 +521,7 @@ const codeGenDFS = (node, scope) => {
             post: (node) => ``
         },
         "factor": {
-            pre: [(node) => ``, (node) => `(local.get $${indexer(node, 0, 0).value})`],
+            pre: [(node) => ``, (node) => `(${findScopeFromSymbol(indexer(node, 0, 0).value).name === "global" ? "global" : "local"}.get $${indexer(node, 0, 0).value})`],
             post: [(node) => ``, (node) => ``]
         },
         "mutable": {
@@ -550,6 +553,28 @@ const codeGenDFS = (node, scope) => {
 
     const output = { type: node.type, pre: null, children: [], post: null };
 
+    if (node.scopeHead) {
+        const arrayEquals = (a, b) => {
+            if (a.length !== b.length)
+                return false;
+            for (let i = 0; i < a.length; i++) {
+                if (a[i] !== b[i])
+                    return false;
+            }
+            return true;
+        }
+
+        const scope = currentScope().scopes.find(s => arrayEquals(s.nodeIndex, node.index));
+        if (scope) {
+            scopePath.push(scope);
+            // console.log(node.title.toUpperCase() + "{ ")
+            // console.log(scopePath);
+            // console.log("} " + node.title.toUpperCase())
+        } else {
+            throw new Error("Scope not found");
+        }
+    }
+
     if (node.type in terminals) {
         const terminal = terminals[node.type];
         if (terminal.order) {
@@ -576,7 +601,14 @@ const codeGenDFS = (node, scope) => {
                         }
                     }
                 } else if (!orderRule) {
-                    orderOutput = ['', ''];
+                    const children = [];
+                    if (node.parts) {
+                        for (const part of node.parts) {
+                            const outputPart = codeGenDFS(part, scope);
+                            children.push(outputPart);
+                        }
+                    }
+                    orderOutput = ['', ...children, ''];
                 } else {
                     for (const part of orderRule) {
                         if (typeof part === "function") {
@@ -654,6 +686,7 @@ const codeGenDFS = (node, scope) => {
             }
 
             if (node.parts) {
+
                 for (const part of node.parts) {
                     const outputPart = codeGenDFS(part, scope);
                     output.children.push(outputPart);
@@ -684,6 +717,9 @@ const codeGenDFS = (node, scope) => {
         if (!node.value)
             throw new Error(`No value for node ${node.type}`);
     }
+
+    if (node.scopeHead)
+        scopePath.pop();
 
     return output;
 }
@@ -731,6 +767,7 @@ const addIndex = (node, index = [0]) => {
 }
 
 addIndex(scope);
+scopePath = [scope];
 
 const codeTree = codeGenDFS(ast, scope);
 const codeOutput = codeTreeToString(codeTree);
