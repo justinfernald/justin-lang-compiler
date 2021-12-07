@@ -114,8 +114,8 @@ function ast(part, scopeHead = false, title = "default") {
     const values = context.map(x => x.value);
     const startTypes = context.map(x => x.terms[0]);
     const endTypes = context.map(x => x.terms[x.terms.length - 1]);
-
-    return { scopeHead, title, values, parts: part};  
+    if (!scopeHead) title = undefined;
+    return { scopeHead, title, parts: part};  
     // return { scopeHead, title, values, context, parts: part};  
 }
 

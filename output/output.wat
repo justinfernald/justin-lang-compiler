@@ -21,19 +21,20 @@
             )
         )
         (loop $loop_00001052010
+            (if
             (
                 i32.lt_s
                 (local.get $i)
                 (local.get $high)
             )
-            (if (then
-            ;; start if
+            (then
+            (if
                 (
                     i32.lt_s
                     (local.get $a)
                     (local.get $x)
                 )
-                (if (then
+                (then
                 (local.set $x
                     (local.get $a)
                 )
@@ -65,6 +66,7 @@
             (local.get $low)
         )
         (loop $loop_000105210
+            (if
             (
                 i32.lt_s
                 (local.get $i)
@@ -73,7 +75,7 @@
                     (i32.const 1)
                 )
             )
-            (if (then
+            (then
             (local.set $k
                 (call $minloc
                     (local.get $a)
@@ -107,12 +109,13 @@
             (i32.const 0)
         )
         (loop $loop_00105200010
+            (if
             (
                 i32.lt_s
                 (local.get $i)
                 (i32.const 10)
             )
-            (if (then
+            (then
             (global.set $x
                 (call $input
                 )
@@ -134,12 +137,13 @@
             (i32.const 0)
         )
         (loop $loop_00105210
+            (if
             (
                 i32.lt_s
                 (local.get $i)
                 (i32.const 10)
             )
-            (if (then
+            (then
             (call $output
                 (global.get $x)
             )

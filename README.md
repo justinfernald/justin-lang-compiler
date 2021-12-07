@@ -10,6 +10,8 @@ Be on latest version of NPM
 
 `npm install`
 
+`npm install -g wat2wasm`
+
 `npm run build`
 
 `node src/index.js [file name]`

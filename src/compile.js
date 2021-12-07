@@ -1,6 +1,17 @@
 const fs = require("fs");
 const ast = require("../output/ast.json");
 
+const addASTIndex = (node, index = [0]) => {
+    node.index = index;
+    if (node.parts) {
+        for (let i = 0; i < node.parts.length; i++) {
+            addASTIndex(node.parts[i], [...index, i]);
+        }
+    }
+}
+
+addASTIndex(ast);
+
 console.full = (...args) => console.dir(...args, { depth: null });
 
 const scope = {
@@ -451,12 +462,12 @@ const codeGenDFS = (node, scope) => {
         },
         "selectStmt": {
             order: {
-                0: [(node) => `;; start if`, 2, `(if (then`, 4, `))`],
-                1: [(node) => `;; start if`, 2, `(if (then`, 4, `)(else`, 6, '))']
+                0: [`(if`, 2, `(then`, 4, `))`],
+                1: [`(if`, 2, `(then`, 4, `)(else`, 6, '))']
             }
         },
         "iterStmt": {
-            order: [(node) => `(loop $loop_${node.index.join("")}`, 2, `(if (then`, 4, (node) => `br $loop_${node.index.join("")}`, `)))`]
+            order: [(node) => `(loop $loop_${node.index.join("")}`, `(if`, 2, `(then`, 4, (node) => `br $loop_${node.index.join("")}`, `)))`]
         },
         "returnStmt": {
             pre: (node) => `(return`,
