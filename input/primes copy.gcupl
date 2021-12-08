@@ -1,0 +1,37 @@
+# int hello[3];
+# int bruh;
+
+int fib(int n) {
+    #int nums[10];
+    #nums[0] = 10;
+    #if (nums[0] == 0) {
+    #    return -1;
+    #}
+    if (n == 0) {
+        return 0;
+    }
+    if (n == 1) {
+        return 1;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
+
+void listNums() {
+    int n = input();
+    int i = 0;
+    while (i < n) {
+        output(i);
+        i = i + 1;
+    }
+}
+
+
+int main() {
+    int n = input();
+    int val = fib(n);
+    output(n);
+    output(val);
+    listNums();
+    return val;
+}
+

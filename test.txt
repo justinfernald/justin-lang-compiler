@@ -1,0 +1,20 @@
+we can fix the return not being at the end by having the function have a local decl for an output with some unique name then in the function it is one big block and when you return you set the value of the output variable then break out of the block and return the value of the output variable
+
+example:
+
+function fib(n) {
+    int output_val;
+    function_block {
+        if (n == 0) {
+            output_val = 0;
+            br function_block;
+        }
+        if (n == 1) {
+            output_val = 1;
+            br function_block;
+        }
+        output_val = fib(n-1) + fib(n-2);
+    }
+
+    return output_val;
+}

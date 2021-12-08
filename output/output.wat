@@ -1,96 +1,76 @@
 (module
     (import "console" "log" (func $output (param i32)))
-    (import "prompt" "alert" (func $input (result i32)))
-    (global $x (mut i32) (i32.const 0))
-    (func $minloc
-        (param $a i32)
-        (param $low i32)
-        (param $high i32)
+    (import "window" "prompt" (func $input (result i32)))
+    (memory (import "js" "mem") 1)
+    (global $mem_pointer (mut i32) (i32.const 0))
+    (func $fib
+        (param $n i32)
         (result i32)
-        (local $i i32)(local $x i32)(local $k i32)
-        (local.set $k
-            (local.get $low)
-        )
-        (local.set $x
-            (local.get $a)
-        )
-        (local.set $i
-            (i32.add
-                (local.get $low)
+        (local $function_output i32)
+        (block $function_block
+        (if
+            (
+                i32.eq
+                (local.get $n)
+                (i32.const 0)
+            )
+            (then
+            (local.set $function_output 
+                (i32.const 0)
+            )(br $function_block)
+        ))
+        (if
+            (
+                i32.eq
+                (local.get $n)
                 (i32.const 1)
             )
-        )
-        (loop $loop_00001052010
-            (if
-            (
-                i32.lt_s
-                (local.get $i)
-                (local.get $high)
-            )
             (then
-            (if
-                (
-                    i32.lt_s
-                    (local.get $a)
-                    (local.get $x)
+            (local.set $function_output 
+                (i32.const 1)
+            )(br $function_block)
+        ))
+        (local.set $function_output 
+            (i32.add
+                (call $fib
+                    (i32.sub
+                        (local.get $n)
+                        (i32.const 1)
+                    )
                 )
-                (then
-                (local.set $x
-                    (local.get $a)
-                )
-                (local.set $k
-                    (local.get $i)
-                )
-                )(else
-            ))
-            (local.set $i
-                (i32.add
-                    (local.get $i)
-                    (i32.const 1)
+                (call $fib
+                    (i32.sub
+                        (local.get $n)
+                        (i32.const 2)
+                    )
                 )
             )
-            br $loop_00001052010
-        )))
-        (return
-            (local.get $k)
+        )(br $function_block)
         )
-    )(export "minloc" (func $minloc))
+        (return (local.get $function_output))
+    )(export "fib" (func $fib))
 
-    (func $sort
-        (param $a i32)
-        (param $low i32)
-        (param $high i32)
+    (func $listNums
         
-        (local $i i32)(local $k i32)(local $t i32)
-        (local.set $i
-            (local.get $low)
+        (local $function_output i32)(local $n i32)(local $i i32)
+        (block $function_block
+        (local.set $n
+            (call $input
+            )
         )
-        (loop $loop_000105210
+        (local.set $i
+            (i32.const 0)
+        )
+        (block $block_000105210 (loop $loop_000105210
             (if
             (
                 i32.lt_s
                 (local.get $i)
-                (i32.sub
-                    (local.get $high)
-                    (i32.const 1)
-                )
+                (local.get $n)
             )
             (then
-            (local.set $k
-                (call $minloc
-                    (local.get $a)
-                    (local.get $i)
-                    (local.get $high)
-                )
-            )
-            (local.set $t
-                (local.get $a)
-            )
-            (local.set $a
-                (local.get $a)
-            )
-            (local.set $a
-                (local.get $t)
+            (call $output
+                (local.get $i)
             )
             (local.set $i
                 (i32.add
@@ -99,16 +79,19 @@
                 )
             )
             br $loop_000105210
-        )))
-    )(export "sort" (func $sort))
+        ))))
+        )
+        
+    )(export "listNums" (func $listNums))
 
     (func $main
-        
-        (local $i i32)
+        (result i32)
+        (local $function_output i32)(local $i i32)(local $n i32)(local $val i32)
+        (block $function_block
         (local.set $i
             (i32.const 0)
         )
-        (loop $loop_00105200010
+        (block $block_00105200000010 (loop $loop_00105200000010
             (if
             (
                 i32.lt_s
@@ -116,36 +99,28 @@
                 (i32.const 10)
             )
             (then
-            (global.set $x
-                (call $input
-                )
-            )
-            (local.set $i
-                (i32.add
+            (block $block_001052000000104020010 (loop $loop_001052000000104020010
+                (if
+                (
+                    i32.lt_s
                     (local.get $i)
-                    (i32.const 1)
+                    (i32.const 10)
                 )
-            )
-            br $loop_00105200010
-        )))
-        (call $sort
-            (global.get $x)
-            (i32.const 0)
-            (i32.const 10)
-        )
-        (local.set $i
-            (i32.const 0)
-        )
-        (loop $loop_00105210
-            (if
-            (
-                i32.lt_s
-                (local.get $i)
-                (i32.const 10)
-            )
-            (then
+                (then
+                (call $output
+                    (i32.const 2)
+                )
+                (local.set $i
+                    (i32.add
+                        (local.get $i)
+                        (i32.const 1)
+                    )
+                )
+                (br 0)
+                br $loop_001052000000104020010
+            ))))
             (call $output
-                (global.get $x)
+                (i32.const 69)
             )
             (local.set $i
                 (i32.add
@@ -153,8 +128,30 @@
                     (i32.const 1)
                 )
             )
-            br $loop_00105210
-        )))
+            br $loop_00105200000010
+        ))))
+        (local.set $n
+            (call $input
+            )
+        )
+        (local.set $val
+            (call $fib
+                (local.get $n)
+            )
+        )
+        (call $output
+            (local.get $n)
+        )
+        (call $output
+            (local.get $val)
+        )
+        (call $listNums
+        )
+        (local.set $function_output 
+            (local.get $val)
+        )(br $function_block)
+        )
+        (return (local.get $function_output))
     )(export "main" (func $main))
 
 )

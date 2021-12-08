@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WASM Runner</title>
+        <script src="main.js"></script>
+        <style>
+            #content {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 30px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .button-wrap {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #output {
+                flex: 1;
+                border: 1px solid #ccc;
+                min-height: 50px;
+                overflow: auto;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="content">
+            <div class="button-wrap"><button id="run-button">RUN</button></div>
+            <pre id="output"></pre>
+        </div>
+    </body>
+</html>

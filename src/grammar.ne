@@ -45,6 +45,7 @@ const lexer = moo.compile({
     // string: /"[^"]*"/,
     comment: { // find all comments and removes them
         match: /#[^\n]*/,
+        // value: s => s.substring(1)
         value: s => s.substring(1)
     },
     number_literal: { // finds all number tokens
@@ -59,7 +60,7 @@ const lexer = moo.compile({
 // custom edited lexer from moo for next such that it ignores all white space
 lexer.next = (next => () => {
     let token;
-    while ((token = next.call(lexer)) && token.type === "ws") {}
+    while ((token = next.call(lexer)) && (token.type === "ws" || token.type === "comment")) {}
     return token;
 })(lexer.next);
 
@@ -227,6 +228,7 @@ stmt -> expStmt {% (data) => ({type: "stmt", rule: 0, ...ast(data)}) %}
     | selectStmt {% (data) => ({type: "stmt", rule: 2, ...ast(data)}) %}
     | iterStmt {% (data) => ({type: "stmt", rule: 3, ...ast(data)}) %}
     | returnStmt {% (data) => ({type: "stmt", rule: 4, ...ast(data)}) %}
+    | breakStmt {% (data) => ({type: "stmt", rule: 5, ...ast(data)}) %}
 
 # expression statement
 expStmt -> exp %scolon {% (data) => ({type: "expStmt", rule: 0, ...ast(data)}) %}

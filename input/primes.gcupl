@@ -1,0 +1,33 @@
+int fib(int n) {
+    if (n == 0) {
+        return 0;
+    }
+    if (n == 1) {
+        return 1;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
+
+void listNums() {
+    int n = input();
+    int i = 0;
+    while (i < n) {
+        output(i);
+        i = i + 1;
+    }
+}
+
+
+int main() {
+    int i = 0;
+    int n;
+    int val;
+    n = input();
+    val = fib(n);
+    
+    output(n);
+    output(val);
+    listNums();
+    return val;
+}
+

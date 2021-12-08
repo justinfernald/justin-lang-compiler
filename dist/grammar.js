@@ -49,6 +49,7 @@ const lexer = moo.compile({
     // string: /"[^"]*"/,
     comment: { // find all comments and removes them
         match: /#[^\n]*/,
+        // value: s => s.substring(1)
         value: s => s.substring(1)
     },
     number_literal: { // finds all number tokens
@@ -63,7 +64,7 @@ const lexer = moo.compile({
 // custom edited lexer from moo for next such that it ignores all white space
 lexer.next = (next => () => {
     let token;
-    while ((token = next.call(lexer)) && token.type === "ws") {}
+    while ((token = next.call(lexer)) && (token.type === "ws" || token.type === "comment")) {}
     return token;
 })(lexer.next);
 
@@ -195,6 +196,7 @@ var grammar = {
     {"name": "stmt", "symbols": ["selectStmt"], "postprocess": (data) => ({type: "stmt", rule: 2, ...ast(data)})},
     {"name": "stmt", "symbols": ["iterStmt"], "postprocess": (data) => ({type: "stmt", rule: 3, ...ast(data)})},
     {"name": "stmt", "symbols": ["returnStmt"], "postprocess": (data) => ({type: "stmt", rule: 4, ...ast(data)})},
+    {"name": "stmt", "symbols": ["breakStmt"], "postprocess": (data) => ({type: "stmt", rule: 5, ...ast(data)})},
     {"name": "expStmt", "symbols": ["exp", (lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "expStmt", rule: 0, ...ast(data)})},
     {"name": "expStmt", "symbols": [(lexer.has("scolon") ? {type: "scolon"} : scolon)], "postprocess": (data) => ({type: "expStmt", rule: 1, ...ast(data)})},
     {"name": "compoundStmt", "symbols": [(lexer.has("lbrace") ? {type: "lbrace"} : lbrace), "localDecls", "stmtList", (lexer.has("rbrace") ? {type: "rbrace"} : rbrace)], "postprocess": (data) => ({type: "compoundStmt", rule: 0, ...ast(data, true, "compound")})},

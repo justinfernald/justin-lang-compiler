@@ -26,6 +26,8 @@ const scope = {
 let scopePath = [scope];
 const currentScope = () => scopePath[scopePath.length - 1];
 
+let currentMemoryLocation = 0;
+
 const findSymbol = (id, scopes = scopePath) => scopes.length ? scopes[scopes.length - 1].symbols.find(symbol => symbol.name === id) || findSymbol(id, scopes.slice(0, -1)) : undefined;
 
 const findScopeFromSymbol = (id, scopes = scopePath) => scopes.length ? scopes[scopes.length - 1].symbols.find(symbol => symbol.name === id) ? scopes[scopes.length - 1] : findScopeFromSymbol(id, scopes.slice(0, -1)) : undefined;
@@ -52,7 +54,7 @@ const getContext = (node) => {
     return "\n" + JSON.stringify({
         start: startTerminal.start || { line: startTerminal.line, col: startTerminal.col },
         end: endTerminal.end || { line: endTerminal.line, col: endTerminal.col },
-        preview: node.value || node.values.join(" ")
+        preview: node.value || node.values?.join(" ") || node
     }, null, 4)
 }
 
@@ -188,8 +190,13 @@ const checkType = (node) => {
                 const type = checkType(indexer(node, 0));
                 return type;
             } else if (node.rule === 1) {
-                const type = checkType(indexer(node, 0));
-                return type;
+                const symbol = findSymbol(indexer(node, 0).value);
+
+                const typeIndex = checkType(indexer(node, 2));
+                if (typeIndex !== "int")
+                    throw new Error(`Type mismatch: ${typeIndex} | Should be int` + getContext(node));
+
+                return symbol.type;
             }
         }
 
@@ -211,13 +218,13 @@ const checkType = (node) => {
             if (!symbol) {
                 throw new Error(`Symbol ${node.value} not found` + getContext(node));
             }
-            return symbol.type;
+            return symbol.type + (symbol.array ? "[]" : "");
         }
 
         case "call": {
             const symbol = findSymbol(indexer(node, 0).value);
             if (!symbol) {
-                throw new Error(`Symbol ${node.value} not found` + getContext(node));
+                throw new Error(`Symbol ${indexer(node, 0).value} not found` + getContext(node));
             }
             if (!symbol.function) {
                 throw new Error(`Type mismatch: ${symbol} | Should be function` + getContext(node));
@@ -314,7 +321,12 @@ const semanticCheckDFS = (node) => {
 
     switch (node.type) {
         case "varDecl": {
-            currentScope().symbols.push({ type: indexer(node, 0, 0).value, name: indexer(node, 1, 0, 0).value })
+            if (indexer(node, 1, 0).rule === 0) {
+                currentScope().symbols.push({ type: indexer(node, 0, 0).value, name: indexer(node, 1, 0, 0).value })
+            } else {
+                const size = +indexer(node, 1, 0, 2).value;
+                currentScope().symbols.push({ type: indexer(node, 0, 0).value, name: indexer(node, 1, 0, 0).value, array: true, size, length: 4 * size })
+            }
             break;
         }
         case "funcDecl": {
@@ -324,7 +336,11 @@ const semanticCheckDFS = (node) => {
             break;
         }
         case "scopedVarDecl": {
-            currentScope().symbols.push({ type: indexer(node, 0, 0).value, name: indexer(node, 1, 0, 0).value })
+            if (indexer(node, 1, 0).rule === 0) {
+                currentScope().symbols.push({ type: indexer(node, 0, 0).value, name: indexer(node, 1, 0, 0).value })
+            } else {
+                currentScope().symbols.push({ type: indexer(node, 0, 0).value, name: indexer(node, 1, 0, 0).value, array: true, size: +indexer(node, 1, 0, 2).value })
+            }
             break;
         }
         case "parmTypeList": {
@@ -362,7 +378,7 @@ const semanticCheckDFS = (node) => {
 const codeGenDFS = (node, scope) => {
     const terminals = {
         "program": {
-            pre: (node) => `(module\n    (import "console" "log" (func $output (param i32)))\n    (import "prompt" "alert" (func $input (result i32)))`,
+            pre: (node) => `(module\n    (import "console" "log" (func $output (param i32)))\n    (import "window" "prompt" (func $input (result i32)))\n    (memory (import "js" "mem") 1)\n    (global $mem_pointer (mut i32) (i32.const 0))`,
             post: (node) => `)`
         },
         "declList": {
@@ -374,7 +390,7 @@ const codeGenDFS = (node, scope) => {
             post: (node) => ``
         },
         "varDecl": {
-            pre: (node) => `(global $${indexer(node, 1, 0, 0).value} (mut i32) (i32.const 0))`,
+            pre: (node) => findSymbol(indexer(node, 1, 0, 0).value).array ? `` : `(global $${indexer(node, 1, 0, 0).value} (mut i32) (i32.const 0))`,
             post: (node) => ``
         },
         "scopedVarDecl": {
@@ -386,8 +402,8 @@ const codeGenDFS = (node, scope) => {
             post: (node) => ``
         },
         "varDeclInit": {
-            pre: (node) => ``,
-            post: (node) => ``
+            pre: [(node) => ``, (node) => `(local.set $${indexer(node, 0, 0).value}`],
+            post: [(node) => ``, (node) => `)`]
         },
         "varDeclId": {
             pre: (node) => ``,
@@ -411,13 +427,16 @@ const codeGenDFS = (node, scope) => {
                 }
 
                 const localDecls = getLocalDecls(findSymbol(indexer(node, 1).value).scope, true);
-                let output = "";
+                let output = "(local $function_output i32)";
                 for (const decl of localDecls) {
                     output += `(local $${decl.name} i32)`
                 }
                 return output;
             },
+                '(block $function_block',
                 5,
+                ')',
+            (node) => indexer(node, 0, 0).value === "void" ? '' : '(return (local.get $function_output))',
             `)(export "${indexer(node, 1).value}" (func $${indexer(node, 1).value}))\n`]
         },
         "parms": {
@@ -467,14 +486,14 @@ const codeGenDFS = (node, scope) => {
             }
         },
         "iterStmt": {
-            order: [(node) => `(loop $loop_${node.index.join("")}`, `(if`, 2, `(then`, 4, (node) => `br $loop_${node.index.join("")}`, `)))`]
+            order: [(node) => `(block $block_${node.index.join("")} (loop $loop_${node.index.join("")}`, `(if`, 2, `(then`, 4, (node) => `br $loop_${node.index.join("")}`, `))))`]
         },
         "returnStmt": {
-            pre: (node) => `(return`,
-            post: (node) => `)`
+            pre: (node) => `(local.set $function_output `,
+            post: (node) => `)(br $function_block)`
         },
         "breakStmt": {
-            pre: (node) => ``,
+            pre: (node) => `(br 0)`,
             post: (node) => ``
         },
         "exp": {
@@ -776,7 +795,9 @@ const addIndex = (node, index = [0]) => {
         }
     }
 }
-
+let scopeCopy = JSON.parse(JSON.stringify(scope));
+scopeCopy.symbols = scopeCopy.symbols.map(({ scope, ...x }) => x)
+console.full(scopeCopy);
 addIndex(scope);
 scopePath = [scope];
 

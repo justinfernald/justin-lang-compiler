@@ -6,15 +6,17 @@
         "json-to-pretty-yaml": "^1.2.2",
         "moo": "^0.5.1",
         "nearley": "^2.20.1",
+        "serve": "^13.0.2",
         "yaml": "2.0.0-9"
     },
     "scripts": {
         "build": "nearleyc src/grammar.ne -o dist/grammar.js",
-        "start": "node src/index.js input/testProg.gcupl",
+        "start": "node src/index.js input/primes.gcupl",
         "go": "npm run build & npm run start",
-        "compile": "node src/compile.js",
+        "compile": "node src/compile.js & npm run convert",
         "full": "npm run go & npm run compile",
-        "convert": "wat2wasm output/output.wat -o output/output.wasm"
+        "convert": "wat2wasm output/output.wat -o runner/output.wasm",
+        "serve": "serve runner"
     },
     "author": "Justin Fernald",
     "license": "ISC"
