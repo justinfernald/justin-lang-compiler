@@ -9,8 +9,35 @@
     (func $fib
         (param $n i32)
         (result i32)
-        (local $function_output i32) 
+        (local $function_output i32)(local $nums i32)
         (block $function_block
+        (i32.store (global.get $hello) (i32.const 420))
+        (i32.store (i32.add (global.get $hello) (i32.const 4)) (i32.const 57))
+        (call $output
+            (i32.load (global.get $hello))
+        )
+        (call $output
+            (i32.load (i32.add (global.get $hello) (i32.const 4)))
+        )
+
+        (local.set $nums
+            (i32.const 0)
+            (i32.const 10)
+        )
+        (if
+            (
+                i32.eq
+                (local.get $nums)
+                    (i32.const 0)
+                (i32.const 0)
+            )
+            (then
+            (local.set $function_output 
+                (i32.sub (i32.const 0)
+                    (i32.const 1)
+                )
+            )(br $function_block)
+        ))
         (if
             (
                 i32.eq
@@ -50,13 +77,12 @@
             )
         )(br $function_block)
         )
-        (global.set $mem_pointer (i32.sub (global.get $mem_pointer) (i32.const 0)))
         (return (local.get $function_output))
     )(export "fib" (func $fib))
 
     (func $listNums
         
-        (local $function_output i32)(local $n i32)(local $i i32) 
+        (local $function_output i32)(local $n i32)(local $i i32)
         (block $function_block
         (local.set $n
             (call $input
@@ -65,7 +91,7 @@
         (local.set $i
             (i32.const 0)
         )
-        (block $block_000105110 (loop $loop_000105110
+        (block $block_000105210 (loop $loop_000105210
             (if
             (
                 i32.lt_s
@@ -82,32 +108,16 @@
                     (i32.const 1)
                 )
             )
-            br $loop_000105110
+            br $loop_000105210
         ))))
         )
-        (global.set $mem_pointer (i32.sub (global.get $mem_pointer) (i32.const 0)))
         
     )(export "listNums" (func $listNums))
 
     (func $main
         (result i32)
-        (local $function_output i32)(local $nums i32)(local $n i32)(local $val i32) (local.set $nums (global.get $mem_pointer))(global.set $mem_pointer (i32.add (global.get $mem_pointer) (i32.const 40)))
+        (local $function_output i32)(local $n i32)(local $val i32)
         (block $function_block
-        (i32.store (i32.add (local.get $nums) (i32.mul (i32.const 4) (i32.const 0)))
-            (i32.const 10)
-        )
-        (i32.store (i32.add (local.get $nums) (i32.mul (i32.const 4) (i32.const 1)))
-            (i32.const 20)
-        )
-        (i32.store (i32.add (local.get $nums) (i32.mul (i32.const 4) (i32.const 2)))
-            (i32.const 30)
-        )
-        (i32.store (i32.add (local.get $nums) (i32.mul (i32.const 4) (i32.const 3)))
-            (i32.const 45)
-        )
-        (call $output
-            (i32.load (i32.add (local.get $nums) (i32.mul (i32.const 4) (i32.const 2))))
-        )
         (local.set $n
             (call $input
             )
@@ -129,7 +139,6 @@
             (local.get $val)
         )(br $function_block)
         )
-        (global.set $mem_pointer (i32.sub (global.get $mem_pointer) (i32.const 40)))
         (return (local.get $function_output))
     )(export "main" (func $main))
 

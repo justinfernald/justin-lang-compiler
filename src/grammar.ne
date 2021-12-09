@@ -229,17 +229,18 @@ stmt -> expStmt {% (data) => ({type: "stmt", rule: 0, ...ast(data)}) %}
     | iterStmt {% (data) => ({type: "stmt", rule: 3, ...ast(data)}) %}
     | returnStmt {% (data) => ({type: "stmt", rule: 4, ...ast(data)}) %}
     | breakStmt {% (data) => ({type: "stmt", rule: 5, ...ast(data)}) %}
+    | scopedVarDecl {% (data) => ({type: "stmt", rule: 6, ...ast(data)}) %}
 
 # expression statement
 expStmt -> exp %scolon {% (data) => ({type: "expStmt", rule: 0, ...ast(data)}) %}
     | %scolon {% (data) => ({type: "expStmt", rule: 1, ...ast(data)}) %}
 
 # compound statement
-compoundStmt -> %lbrace localDecls stmtList %rbrace {% (data) => ({type: "compoundStmt", rule: 0, ...ast(data, true, "compound")}) %}
+compoundStmt -> %lbrace stmtList %rbrace {% (data) => ({type: "compoundStmt", rule: 0, ...ast(data, true, "compound")}) %}
 
-# local declarations
-localDecls -> localDecls scopedVarDecl {% (data) => ({type: "localDecls", rule: 0, ...ast(data)}) %}
-    | null {% (data) => ({type: "localDecls", rule: 1, ...ast(data)}) %}
+# # local declarations
+# localDecls -> localDecls scopedVarDecl {% (data) => ({type: "localDecls", rule: 0, ...ast(data)}) %}
+#     | null {% (data) => ({type: "localDecls", rule: 1, ...ast(data)}) %}
 
 # statement list
 stmtList -> stmtList stmt {% (data) => ({type: "stmtList", rule: 0, ...ast(data)}) %}

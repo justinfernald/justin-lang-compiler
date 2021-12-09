@@ -339,7 +339,8 @@ const semanticCheckDFS = (node) => {
             if (indexer(node, 1, 0).rule === 0) {
                 currentScope().symbols.push({ type: indexer(node, 0, 0).value, name: indexer(node, 1, 0, 0).value })
             } else {
-                currentScope().symbols.push({ type: indexer(node, 0, 0).value, name: indexer(node, 1, 0, 0).value, array: true, size: +indexer(node, 1, 0, 2).value })
+                const size = +indexer(node, 1, 0, 2).value;
+                currentScope().symbols.push({ type: indexer(node, 0, 0).value, name: indexer(node, 1, 0, 0).value, array: true, size, length: 4 * size })
             }
             break;
         }
@@ -375,10 +376,28 @@ const semanticCheckDFS = (node) => {
         scopePath.pop();
 }
 
+let memPointer = 0;
+
+const getLocalDecls = (scope, skip = false) => {
+    const output = skip ? [] : scope.symbols.map(symbol => ({ type: symbol.type, name: symbol.name, array: symbol.array, size: symbol.size, length: symbol.length/* + "_" + scope.index.join('') */ }));
+    for (const child of scope.scopes) {
+        output.push(...getLocalDecls(child));
+    }
+    return output;
+}
+
 const codeGenDFS = (node, scope) => {
     const terminals = {
         "program": {
-            pre: (node) => `(module\n    (import "console" "log" (func $output (param i32)))\n    (import "window" "prompt" (func $input (result i32)))\n    (memory (import "js" "mem") 1)\n    (global $mem_pointer (mut i32) (i32.const 0))`,
+            pre: (node) => {
+                const globalArrays = scope.symbols.filter(x => x.array);
+                let globalArrayOutput = "";
+                for (const globalArray of globalArrays) {
+                    globalArrayOutput += "\n    " + `(global $${globalArray.name} (mut i32) (i32.const ${memPointer}))`
+                    memPointer += globalArray.length;
+                }
+                return `(module\n    (import "console" "log" (func $output (param i32)))\n    (import "window" "prompt" (func $input (result i32)))\n    (memory (import "js" "mem") 1)\n    (global $mem_pointer (mut i32) (i32.const ${memPointer}))${globalArrayOutput}`
+            },
             post: (node) => `)`
         },
         "declList": {
@@ -418,24 +437,33 @@ const codeGenDFS = (node, scope) => {
                 3,
             (node) => indexer(node, 0, 0).value === "void" ? '' : `(result i32)`,
             (node) => {
-                const getLocalDecls = (scope, skip = false) => {
-                    const output = skip ? [] : scope.symbols.map(symbol => ({ type: symbol.type, name: symbol.name/* + "_" + scope.index.join('') */ }));
-                    for (const child of scope.scopes) {
-                        output.push(...getLocalDecls(child));
+                const localDecls = getLocalDecls(findSymbol(indexer(node, 1).value).scope, true);
+                let localDeclOutput = "(local $function_output i32)";
+                let localDeclArrayOutput = "";
+                for (const decl of localDecls) {
+                    localDeclOutput += `(local $${decl.name} i32)`
+                    if (decl.array) {
+                        localDeclArrayOutput += `(local.set $${decl.name} (global.get $mem_pointer))(global.set $mem_pointer (i32.add (global.get $mem_pointer) (i32.const ${decl.length})))`;
                     }
-                    return output;
                 }
 
-                const localDecls = getLocalDecls(findSymbol(indexer(node, 1).value).scope, true);
-                let output = "(local $function_output i32)";
-                for (const decl of localDecls) {
-                    output += `(local $${decl.name} i32)`
-                }
-                return output;
+
+                return localDeclOutput + " " + localDeclArrayOutput;
             },
+
                 '(block $function_block',
                 5,
                 ')',
+            (node) => {
+                const localDecls = getLocalDecls(findSymbol(indexer(node, 1).value).scope, true);
+                let totalLength = 0;
+                for (const decl of localDecls) {
+                    if (decl.array) {
+                        totalLength += decl.length;
+                    }
+                }
+                return `(global.set $mem_pointer (i32.sub (global.get $mem_pointer) (i32.const ${totalLength})))`
+            },
             (node) => indexer(node, 0, 0).value === "void" ? '' : '(return (local.get $function_output))',
             `)(export "${indexer(node, 1).value}" (func $${indexer(node, 1).value}))\n`]
         },
@@ -497,7 +525,19 @@ const codeGenDFS = (node, scope) => {
             post: (node) => ``
         },
         "exp": {
-            pre: [(node) => `(${findScopeFromSymbol(indexer(node, 0, 0).value).name === "global" ? "global" : "local"}.set $${indexer(node, 0, 0).value}`, (node) => ``],
+            pre: [(node) => {
+                const symbol = findSymbol(indexer(node, 0, 0).value);
+                console.log(symbol);
+                const scope = findScopeFromSymbol(symbol.name);
+
+
+                if (symbol.array) {
+                    const indexValue = codeTreeToString(codeGenDFS(indexer(node, 0, 2)), 0, false);
+                    return `(i32.store (i32.add (${scope.name === "global" ? "global" : "local"}.get $${symbol.name}) (i32.mul (i32.const 4) ${indexValue}))`;
+                }
+
+                return `(${scope.name === "global" ? "global" : "local"}.set $${symbol.name}`
+            }, (node) => ``],
             post: [(node) => `)`, (node) => ``]
         },
         "simpleExp": {
@@ -551,12 +591,21 @@ const codeGenDFS = (node, scope) => {
             post: (node) => ``
         },
         "factor": {
-            pre: [(node) => ``, (node) => `(${findScopeFromSymbol(indexer(node, 0, 0).value).name === "global" ? "global" : "local"}.get $${indexer(node, 0, 0).value})`],
+            pre: [(node) => ``, (node) => {
+                const symbol = findSymbol(indexer(node, 0, 0).value);
+                const scope = findScopeFromSymbol(symbol.name);
+                if (symbol.array) {
+                    const indexValue = codeTreeToString(codeGenDFS(indexer(node, 0, 2)), 0, false);
+                    return `(i32.load (i32.add (${scope.name === "global" ? "global" : "local"}.get $${symbol.name}) (i32.mul (i32.const 4) ${indexValue})))`;
+                }
+                return `(${scope.name === "global" ? "global" : "local"}.get $${symbol.name})`
+            }],
             post: [(node) => ``, (node) => ``]
         },
         "mutable": {
-            pre: (node) => ``,
-            post: (node) => ``
+            order: ['', '']
+            // pre: (node) => ``,
+            // post: (node) => ``
         },
         "immutable": {
             pre: (node) => ``,
@@ -760,27 +809,30 @@ const reduceCodeTree = (tree) => {
     return tree
 }
 
-const codeTreeToString = (node, level = 0) => {
+const codeTreeToString = (node, level = 0, spacing = true) => {
     node = reduceCodeTree(node);
+    if (Array.isArray(node))
+        node = node.length === 1 ? node[0] : { pre: '', children: node, post: '' };
 
     let output = "";
     let spaces = "";
-    for (let i = 0; i < level; i++)
-        spaces += "    ";
+    if (spacing)
+        for (let i = 0; i < level; i++)
+            spaces += "    ";
 
     if (node.pre)
-        output += spaces + node.pre + "\n";
+        output += spaces + node.pre + (spacing ? "\n" : "");
 
     if (node.children) {
         for (const child of node.children) {
             output += codeTreeToString(child, level + 1);
         }
     } else {
-        output += spaces + node + "\n";
+        output += spaces + node + (spacing ? "\n" : "");
     }
 
     if (node.post)
-        output += spaces + node.post + "\n";
+        output += spaces + node.post + (spacing ? "\n" : "");
 
     return output;
 }
@@ -797,7 +849,7 @@ const addIndex = (node, index = [0]) => {
 }
 let scopeCopy = JSON.parse(JSON.stringify(scope));
 scopeCopy.symbols = scopeCopy.symbols.map(({ scope, ...x }) => x)
-console.full(scopeCopy);
+// console.full(scopeCopy);
 addIndex(scope);
 scopePath = [scope];
 
