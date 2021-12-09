@@ -3935,11 +3935,11 @@
                                          "type": "identifier",
                                          "value": "nums",
                                          "start": {
-                                          "line": 29,
+                                          "line": 28,
                                           "col": 4
                                          },
                                          "end": {
-                                          "line": 29,
+                                          "line": 28,
                                           "col": 8
                                          }
                                         },
@@ -3947,9 +3947,9 @@
                                          "type": "lbracket",
                                          "value": "[",
                                          "text": "[",
-                                         "offset": 384,
+                                         "offset": 378,
                                          "lineBreaks": 0,
-                                         "line": 29,
+                                         "line": 28,
                                          "col": 9
                                         },
                                         {
@@ -4011,11 +4011,11 @@
                                                                "type": "number_literal",
                                                                "value": "0",
                                                                "start": {
-                                                                "line": 29,
+                                                                "line": 28,
                                                                 "col": 9
                                                                },
                                                                "end": {
-                                                                "line": 29,
+                                                                "line": 28,
                                                                 "col": 10
                                                                }
                                                               }
@@ -4045,9 +4045,9 @@
                                          "type": "rbracket",
                                          "value": "]",
                                          "text": "]",
-                                         "offset": 386,
+                                         "offset": 380,
                                          "lineBreaks": 0,
-                                         "line": 29,
+                                         "line": 28,
                                          "col": 11
                                         }
                                        ]
@@ -4056,9 +4056,9 @@
                                        "type": "assignment",
                                        "value": "=",
                                        "text": "=",
-                                       "offset": 388,
+                                       "offset": 382,
                                        "lineBreaks": 0,
-                                       "line": 29,
+                                       "line": 28,
                                        "col": 13
                                       },
                                       {
@@ -4120,11 +4120,11 @@
                                                              "type": "number_literal",
                                                              "value": "10",
                                                              "start": {
-                                                              "line": 29,
+                                                              "line": 28,
                                                               "col": 14
                                                              },
                                                              "end": {
-                                                              "line": 29,
+                                                              "line": 28,
                                                               "col": 16
                                                              }
                                                             }
@@ -4156,9 +4156,9 @@
                                      "type": "scolon",
                                      "value": ";",
                                      "text": ";",
-                                     "offset": 392,
+                                     "offset": 386,
                                      "lineBreaks": 0,
-                                     "line": 29,
+                                     "line": 28,
                                      "col": 17
                                     }
                                    ]
@@ -4191,11 +4191,11 @@
                                        "type": "identifier",
                                        "value": "nums",
                                        "start": {
-                                        "line": 30,
+                                        "line": 29,
                                         "col": 4
                                        },
                                        "end": {
-                                        "line": 30,
+                                        "line": 29,
                                         "col": 8
                                        }
                                       },
@@ -4203,9 +4203,9 @@
                                        "type": "lbracket",
                                        "value": "[",
                                        "text": "[",
-                                       "offset": 403,
+                                       "offset": 397,
                                        "lineBreaks": 0,
-                                       "line": 30,
+                                       "line": 29,
                                        "col": 9
                                       },
                                       {
@@ -4267,11 +4267,11 @@
                                                              "type": "number_literal",
                                                              "value": "1",
                                                              "start": {
-                                                              "line": 30,
+                                                              "line": 29,
                                                               "col": 9
                                                              },
                                                              "end": {
-                                                              "line": 30,
+                                                              "line": 29,
                                                               "col": 10
                                                              }
                                                             }
@@ -4301,9 +4301,9 @@
                                        "type": "rbracket",
                                        "value": "]",
                                        "text": "]",
-                                       "offset": 405,
+                                       "offset": 399,
                                        "lineBreaks": 0,
-                                       "line": 30,
+                                       "line": 29,
                                        "col": 11
                                       }
                                      ]
@@ -4312,9 +4312,9 @@
                                      "type": "assignment",
                                      "value": "=",
                                      "text": "=",
-                                     "offset": 407,
+                                     "offset": 401,
                                      "lineBreaks": 0,
-                                     "line": 30,
+                                     "line": 29,
                                      "col": 13
                                     },
                                     {
@@ -4376,11 +4376,11 @@
                                                            "type": "number_literal",
                                                            "value": "20",
                                                            "start": {
-                                                            "line": 30,
+                                                            "line": 29,
                                                             "col": 14
                                                            },
                                                            "end": {
-                                                            "line": 30,
+                                                            "line": 29,
                                                             "col": 16
                                                            }
                                                           }
@@ -4412,9 +4412,9 @@
                                    "type": "scolon",
                                    "value": ";",
                                    "text": ";",
-                                   "offset": 411,
+                                   "offset": 405,
                                    "lineBreaks": 0,
-                                   "line": 30,
+                                   "line": 29,
                                    "col": 17
                                   }
                                  ]
@@ -4447,11 +4447,11 @@
                                      "type": "identifier",
                                      "value": "nums",
                                      "start": {
-                                      "line": 31,
+                                      "line": 30,
                                       "col": 4
                                      },
                                      "end": {
-                                      "line": 31,
+                                      "line": 30,
                                       "col": 8
                                      }
                                     },
@@ -4459,9 +4459,9 @@
                                      "type": "lbracket",
                                      "value": "[",
                                      "text": "[",
-                                     "offset": 422,
+                                     "offset": 416,
                                      "lineBreaks": 0,
-                                     "line": 31,
+                                     "line": 30,
                                      "col": 9
                                     },
                                     {
@@ -4523,11 +4523,11 @@
                                                            "type": "number_literal",
                                                            "value": "2",
                                                            "start": {
-                                                            "line": 31,
+                                                            "line": 30,
                                                             "col": 9
                                                            },
                                                            "end": {
-                                                            "line": 31,
+                                                            "line": 30,
                                                             "col": 10
                                                            }
                                                           }
@@ -4557,9 +4557,9 @@
                                      "type": "rbracket",
                                      "value": "]",
                                      "text": "]",
-                                     "offset": 424,
+                                     "offset": 418,
                                      "lineBreaks": 0,
-                                     "line": 31,
+                                     "line": 30,
                                      "col": 11
                                     }
                                    ]
@@ -4568,9 +4568,9 @@
                                    "type": "assignment",
                                    "value": "=",
                                    "text": "=",
-                                   "offset": 426,
+                                   "offset": 420,
                                    "lineBreaks": 0,
-                                   "line": 31,
+                                   "line": 30,
                                    "col": 13
                                   },
                                   {
@@ -4632,11 +4632,11 @@
                                                          "type": "number_literal",
                                                          "value": "30",
                                                          "start": {
-                                                          "line": 31,
+                                                          "line": 30,
                                                           "col": 14
                                                          },
                                                          "end": {
-                                                          "line": 31,
+                                                          "line": 30,
                                                           "col": 16
                                                          }
                                                         }
@@ -4668,9 +4668,9 @@
                                  "type": "scolon",
                                  "value": ";",
                                  "text": ";",
-                                 "offset": 430,
+                                 "offset": 424,
                                  "lineBreaks": 0,
-                                 "line": 31,
+                                 "line": 30,
                                  "col": 17
                                 }
                                ]
@@ -4703,11 +4703,11 @@
                                    "type": "identifier",
                                    "value": "nums",
                                    "start": {
-                                    "line": 32,
+                                    "line": 31,
                                     "col": 4
                                    },
                                    "end": {
-                                    "line": 32,
+                                    "line": 31,
                                     "col": 8
                                    }
                                   },
@@ -4715,9 +4715,9 @@
                                    "type": "lbracket",
                                    "value": "[",
                                    "text": "[",
-                                   "offset": 441,
+                                   "offset": 435,
                                    "lineBreaks": 0,
-                                   "line": 32,
+                                   "line": 31,
                                    "col": 9
                                   },
                                   {
@@ -4779,11 +4779,11 @@
                                                          "type": "number_literal",
                                                          "value": "3",
                                                          "start": {
-                                                          "line": 32,
+                                                          "line": 31,
                                                           "col": 9
                                                          },
                                                          "end": {
-                                                          "line": 32,
+                                                          "line": 31,
                                                           "col": 10
                                                          }
                                                         }
@@ -4813,9 +4813,9 @@
                                    "type": "rbracket",
                                    "value": "]",
                                    "text": "]",
-                                   "offset": 443,
+                                   "offset": 437,
                                    "lineBreaks": 0,
-                                   "line": 32,
+                                   "line": 31,
                                    "col": 11
                                   }
                                  ]
@@ -4824,9 +4824,9 @@
                                  "type": "assignment",
                                  "value": "=",
                                  "text": "=",
-                                 "offset": 445,
+                                 "offset": 439,
                                  "lineBreaks": 0,
-                                 "line": 32,
+                                 "line": 31,
                                  "col": 13
                                 },
                                 {
@@ -4888,11 +4888,11 @@
                                                        "type": "number_literal",
                                                        "value": "45",
                                                        "start": {
-                                                        "line": 32,
+                                                        "line": 31,
                                                         "col": 14
                                                        },
                                                        "end": {
-                                                        "line": 32,
+                                                        "line": 31,
                                                         "col": 16
                                                        }
                                                       }
@@ -4924,9 +4924,9 @@
                                "type": "scolon",
                                "value": ";",
                                "text": ";",
-                               "offset": 449,
+                               "offset": 443,
                                "lineBreaks": 0,
-                               "line": 32,
+                               "line": 31,
                                "col": 17
                               }
                              ]
@@ -5004,11 +5004,11 @@
                                                    "type": "identifier",
                                                    "value": "output",
                                                    "start": {
-                                                    "line": 34,
+                                                    "line": 33,
                                                     "col": 4
                                                    },
                                                    "end": {
-                                                    "line": 34,
+                                                    "line": 33,
                                                     "col": 10
                                                    }
                                                   },
@@ -5016,9 +5016,9 @@
                                                    "type": "lparan",
                                                    "value": "(",
                                                    "text": "(",
-                                                   "offset": 468,
+                                                   "offset": 462,
                                                    "lineBreaks": 0,
-                                                   "line": 34,
+                                                   "line": 33,
                                                    "col": 11
                                                   },
                                                   {
@@ -5085,11 +5085,11 @@
                                                                            "type": "identifier",
                                                                            "value": "nums",
                                                                            "start": {
-                                                                            "line": 34,
+                                                                            "line": 33,
                                                                             "col": 11
                                                                            },
                                                                            "end": {
-                                                                            "line": 34,
+                                                                            "line": 33,
                                                                             "col": 15
                                                                            }
                                                                           },
@@ -5097,9 +5097,9 @@
                                                                            "type": "lbracket",
                                                                            "value": "[",
                                                                            "text": "[",
-                                                                           "offset": 473,
+                                                                           "offset": 467,
                                                                            "lineBreaks": 0,
-                                                                           "line": 34,
+                                                                           "line": 33,
                                                                            "col": 16
                                                                           },
                                                                           {
@@ -5161,11 +5161,11 @@
                                                                                                  "type": "number_literal",
                                                                                                  "value": "2",
                                                                                                  "start": {
-                                                                                                  "line": 34,
+                                                                                                  "line": 33,
                                                                                                   "col": 16
                                                                                                  },
                                                                                                  "end": {
-                                                                                                  "line": 34,
+                                                                                                  "line": 33,
                                                                                                   "col": 17
                                                                                                  }
                                                                                                 }
@@ -5195,9 +5195,9 @@
                                                                            "type": "rbracket",
                                                                            "value": "]",
                                                                            "text": "]",
-                                                                           "offset": 475,
+                                                                           "offset": 469,
                                                                            "lineBreaks": 0,
-                                                                           "line": 34,
+                                                                           "line": 33,
                                                                            "col": 18
                                                                           }
                                                                          ]
@@ -5228,9 +5228,9 @@
                                                    "type": "rparan",
                                                    "value": ")",
                                                    "text": ")",
-                                                   "offset": 476,
+                                                   "offset": 470,
                                                    "lineBreaks": 0,
-                                                   "line": 34,
+                                                   "line": 33,
                                                    "col": 19
                                                   }
                                                  ]
@@ -5259,9 +5259,9 @@
                              "type": "scolon",
                              "value": ";",
                              "text": ";",
-                             "offset": 477,
+                             "offset": 471,
                              "lineBreaks": 0,
-                             "line": 34,
+                             "line": 33,
                              "col": 20
                             }
                            ]
@@ -5289,9 +5289,9 @@
                              "type": "int",
                              "value": "int",
                              "text": "int",
-                             "offset": 486,
+                             "offset": 480,
                              "lineBreaks": 0,
-                             "line": 36,
+                             "line": 35,
                              "col": 5
                             }
                            ]
@@ -5310,11 +5310,11 @@
                                "type": "identifier",
                                "value": "n",
                                "start": {
-                                "line": 36,
+                                "line": 35,
                                 "col": 8
                                },
                                "end": {
-                                "line": 36,
+                                "line": 35,
                                 "col": 9
                                }
                               }
@@ -5324,11 +5324,11 @@
                                "type": "identifier",
                                "value": "n",
                                "start": {
-                                "line": 36,
+                                "line": 35,
                                 "col": 8
                                },
                                "end": {
-                                "line": 36,
+                                "line": 35,
                                 "col": 9
                                }
                               }
@@ -5338,9 +5338,9 @@
                              "type": "assignment",
                              "value": "=",
                              "text": "=",
-                             "offset": 492,
+                             "offset": 486,
                              "lineBreaks": 0,
-                             "line": 36,
+                             "line": 35,
                              "col": 11
                             },
                             {
@@ -5397,11 +5397,11 @@
                                                  "type": "identifier",
                                                  "value": "input",
                                                  "start": {
-                                                  "line": 36,
+                                                  "line": 35,
                                                   "col": 12
                                                  },
                                                  "end": {
-                                                  "line": 36,
+                                                  "line": 35,
                                                   "col": 17
                                                  }
                                                 },
@@ -5409,9 +5409,9 @@
                                                  "type": "lparan",
                                                  "value": "(",
                                                  "text": "(",
-                                                 "offset": 499,
+                                                 "offset": 493,
                                                  "lineBreaks": 0,
-                                                 "line": 36,
+                                                 "line": 35,
                                                  "col": 18
                                                 },
                                                 {
@@ -5424,9 +5424,9 @@
                                                  "type": "rparan",
                                                  "value": ")",
                                                  "text": ")",
-                                                 "offset": 500,
+                                                 "offset": 494,
                                                  "lineBreaks": 0,
-                                                 "line": 36,
+                                                 "line": 35,
                                                  "col": 19
                                                 }
                                                ]
@@ -5460,11 +5460,11 @@
                                "type": "identifier",
                                "value": "n",
                                "start": {
-                                "line": 36,
+                                "line": 35,
                                 "col": 8
                                },
                                "end": {
-                                "line": 36,
+                                "line": 35,
                                 "col": 9
                                }
                               }
@@ -5474,11 +5474,11 @@
                                "type": "identifier",
                                "value": "n",
                                "start": {
-                                "line": 36,
+                                "line": 35,
                                 "col": 8
                                },
                                "end": {
-                                "line": 36,
+                                "line": 35,
                                 "col": 9
                                }
                               }
@@ -5490,9 +5490,9 @@
                            "type": "scolon",
                            "value": ";",
                            "text": ";",
-                           "offset": 501,
+                           "offset": 495,
                            "lineBreaks": 0,
-                           "line": 36,
+                           "line": 35,
                            "col": 20
                           }
                          ]
@@ -5520,9 +5520,9 @@
                            "type": "int",
                            "value": "int",
                            "text": "int",
-                           "offset": 508,
+                           "offset": 502,
                            "lineBreaks": 0,
-                           "line": 37,
+                           "line": 36,
                            "col": 5
                           }
                          ]
@@ -5541,11 +5541,11 @@
                              "type": "identifier",
                              "value": "val",
                              "start": {
-                              "line": 37,
+                              "line": 36,
                               "col": 8
                              },
                              "end": {
-                              "line": 37,
+                              "line": 36,
                               "col": 11
                              }
                             }
@@ -5555,11 +5555,11 @@
                              "type": "identifier",
                              "value": "val",
                              "start": {
-                              "line": 37,
+                              "line": 36,
                               "col": 8
                              },
                              "end": {
-                              "line": 37,
+                              "line": 36,
                               "col": 11
                              }
                             }
@@ -5569,9 +5569,9 @@
                            "type": "assignment",
                            "value": "=",
                            "text": "=",
-                           "offset": 516,
+                           "offset": 510,
                            "lineBreaks": 0,
-                           "line": 37,
+                           "line": 36,
                            "col": 13
                           },
                           {
@@ -5628,11 +5628,11 @@
                                                "type": "identifier",
                                                "value": "fib",
                                                "start": {
-                                                "line": 37,
+                                                "line": 36,
                                                 "col": 14
                                                },
                                                "end": {
-                                                "line": 37,
+                                                "line": 36,
                                                 "col": 17
                                                }
                                               },
@@ -5640,9 +5640,9 @@
                                                "type": "lparan",
                                                "value": "(",
                                                "text": "(",
-                                               "offset": 521,
+                                               "offset": 515,
                                                "lineBreaks": 0,
-                                               "line": 37,
+                                               "line": 36,
                                                "col": 18
                                               },
                                               {
@@ -5709,11 +5709,11 @@
                                                                        "type": "identifier",
                                                                        "value": "n",
                                                                        "start": {
-                                                                        "line": 37,
+                                                                        "line": 36,
                                                                         "col": 18
                                                                        },
                                                                        "end": {
-                                                                        "line": 37,
+                                                                        "line": 36,
                                                                         "col": 19
                                                                        }
                                                                       }
@@ -5745,9 +5745,9 @@
                                                "type": "rparan",
                                                "value": ")",
                                                "text": ")",
-                                               "offset": 523,
+                                               "offset": 517,
                                                "lineBreaks": 0,
-                                               "line": 37,
+                                               "line": 36,
                                                "col": 20
                                               }
                                              ]
@@ -5781,11 +5781,11 @@
                              "type": "identifier",
                              "value": "val",
                              "start": {
-                              "line": 37,
+                              "line": 36,
                               "col": 8
                              },
                              "end": {
-                              "line": 37,
+                              "line": 36,
                               "col": 11
                              }
                             }
@@ -5795,11 +5795,11 @@
                              "type": "identifier",
                              "value": "val",
                              "start": {
-                              "line": 37,
+                              "line": 36,
                               "col": 8
                              },
                              "end": {
-                              "line": 37,
+                              "line": 36,
                               "col": 11
                              }
                             }
@@ -5811,9 +5811,9 @@
                          "type": "scolon",
                          "value": ";",
                          "text": ";",
-                         "offset": 524,
+                         "offset": 518,
                          "lineBreaks": 0,
-                         "line": 37,
+                         "line": 36,
                          "col": 21
                         }
                        ]
@@ -5891,11 +5891,11 @@
                                              "type": "identifier",
                                              "value": "output",
                                              "start": {
-                                              "line": 39,
+                                              "line": 38,
                                               "col": 4
                                              },
                                              "end": {
-                                              "line": 39,
+                                              "line": 38,
                                               "col": 10
                                              }
                                             },
@@ -5903,9 +5903,9 @@
                                              "type": "lparan",
                                              "value": "(",
                                              "text": "(",
-                                             "offset": 539,
+                                             "offset": 533,
                                              "lineBreaks": 0,
-                                             "line": 39,
+                                             "line": 38,
                                              "col": 11
                                             },
                                             {
@@ -5972,11 +5972,11 @@
                                                                      "type": "identifier",
                                                                      "value": "n",
                                                                      "start": {
-                                                                      "line": 39,
+                                                                      "line": 38,
                                                                       "col": 11
                                                                      },
                                                                      "end": {
-                                                                      "line": 39,
+                                                                      "line": 38,
                                                                       "col": 12
                                                                      }
                                                                     }
@@ -6008,9 +6008,9 @@
                                              "type": "rparan",
                                              "value": ")",
                                              "text": ")",
-                                             "offset": 541,
+                                             "offset": 535,
                                              "lineBreaks": 0,
-                                             "line": 39,
+                                             "line": 38,
                                              "col": 13
                                             }
                                            ]
@@ -6039,9 +6039,9 @@
                        "type": "scolon",
                        "value": ";",
                        "text": ";",
-                       "offset": 542,
+                       "offset": 536,
                        "lineBreaks": 0,
-                       "line": 39,
+                       "line": 38,
                        "col": 14
                       }
                      ]
@@ -6119,11 +6119,11 @@
                                            "type": "identifier",
                                            "value": "output",
                                            "start": {
-                                            "line": 40,
+                                            "line": 39,
                                             "col": 4
                                            },
                                            "end": {
-                                            "line": 40,
+                                            "line": 39,
                                             "col": 10
                                            }
                                           },
@@ -6131,9 +6131,9 @@
                                            "type": "lparan",
                                            "value": "(",
                                            "text": "(",
-                                           "offset": 555,
+                                           "offset": 549,
                                            "lineBreaks": 0,
-                                           "line": 40,
+                                           "line": 39,
                                            "col": 11
                                           },
                                           {
@@ -6200,11 +6200,11 @@
                                                                    "type": "identifier",
                                                                    "value": "val",
                                                                    "start": {
-                                                                    "line": 40,
+                                                                    "line": 39,
                                                                     "col": 11
                                                                    },
                                                                    "end": {
-                                                                    "line": 40,
+                                                                    "line": 39,
                                                                     "col": 14
                                                                    }
                                                                   }
@@ -6236,9 +6236,9 @@
                                            "type": "rparan",
                                            "value": ")",
                                            "text": ")",
-                                           "offset": 559,
+                                           "offset": 553,
                                            "lineBreaks": 0,
-                                           "line": 40,
+                                           "line": 39,
                                            "col": 15
                                           }
                                          ]
@@ -6267,9 +6267,9 @@
                      "type": "scolon",
                      "value": ";",
                      "text": ";",
-                     "offset": 560,
+                     "offset": 554,
                      "lineBreaks": 0,
-                     "line": 40,
+                     "line": 39,
                      "col": 16
                     }
                    ]
@@ -6347,11 +6347,11 @@
                                          "type": "identifier",
                                          "value": "listNums",
                                          "start": {
-                                          "line": 41,
+                                          "line": 40,
                                           "col": 4
                                          },
                                          "end": {
-                                          "line": 41,
+                                          "line": 40,
                                           "col": 12
                                          }
                                         },
@@ -6359,9 +6359,9 @@
                                          "type": "lparan",
                                          "value": "(",
                                          "text": "(",
-                                         "offset": 575,
+                                         "offset": 569,
                                          "lineBreaks": 0,
-                                         "line": 41,
+                                         "line": 40,
                                          "col": 13
                                         },
                                         {
@@ -6374,9 +6374,9 @@
                                          "type": "rparan",
                                          "value": ")",
                                          "text": ")",
-                                         "offset": 576,
+                                         "offset": 570,
                                          "lineBreaks": 0,
-                                         "line": 41,
+                                         "line": 40,
                                          "col": 14
                                         }
                                        ]
@@ -6405,9 +6405,9 @@
                    "type": "scolon",
                    "value": ";",
                    "text": ";",
-                   "offset": 577,
+                   "offset": 571,
                    "lineBreaks": 0,
-                   "line": 41,
+                   "line": 40,
                    "col": 15
                   }
                  ]
@@ -6430,9 +6430,9 @@
                  "type": "returnn",
                  "value": "return",
                  "text": "return",
-                 "offset": 584,
+                 "offset": 578,
                  "lineBreaks": 0,
-                 "line": 42,
+                 "line": 41,
                  "col": 5
                 },
                 {
@@ -6484,11 +6484,11 @@
                                    "type": "identifier",
                                    "value": "val",
                                    "start": {
-                                    "line": 42,
+                                    "line": 41,
                                     "col": 11
                                    },
                                    "end": {
-                                    "line": 42,
+                                    "line": 41,
                                     "col": 14
                                    }
                                   }
@@ -6514,9 +6514,9 @@
                  "type": "scolon",
                  "value": ";",
                  "text": ";",
-                 "offset": 594,
+                 "offset": 588,
                  "lineBreaks": 0,
-                 "line": 42,
+                 "line": 41,
                  "col": 15
                 }
                ]
@@ -6529,9 +6529,9 @@
            "type": "rbrace",
            "value": "}",
            "text": "}",
-           "offset": 597,
+           "offset": 591,
            "lineBreaks": 0,
-           "line": 43,
+           "line": 42,
            "col": 1
           }
          ]

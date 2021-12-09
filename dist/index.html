@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WASM Runner</title>
+        <script src="bundle.js"></script>
         <script src="main.js"></script>
         <style>
             #content {
@@ -34,8 +35,9 @@
                 box-sizing: border-box;
             }
         </style>
-    </head>
+    <script defer src="bundle.js"></script></head>
     <body>
+        <textarea name="input" id="input" cols="30" rows="10"></textarea>
         <div id="content">
             <div class="button-wrap"><button id="run-button">RUN</button></div>
             <pre id="output"></pre>

@@ -2663,18 +2663,18 @@ parts:
                                                                               - type: "identifier"
                                                                                 value: "nums"
                                                                                 start:
-                                                                                  line: 29
+                                                                                  line: 28
                                                                                   col: 4
                                                                                 end:
-                                                                                  line: 29
+                                                                                  line: 28
                                                                                   col: 8
                                                                               - type: "lbracket"
                                                                                 value: "["
                                                                                 text: "["
                                                                                 toString: [object Function]
-                                                                                offset: 384
+                                                                                offset: 378
                                                                                 lineBreaks: 0
-                                                                                line: 29
+                                                                                line: 28
                                                                                 col: 9
                                                                               - type: "exp"
                                                                                 rule: 1
@@ -2723,26 +2723,26 @@ parts:
                                                                                                                           - type: "number_literal"
                                                                                                                             value: "0"
                                                                                                                             start:
-                                                                                                                              line: 29
+                                                                                                                              line: 28
                                                                                                                               col: 9
                                                                                                                             end:
-                                                                                                                              line: 29
+                                                                                                                              line: 28
                                                                                                                               col: 10
                                                                               - type: "rbracket"
                                                                                 value: "]"
                                                                                 text: "]"
                                                                                 toString: [object Function]
-                                                                                offset: 386
+                                                                                offset: 380
                                                                                 lineBreaks: 0
-                                                                                line: 29
+                                                                                line: 28
                                                                                 col: 11
                                                                           - type: "assignment"
                                                                             value: "="
                                                                             text: "="
                                                                             toString: [object Function]
-                                                                            offset: 388
+                                                                            offset: 382
                                                                             lineBreaks: 0
-                                                                            line: 29
+                                                                            line: 28
                                                                             col: 13
                                                                           - type: "exp"
                                                                             rule: 1
@@ -2791,18 +2791,18 @@ parts:
                                                                                                                       - type: "number_literal"
                                                                                                                         value: "10"
                                                                                                                         start:
-                                                                                                                          line: 29
+                                                                                                                          line: 28
                                                                                                                           col: 14
                                                                                                                         end:
-                                                                                                                          line: 29
+                                                                                                                          line: 28
                                                                                                                           col: 16
                                                                       - type: "scolon"
                                                                         value: ";"
                                                                         text: ";"
                                                                         toString: [object Function]
-                                                                        offset: 392
+                                                                        offset: 386
                                                                         lineBreaks: 0
-                                                                        line: 29
+                                                                        line: 28
                                                                         col: 17
                                                           - type: "stmt"
                                                             rule: 0
@@ -2823,18 +2823,18 @@ parts:
                                                                           - type: "identifier"
                                                                             value: "nums"
                                                                             start:
-                                                                              line: 30
+                                                                              line: 29
                                                                               col: 4
                                                                             end:
-                                                                              line: 30
+                                                                              line: 29
                                                                               col: 8
                                                                           - type: "lbracket"
                                                                             value: "["
                                                                             text: "["
                                                                             toString: [object Function]
-                                                                            offset: 403
+                                                                            offset: 397
                                                                             lineBreaks: 0
-                                                                            line: 30
+                                                                            line: 29
                                                                             col: 9
                                                                           - type: "exp"
                                                                             rule: 1
@@ -2883,26 +2883,26 @@ parts:
                                                                                                                       - type: "number_literal"
                                                                                                                         value: "1"
                                                                                                                         start:
-                                                                                                                          line: 30
+                                                                                                                          line: 29
                                                                                                                           col: 9
                                                                                                                         end:
-                                                                                                                          line: 30
+                                                                                                                          line: 29
                                                                                                                           col: 10
                                                                           - type: "rbracket"
                                                                             value: "]"
                                                                             text: "]"
                                                                             toString: [object Function]
-                                                                            offset: 405
+                                                                            offset: 399
                                                                             lineBreaks: 0
-                                                                            line: 30
+                                                                            line: 29
                                                                             col: 11
                                                                       - type: "assignment"
                                                                         value: "="
                                                                         text: "="
                                                                         toString: [object Function]
-                                                                        offset: 407
+                                                                        offset: 401
                                                                         lineBreaks: 0
-                                                                        line: 30
+                                                                        line: 29
                                                                         col: 13
                                                                       - type: "exp"
                                                                         rule: 1
@@ -2951,18 +2951,18 @@ parts:
                                                                                                                   - type: "number_literal"
                                                                                                                     value: "20"
                                                                                                                     start:
-                                                                                                                      line: 30
+                                                                                                                      line: 29
                                                                                                                       col: 14
                                                                                                                     end:
-                                                                                                                      line: 30
+                                                                                                                      line: 29
                                                                                                                       col: 16
                                                                   - type: "scolon"
                                                                     value: ";"
                                                                     text: ";"
                                                                     toString: [object Function]
-                                                                    offset: 411
+                                                                    offset: 405
                                                                     lineBreaks: 0
-                                                                    line: 30
+                                                                    line: 29
                                                                     col: 17
                                                       - type: "stmt"
                                                         rule: 0
@@ -2983,18 +2983,18 @@ parts:
                                                                       - type: "identifier"
                                                                         value: "nums"
                                                                         start:
-                                                                          line: 31
+                                                                          line: 30
                                                                           col: 4
                                                                         end:
-                                                                          line: 31
+                                                                          line: 30
                                                                           col: 8
                                                                       - type: "lbracket"
                                                                         value: "["
                                                                         text: "["
                                                                         toString: [object Function]
-                                                                        offset: 422
+                                                                        offset: 416
                                                                         lineBreaks: 0
-                                                                        line: 31
+                                                                        line: 30
                                                                         col: 9
                                                                       - type: "exp"
                                                                         rule: 1
@@ -3043,26 +3043,26 @@ parts:
                                                                                                                   - type: "number_literal"
                                                                                                                     value: "2"
                                                                                                                     start:
-                                                                                                                      line: 31
+                                                                                                                      line: 30
                                                                                                                       col: 9
                                                                                                                     end:
-                                                                                                                      line: 31
+                                                                                                                      line: 30
                                                                                                                       col: 10
                                                                       - type: "rbracket"
                                                                         value: "]"
                                                                         text: "]"
                                                                         toString: [object Function]
-                                                                        offset: 424
+                                                                        offset: 418
                                                                         lineBreaks: 0
-                                                                        line: 31
+                                                                        line: 30
                                                                         col: 11
                                                                   - type: "assignment"
                                                                     value: "="
                                                                     text: "="
                                                                     toString: [object Function]
-                                                                    offset: 426
+                                                                    offset: 420
                                                                     lineBreaks: 0
-                                                                    line: 31
+                                                                    line: 30
                                                                     col: 13
                                                                   - type: "exp"
                                                                     rule: 1
@@ -3111,18 +3111,18 @@ parts:
                                                                                                               - type: "number_literal"
                                                                                                                 value: "30"
                                                                                                                 start:
-                                                                                                                  line: 31
+                                                                                                                  line: 30
                                                                                                                   col: 14
                                                                                                                 end:
-                                                                                                                  line: 31
+                                                                                                                  line: 30
                                                                                                                   col: 16
                                                               - type: "scolon"
                                                                 value: ";"
                                                                 text: ";"
                                                                 toString: [object Function]
-                                                                offset: 430
+                                                                offset: 424
                                                                 lineBreaks: 0
-                                                                line: 31
+                                                                line: 30
                                                                 col: 17
                                                   - type: "stmt"
                                                     rule: 0
@@ -3143,18 +3143,18 @@ parts:
                                                                   - type: "identifier"
                                                                     value: "nums"
                                                                     start:
-                                                                      line: 32
+                                                                      line: 31
                                                                       col: 4
                                                                     end:
-                                                                      line: 32
+                                                                      line: 31
                                                                       col: 8
                                                                   - type: "lbracket"
                                                                     value: "["
                                                                     text: "["
                                                                     toString: [object Function]
-                                                                    offset: 441
+                                                                    offset: 435
                                                                     lineBreaks: 0
-                                                                    line: 32
+                                                                    line: 31
                                                                     col: 9
                                                                   - type: "exp"
                                                                     rule: 1
@@ -3203,26 +3203,26 @@ parts:
                                                                                                               - type: "number_literal"
                                                                                                                 value: "3"
                                                                                                                 start:
-                                                                                                                  line: 32
+                                                                                                                  line: 31
                                                                                                                   col: 9
                                                                                                                 end:
-                                                                                                                  line: 32
+                                                                                                                  line: 31
                                                                                                                   col: 10
                                                                   - type: "rbracket"
                                                                     value: "]"
                                                                     text: "]"
                                                                     toString: [object Function]
-                                                                    offset: 443
+                                                                    offset: 437
                                                                     lineBreaks: 0
-                                                                    line: 32
+                                                                    line: 31
                                                                     col: 11
                                                               - type: "assignment"
                                                                 value: "="
                                                                 text: "="
                                                                 toString: [object Function]
-                                                                offset: 445
+                                                                offset: 439
                                                                 lineBreaks: 0
-                                                                line: 32
+                                                                line: 31
                                                                 col: 13
                                                               - type: "exp"
                                                                 rule: 1
@@ -3271,18 +3271,18 @@ parts:
                                                                                                           - type: "number_literal"
                                                                                                             value: "45"
                                                                                                             start:
-                                                                                                              line: 32
+                                                                                                              line: 31
                                                                                                               col: 14
                                                                                                             end:
-                                                                                                              line: 32
+                                                                                                              line: 31
                                                                                                               col: 16
                                                           - type: "scolon"
                                                             value: ";"
                                                             text: ";"
                                                             toString: [object Function]
-                                                            offset: 449
+                                                            offset: 443
                                                             lineBreaks: 0
-                                                            line: 32
+                                                            line: 31
                                                             col: 17
                                               - type: "stmt"
                                                 rule: 0
@@ -3339,18 +3339,18 @@ parts:
                                                                                                   - type: "identifier"
                                                                                                     value: "output"
                                                                                                     start:
-                                                                                                      line: 34
+                                                                                                      line: 33
                                                                                                       col: 4
                                                                                                     end:
-                                                                                                      line: 34
+                                                                                                      line: 33
                                                                                                       col: 10
                                                                                                   - type: "lparan"
                                                                                                     value: "("
                                                                                                     text: "("
                                                                                                     toString: [object Function]
-                                                                                                    offset: 468
+                                                                                                    offset: 462
                                                                                                     lineBreaks: 0
-                                                                                                    line: 34
+                                                                                                    line: 33
                                                                                                     col: 11
                                                                                                   - type: "args"
                                                                                                     rule: 0
@@ -3403,18 +3403,18 @@ parts:
                                                                                                                                                   - type: "identifier"
                                                                                                                                                     value: "nums"
                                                                                                                                                     start:
-                                                                                                                                                      line: 34
+                                                                                                                                                      line: 33
                                                                                                                                                       col: 11
                                                                                                                                                     end:
-                                                                                                                                                      line: 34
+                                                                                                                                                      line: 33
                                                                                                                                                       col: 15
                                                                                                                                                   - type: "lbracket"
                                                                                                                                                     value: "["
                                                                                                                                                     text: "["
                                                                                                                                                     toString: [object Function]
-                                                                                                                                                    offset: 473
+                                                                                                                                                    offset: 467
                                                                                                                                                     lineBreaks: 0
-                                                                                                                                                    line: 34
+                                                                                                                                                    line: 33
                                                                                                                                                     col: 16
                                                                                                                                                   - type: "exp"
                                                                                                                                                     rule: 1
@@ -3463,34 +3463,34 @@ parts:
                                                                                                                                                                                               - type: "number_literal"
                                                                                                                                                                                                 value: "2"
                                                                                                                                                                                                 start:
-                                                                                                                                                                                                  line: 34
+                                                                                                                                                                                                  line: 33
                                                                                                                                                                                                   col: 16
                                                                                                                                                                                                 end:
-                                                                                                                                                                                                  line: 34
+                                                                                                                                                                                                  line: 33
                                                                                                                                                                                                   col: 17
                                                                                                                                                   - type: "rbracket"
                                                                                                                                                     value: "]"
                                                                                                                                                     text: "]"
                                                                                                                                                     toString: [object Function]
-                                                                                                                                                    offset: 475
+                                                                                                                                                    offset: 469
                                                                                                                                                     lineBreaks: 0
-                                                                                                                                                    line: 34
+                                                                                                                                                    line: 33
                                                                                                                                                     col: 18
                                                                                                   - type: "rparan"
                                                                                                     value: ")"
                                                                                                     text: ")"
                                                                                                     toString: [object Function]
-                                                                                                    offset: 476
+                                                                                                    offset: 470
                                                                                                     lineBreaks: 0
-                                                                                                    line: 34
+                                                                                                    line: 33
                                                                                                     col: 19
                                                       - type: "scolon"
                                                         value: ";"
                                                         text: ";"
                                                         toString: [object Function]
-                                                        offset: 477
+                                                        offset: 471
                                                         lineBreaks: 0
-                                                        line: 34
+                                                        line: 33
                                                         col: 20
                                           - type: "stmt"
                                             rule: 6
@@ -3508,9 +3508,9 @@ parts:
                                                         value: "int"
                                                         text: "int"
                                                         toString: [object Function]
-                                                        offset: 486
+                                                        offset: 480
                                                         lineBreaks: 0
-                                                        line: 36
+                                                        line: 35
                                                         col: 5
                                                   - type: "varDeclInit"
                                                     rule: 1
@@ -3523,28 +3523,28 @@ parts:
                                                           - type: "identifier"
                                                             value: "n"
                                                             start:
-                                                              line: 36
+                                                              line: 35
                                                               col: 8
                                                             end:
-                                                              line: 36
+                                                              line: 35
                                                               col: 9
                                                         symbol:
                                                           type:
                                                             type: "identifier"
                                                             value: "n"
                                                             start:
-                                                              line: 36
+                                                              line: 35
                                                               col: 8
                                                             end:
-                                                              line: 36
+                                                              line: 35
                                                               col: 9
                                                       - type: "assignment"
                                                         value: "="
                                                         text: "="
                                                         toString: [object Function]
-                                                        offset: 492
+                                                        offset: 486
                                                         lineBreaks: 0
-                                                        line: 36
+                                                        line: 35
                                                         col: 11
                                                       - type: "simpleExp"
                                                         rule: 1
@@ -3589,18 +3589,18 @@ parts:
                                                                                               - type: "identifier"
                                                                                                 value: "input"
                                                                                                 start:
-                                                                                                  line: 36
+                                                                                                  line: 35
                                                                                                   col: 12
                                                                                                 end:
-                                                                                                  line: 36
+                                                                                                  line: 35
                                                                                                   col: 17
                                                                                               - type: "lparan"
                                                                                                 value: "("
                                                                                                 text: "("
                                                                                                 toString: [object Function]
-                                                                                                offset: 499
+                                                                                                offset: 493
                                                                                                 lineBreaks: 0
-                                                                                                line: 36
+                                                                                                line: 35
                                                                                                 col: 18
                                                                                               - type: "args"
                                                                                                 rule: 1
@@ -3610,9 +3610,9 @@ parts:
                                                                                                 value: ")"
                                                                                                 text: ")"
                                                                                                 toString: [object Function]
-                                                                                                offset: 500
+                                                                                                offset: 494
                                                                                                 lineBreaks: 0
-                                                                                                line: 36
+                                                                                                line: 35
                                                                                                 col: 19
                                                     symbol:
                                                       type:
@@ -3623,28 +3623,28 @@ parts:
                                                           - type: "identifier"
                                                             value: "n"
                                                             start:
-                                                              line: 36
+                                                              line: 35
                                                               col: 8
                                                             end:
-                                                              line: 36
+                                                              line: 35
                                                               col: 9
                                                         symbol:
                                                           type:
                                                             type: "identifier"
                                                             value: "n"
                                                             start:
-                                                              line: 36
+                                                              line: 35
                                                               col: 8
                                                             end:
-                                                              line: 36
+                                                              line: 35
                                                               col: 9
                                                   - type: "scolon"
                                                     value: ";"
                                                     text: ";"
                                                     toString: [object Function]
-                                                    offset: 501
+                                                    offset: 495
                                                     lineBreaks: 0
-                                                    line: 36
+                                                    line: 35
                                                     col: 20
                                       - type: "stmt"
                                         rule: 6
@@ -3662,9 +3662,9 @@ parts:
                                                     value: "int"
                                                     text: "int"
                                                     toString: [object Function]
-                                                    offset: 508
+                                                    offset: 502
                                                     lineBreaks: 0
-                                                    line: 37
+                                                    line: 36
                                                     col: 5
                                               - type: "varDeclInit"
                                                 rule: 1
@@ -3677,28 +3677,28 @@ parts:
                                                       - type: "identifier"
                                                         value: "val"
                                                         start:
-                                                          line: 37
+                                                          line: 36
                                                           col: 8
                                                         end:
-                                                          line: 37
+                                                          line: 36
                                                           col: 11
                                                     symbol:
                                                       type:
                                                         type: "identifier"
                                                         value: "val"
                                                         start:
-                                                          line: 37
+                                                          line: 36
                                                           col: 8
                                                         end:
-                                                          line: 37
+                                                          line: 36
                                                           col: 11
                                                   - type: "assignment"
                                                     value: "="
                                                     text: "="
                                                     toString: [object Function]
-                                                    offset: 516
+                                                    offset: 510
                                                     lineBreaks: 0
-                                                    line: 37
+                                                    line: 36
                                                     col: 13
                                                   - type: "simpleExp"
                                                     rule: 1
@@ -3743,18 +3743,18 @@ parts:
                                                                                           - type: "identifier"
                                                                                             value: "fib"
                                                                                             start:
-                                                                                              line: 37
+                                                                                              line: 36
                                                                                               col: 14
                                                                                             end:
-                                                                                              line: 37
+                                                                                              line: 36
                                                                                               col: 17
                                                                                           - type: "lparan"
                                                                                             value: "("
                                                                                             text: "("
                                                                                             toString: [object Function]
-                                                                                            offset: 521
+                                                                                            offset: 515
                                                                                             lineBreaks: 0
-                                                                                            line: 37
+                                                                                            line: 36
                                                                                             col: 18
                                                                                           - type: "args"
                                                                                             rule: 0
@@ -3807,18 +3807,18 @@ parts:
                                                                                                                                           - type: "identifier"
                                                                                                                                             value: "n"
                                                                                                                                             start:
-                                                                                                                                              line: 37
+                                                                                                                                              line: 36
                                                                                                                                               col: 18
                                                                                                                                             end:
-                                                                                                                                              line: 37
+                                                                                                                                              line: 36
                                                                                                                                               col: 19
                                                                                           - type: "rparan"
                                                                                             value: ")"
                                                                                             text: ")"
                                                                                             toString: [object Function]
-                                                                                            offset: 523
+                                                                                            offset: 517
                                                                                             lineBreaks: 0
-                                                                                            line: 37
+                                                                                            line: 36
                                                                                             col: 20
                                                 symbol:
                                                   type:
@@ -3829,28 +3829,28 @@ parts:
                                                       - type: "identifier"
                                                         value: "val"
                                                         start:
-                                                          line: 37
+                                                          line: 36
                                                           col: 8
                                                         end:
-                                                          line: 37
+                                                          line: 36
                                                           col: 11
                                                     symbol:
                                                       type:
                                                         type: "identifier"
                                                         value: "val"
                                                         start:
-                                                          line: 37
+                                                          line: 36
                                                           col: 8
                                                         end:
-                                                          line: 37
+                                                          line: 36
                                                           col: 11
                                               - type: "scolon"
                                                 value: ";"
                                                 text: ";"
                                                 toString: [object Function]
-                                                offset: 524
+                                                offset: 518
                                                 lineBreaks: 0
-                                                line: 37
+                                                line: 36
                                                 col: 21
                                   - type: "stmt"
                                     rule: 0
@@ -3907,18 +3907,18 @@ parts:
                                                                                       - type: "identifier"
                                                                                         value: "output"
                                                                                         start:
-                                                                                          line: 39
+                                                                                          line: 38
                                                                                           col: 4
                                                                                         end:
-                                                                                          line: 39
+                                                                                          line: 38
                                                                                           col: 10
                                                                                       - type: "lparan"
                                                                                         value: "("
                                                                                         text: "("
                                                                                         toString: [object Function]
-                                                                                        offset: 539
+                                                                                        offset: 533
                                                                                         lineBreaks: 0
-                                                                                        line: 39
+                                                                                        line: 38
                                                                                         col: 11
                                                                                       - type: "args"
                                                                                         rule: 0
@@ -3971,26 +3971,26 @@ parts:
                                                                                                                                       - type: "identifier"
                                                                                                                                         value: "n"
                                                                                                                                         start:
-                                                                                                                                          line: 39
+                                                                                                                                          line: 38
                                                                                                                                           col: 11
                                                                                                                                         end:
-                                                                                                                                          line: 39
+                                                                                                                                          line: 38
                                                                                                                                           col: 12
                                                                                       - type: "rparan"
                                                                                         value: ")"
                                                                                         text: ")"
                                                                                         toString: [object Function]
-                                                                                        offset: 541
+                                                                                        offset: 535
                                                                                         lineBreaks: 0
-                                                                                        line: 39
+                                                                                        line: 38
                                                                                         col: 13
                                           - type: "scolon"
                                             value: ";"
                                             text: ";"
                                             toString: [object Function]
-                                            offset: 542
+                                            offset: 536
                                             lineBreaks: 0
-                                            line: 39
+                                            line: 38
                                             col: 14
                               - type: "stmt"
                                 rule: 0
@@ -4047,18 +4047,18 @@ parts:
                                                                                   - type: "identifier"
                                                                                     value: "output"
                                                                                     start:
-                                                                                      line: 40
+                                                                                      line: 39
                                                                                       col: 4
                                                                                     end:
-                                                                                      line: 40
+                                                                                      line: 39
                                                                                       col: 10
                                                                                   - type: "lparan"
                                                                                     value: "("
                                                                                     text: "("
                                                                                     toString: [object Function]
-                                                                                    offset: 555
+                                                                                    offset: 549
                                                                                     lineBreaks: 0
-                                                                                    line: 40
+                                                                                    line: 39
                                                                                     col: 11
                                                                                   - type: "args"
                                                                                     rule: 0
@@ -4111,26 +4111,26 @@ parts:
                                                                                                                                   - type: "identifier"
                                                                                                                                     value: "val"
                                                                                                                                     start:
-                                                                                                                                      line: 40
+                                                                                                                                      line: 39
                                                                                                                                       col: 11
                                                                                                                                     end:
-                                                                                                                                      line: 40
+                                                                                                                                      line: 39
                                                                                                                                       col: 14
                                                                                   - type: "rparan"
                                                                                     value: ")"
                                                                                     text: ")"
                                                                                     toString: [object Function]
-                                                                                    offset: 559
+                                                                                    offset: 553
                                                                                     lineBreaks: 0
-                                                                                    line: 40
+                                                                                    line: 39
                                                                                     col: 15
                                       - type: "scolon"
                                         value: ";"
                                         text: ";"
                                         toString: [object Function]
-                                        offset: 560
+                                        offset: 554
                                         lineBreaks: 0
-                                        line: 40
+                                        line: 39
                                         col: 16
                           - type: "stmt"
                             rule: 0
@@ -4187,18 +4187,18 @@ parts:
                                                                               - type: "identifier"
                                                                                 value: "listNums"
                                                                                 start:
-                                                                                  line: 41
+                                                                                  line: 40
                                                                                   col: 4
                                                                                 end:
-                                                                                  line: 41
+                                                                                  line: 40
                                                                                   col: 12
                                                                               - type: "lparan"
                                                                                 value: "("
                                                                                 text: "("
                                                                                 toString: [object Function]
-                                                                                offset: 575
+                                                                                offset: 569
                                                                                 lineBreaks: 0
-                                                                                line: 41
+                                                                                line: 40
                                                                                 col: 13
                                                                               - type: "args"
                                                                                 rule: 1
@@ -4208,17 +4208,17 @@ parts:
                                                                                 value: ")"
                                                                                 text: ")"
                                                                                 toString: [object Function]
-                                                                                offset: 576
+                                                                                offset: 570
                                                                                 lineBreaks: 0
-                                                                                line: 41
+                                                                                line: 40
                                                                                 col: 14
                                   - type: "scolon"
                                     value: ";"
                                     text: ";"
                                     toString: [object Function]
-                                    offset: 577
+                                    offset: 571
                                     lineBreaks: 0
-                                    line: 41
+                                    line: 40
                                     col: 15
                       - type: "stmt"
                         rule: 4
@@ -4232,9 +4232,9 @@ parts:
                                 value: "return"
                                 text: "return"
                                 toString: [object Function]
-                                offset: 584
+                                offset: 578
                                 lineBreaks: 0
-                                line: 42
+                                line: 41
                                 col: 5
                               - type: "simpleExp"
                                 rule: 1
@@ -4275,24 +4275,24 @@ parts:
                                                                   - type: "identifier"
                                                                     value: "val"
                                                                     start:
-                                                                      line: 42
+                                                                      line: 41
                                                                       col: 11
                                                                     end:
-                                                                      line: 42
+                                                                      line: 41
                                                                       col: 14
                               - type: "scolon"
                                 value: ";"
                                 text: ";"
                                 toString: [object Function]
-                                offset: 594
+                                offset: 588
                                 lineBreaks: 0
-                                line: 42
+                                line: 41
                                 col: 15
                   - type: "rbrace"
                     value: "}"
                     text: "}"
                     toString: [object Function]
-                    offset: 597
+                    offset: 591
                     lineBreaks: 0
-                    line: 43
+                    line: 42
                     col: 1

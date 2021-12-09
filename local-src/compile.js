@@ -26,8 +26,6 @@ const scope = {
 let scopePath = [scope];
 const currentScope = () => scopePath[scopePath.length - 1];
 
-let currentMemoryLocation = 0;
-
 const findSymbol = (id, scopes = scopePath) => scopes.length ? scopes[scopes.length - 1].symbols.find(symbol => symbol.name === id) || findSymbol(id, scopes.slice(0, -1)) : undefined;
 
 const findScopeFromSymbol = (id, scopes = scopePath) => scopes.length ? scopes[scopes.length - 1].symbols.find(symbol => symbol.name === id) ? scopes[scopes.length - 1] : findScopeFromSymbol(id, scopes.slice(0, -1)) : undefined;
