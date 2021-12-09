@@ -527,9 +527,7 @@ const codeGenDFS = (node, scope) => {
         "exp": {
             pre: [(node) => {
                 const symbol = findSymbol(indexer(node, 0, 0).value);
-                console.log(symbol);
                 const scope = findScopeFromSymbol(symbol.name);
-
 
                 if (symbol.array) {
                     const indexValue = codeTreeToString(codeGenDFS(indexer(node, 0, 2)), 0, false);
@@ -604,8 +602,6 @@ const codeGenDFS = (node, scope) => {
         },
         "mutable": {
             order: ['', '']
-            // pre: (node) => ``,
-            // post: (node) => ``
         },
         "immutable": {
             pre: (node) => ``,
@@ -646,9 +642,6 @@ const codeGenDFS = (node, scope) => {
         const scope = currentScope().scopes.find(s => arrayEquals(s.nodeIndex, node.index));
         if (scope) {
             scopePath.push(scope);
-            // console.log(node.title.toUpperCase() + "{ ")
-            // console.log(scopePath);
-            // console.log("} " + node.title.toUpperCase())
         } else {
             throw new Error("Scope not found");
         }
@@ -855,7 +848,5 @@ scopePath = [scope];
 
 const codeTree = codeGenDFS(ast, scope);
 const codeOutput = codeTreeToString(codeTree);
-// console.log(codeOutput);
 
-// write code to file
 fs.writeFileSync('./output/output.wat', codeOutput);
