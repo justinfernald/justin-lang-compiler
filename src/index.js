@@ -3,12 +3,12 @@
 
 const nearley = require("nearley");
 const grammar = require("../output/grammar");
-let exports;
 
-let wabt;
-require("wabt")().then(w => {
-    wabt = w;
-});
+let irOutput = "";
+let watOutput = "";
+let binaryOutput = "";
+
+let exports;
 
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 
@@ -19,16 +19,25 @@ window.addEventListener("load", () => {
         exports.main();
     };
 
+    document.getElementById("ir-button").onclick = () => {
+        document.getElementById("code-output").innerText = irOutput
+    }
+
+    document.getElementById("wat-button").onclick = () => {
+        document.getElementById("code-output").innerText = watOutput
+    }
+
+    document.getElementById("binary-button").onclick = () => {
+        document.getElementById("code-output").innerText = binaryOutput
+    }
+
     document.getElementById("input").value = localStorage.getItem("code") || "void main() {\n\n}"
 
     document.getElementById("input").addEventListener("input", (e) => {
         localStorage.setItem("code", e.target.value);
     })
 
-    document.getElementById("compile-button").addEventListener("click", () => {
-
-        if (!wabt) return;
-
+    document.getElementById("compile-button").addEventListener("click", async () => {
         const input = document.getElementById("input").value;
 
         parser.feed(input);
@@ -879,9 +888,17 @@ window.addEventListener("load", () => {
         const codeTree = codeGenDFS(ast, scope);
         const codeOutput = codeTreeToString(codeTree);
 
+        irOutput = codeOutput;
+
+        document.getElementById("code-output").innerText = codeOutput;
+
+        let wabt = await require("wabt")();
+
         const module = wabt.parseWat("", codeOutput);
         module.validate();
+        watOutput = module.toText({ foldExprs: false });
         const binary = module.toBinary({ log: true });
+        binaryOutput = binary.log;
 
         const imports = {
             console: {

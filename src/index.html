@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WASM Runner</title>
         <script src="bundle.js"></script>
-        <script src="main.js"></script>
         <style>
             .split {
                 width: 100%;
@@ -14,14 +13,21 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                padding: 30px;
+                padding: 15px;
                 box-sizing: border-box;
                 display: flex;
             }
 
             .split > div {
-                flex: 1;
                 position: relative;
+            }
+
+            #code-area {
+                flex: 0.5;
+            }
+
+            #run-area {
+                flex: 1;
             }
 
             #input {
@@ -41,10 +47,24 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                padding: 30px;
+                padding: 15px;
                 box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
+            }
+
+            #run-buttons {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            #view-buttons {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            #view-buttons > div {
+                margin-left: 5px;
             }
 
             .button-wrap {
@@ -53,7 +73,8 @@
                 align-items: center;
             }
 
-            #output {
+            #output,
+            #code-output {
                 flex: 1;
                 border: 1px solid #ccc;
                 overflow: auto;
@@ -80,9 +101,26 @@
             </div>
             <div id="run-area">
                 <div class="content">
-                    <div class="button-wrap">
-                        <button id="run-button">Run</button>
+                    <div id="run-buttons">
+                        <div class="left">
+                            <div class="button-wrap">
+                                <button id="run-button">Run</button>
+                            </div>
+                        </div>
+                        <div id="view-buttons" class="right">
+                            <div class="button-wrap">
+                                <button id="ir-button">View IR</button>
+                            </div>
+                            <div class="button-wrap">
+                                <button id="wat-button">View WAT</button>
+                            </div>
+                            <div class="button-wrap">
+                                <button id="binary-button">View Binary</button>
+                            </div>
+                        </div>
                     </div>
+
+                    <pre id="code-output"></pre>
                     <pre id="output"></pre>
                 </div>
             </div>
