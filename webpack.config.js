@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.js',
@@ -10,7 +10,7 @@ module.exports = {
         static: './dist',
     },
     resolve: {
-        fallback: { path: require.resolve("path-browserify"), crypto: require.resolve("crypto-browserify"), buffer: require.resolve("buffer-browserify"), stream: require.resolve("stream-browserify"), fs: false },
+        fallback: { path: require.resolve("path-browserify"), crypto: require.resolve("crypto-browserify"), buffer: require.resolve("buffer-browserify"), stream: require.resolve("stream-browserify"), "assert": require.resolve("assert/"), fs: false },
     },
     output: {
         filename: 'bundle.js',
@@ -21,6 +21,9 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'src/index.html',
             inject: false
+        }),
+        new webpack.ProvidePlugin({
+            wabt: 'wabt',
         }),
     ],
 };
