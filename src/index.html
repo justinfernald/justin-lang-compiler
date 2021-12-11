@@ -33,12 +33,15 @@
             #input {
                 box-sizing: border-box;
                 padding: 10px;
-                margin-top: 14px;
+                margin-top: 16px;
                 margin-bottom: 12px;
                 flex: 1;
                 position: relative;
                 width: 100%;
                 resize: none;
+                white-space: pre;
+                overflow-wrap: normal;
+                overflow-x: auto;
             }
 
             .content {
@@ -87,9 +90,7 @@
         <div class="split">
             <div id="code-area">
                 <div class="content">
-                    <div class="button-wrap">
-                        <button id="compile-button">Compile</button>
-                    </div>
+                    <div>Compiles after unfocusing from input.</div>
                     <textarea
                         name="input"
                         id="input"
