@@ -117,7 +117,7 @@ function ast(part, scopeHead = false, title = "default") {
     const endTypes = context.map(x => x.terms[x.terms.length - 1]);
     if (!scopeHead) title = undefined;
     // return { scopeHead, title, parts: part};  
-    return { scopeHead, title, values, context, parts: part};  
+    return { scopeHead, title, values, parts: part};  
 }
 
 function symbol(type, name, scope) {

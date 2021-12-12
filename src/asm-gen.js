@@ -4,23 +4,34 @@ export class ASMGenerator {
     }
 
     build = (codeOutput, callback) => {
-        const module = this.w.parseWat("", codeOutput, { exceptions: false, multi_value: true });
+        console.log(codeOutput)
+        const module = this.w.parseWat("", codeOutput, {
+            exceptions: false,
+            multi_value: true,
+        });
         module.validate();
         let watOutput = module.toText({ foldExprs: false });
         const binary = module.toBinary({ log: true });
         let binaryOutput = binary.log;
 
         const imports = {
-            console: {
-                log: (x) => {
+            output: {
+                int: (x) => {
                     console.log(x);
-                    document.getElementById("output").innerHTML += x + '<br>';
-                }
+                    setTimeout(() => document.getElementById("output").innerHTML += x + "<br>", 0);
+                },
+                char: (x) => {
+                    console.log(x);
+                    setTimeout(() => document.getElementById("output").innerHTML += x + "<br>");
+                },
             },
-            window: { prompt: () => Number.parseInt(window.prompt()) },
+            input: {
+                int: () => Number.parseInt(window.prompt()),
+                char: () => window.prompt(),
+            },
             js: {
-                mem: new WebAssembly.Memory({ initial: 1028 })
-            }
+                mem: new WebAssembly.Memory({ initial: 1028 }),
+            },
         };
 
         WebAssembly.instantiate(binary.buffer, imports).then(({ instance }) => {
@@ -28,6 +39,6 @@ export class ASMGenerator {
             callback(instance.exports);
         });
 
-        return { watOutput, binaryOutput }
-    }
+        return { watOutput, binaryOutput };
+    };
 }
