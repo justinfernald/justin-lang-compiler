@@ -5,23 +5,14 @@ const { CodeGenerator } = require("./code-gen");
 const { Optimizer } = require("./optimizer");
 const { ScopeHandler } = require("./scope-handler");
 const { Semantic } = require("./semantic");
-const { addIndex, addASTIndex } = require("./utils");
+const { addASTIndex } = require("./utils");
 
 let loaded = false;
 let w;
 wabt().then((x) => {
     w = x;
     if (loaded) {
-        try {
-            compile();
-        } catch (e) {
-            document.getElementById("code-output").innerText = e;
-            irOutput = e;
-            watOutput = e;
-            binaryOutput = e;
-            // console.clear();
-            console.error(e);
-        }
+        runCompilation();
     }
 });
 
@@ -35,21 +26,12 @@ window.addEventListener("load", () => {
     loaded = true;
     if (w) {
         setTimeout(() => {
-            try {
-                compile();
-            } catch (e) {
-                document.getElementById("code-output").innerText = e;
-                irOutput = e;
-                watOutput = e;
-                binaryOutput = e;
-                // console.clear();
-                console.error(e);
-            }
+            runCompilation();
         }, 0);
     }
 
     document.getElementById("run-button").onclick = () => {
-        // console.clear()
+        console.clear()
         document.getElementById("output").innerHTML = "";
         exports.main();
     };
@@ -71,18 +53,22 @@ window.addEventListener("load", () => {
 
     document.getElementById("input").addEventListener("change", (e) => {
         localStorage.setItem("code", e.target.value);
-        try {
-            compile();
-        } catch (e) {
-            document.getElementById("code-output").innerText = e;
-            irOutput = e;
-            watOutput = e;
-            binaryOutput = e;
-            // console.clear();
-            console.error(e);
-        }
+        runCompilation();
     });
 });
+
+const runCompilation = () => {
+    try {
+        compile();
+    } catch (e) {
+        document.getElementById("code-output").innerText = e;
+        irOutput = e;
+        watOutput = e;
+        binaryOutput = e;
+        // console.clear();
+        console.error(e);
+    }
+}
 
 const compile = () => {
     if (!w) return;

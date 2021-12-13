@@ -316,16 +316,16 @@ export class Semantic {
 
         switch (node.type) {
             case "varDecl": {
-                if (indexer(node, 1, 0).rule === 0) {
+                if (indexer(node, 1).rule === 0) {
                     currentScope().symbols.push({
                         type: indexer(node, 0, 0).value,
-                        name: indexer(node, 1, 0, 0).value,
+                        name: indexer(node, 1, 0).value,
                     });
                 } else {
-                    const size = +indexer(node, 1, 0, 2).value;
+                    const size = +indexer(node, 1, 2).value;
                     currentScope().symbols.push({
                         type: indexer(node, 0, 0).value,
-                        name: indexer(node, 1, 0, 0).value,
+                        name: indexer(node, 1, 0).value,
                         array: true,
                         size,
                         length: 4 * size,
@@ -388,6 +388,9 @@ export class Semantic {
                 this.currentFunction = currentScope().symbols.find(
                     (x) => x.name === indexer(node, 1).value
                 );
+
+                if (this.currentFunction.type !== "void" && !this.ensureReturn(node))
+                    throw new Error("Function should return a value");
                 break;
             }
             case "scopedVarDecl": {
@@ -410,8 +413,8 @@ export class Semantic {
             }
         }
 
-        if (node.type === "exp")
-            this.checkType(node);
+        // if (node.type === "exp")
+        this.checkType(node);
 
         if (node.scopeHead) {
             if (isFunctionDeclaration) {
@@ -434,6 +437,35 @@ export class Semantic {
 
         if (node.scopeHead) scopePath.pop();
     };
+
+    hasDefiniteReturn = (node, hadCompound = false) => {
+        // if it is a select statement it must have a return for if and else part
+        if (node.type === "selectStmt" && node.rule === 1) {
+            return (
+                this.hasDefiniteReturn(indexer(node, 4)) &&
+                this.hasDefiniteReturn(indexer(node, 6))
+            );
+        }
+
+        if (node.type === "compoundStmt") {
+            if (hadCompound)
+                return false;
+            hadCompound = true;
+        }
+        if (node.type === "returnStmt") return true;
+
+        if (node.parts)
+            for (let child of node.parts) {
+                if (this.hasDefiniteReturn(child, hadCompound)) {
+                    return true;
+                }
+            }
+        return false;
+    }
+
+    ensureReturn = (node) => {
+        return this.hasDefiniteReturn(node);
+    }
 
     run = (node) => {
         this.semanticCheckInit(node);

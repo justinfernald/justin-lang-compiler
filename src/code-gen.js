@@ -8,7 +8,7 @@ export class CodeGenerator {
     memPointer = 0;
 
     codeGenDFS = (node, scope) => {
-        let { currentScope, scopePath, findSymbol, findScopeFromSymbol, findFunctionSymbol } =
+        let { currentScope, scopePath, findSymbol, findScopeFromSymbol, findFunctionScope } =
             this.scopeHandler;
 
         const terminals = {
@@ -36,9 +36,9 @@ export class CodeGenerator {
             },
             varDecl: {
                 pre: (node) =>
-                    findSymbol(indexer(node, 1, 0, 0).value).array
+                    findSymbol(indexer(node, 1, 0).value).array
                         ? ""
-                        : `(global $${indexer(node, 1, 0, 0).value
+                        : `(global $${indexer(node, 1, 0).value
                         } (mut i32) (i32.const 0))`,
                 post: () => "",
             },
@@ -175,12 +175,8 @@ export class CodeGenerator {
                 ],
             },
             returnStmt: {
-                pre: () => {
-                    console.log([...scopePath])
-                    console.log(findFunctionSymbol(scopePath))
-                    return "(local.set $function_output "
-                },
-                post: () => ")(br $function_block)",
+                pre: () => findFunctionScope(scopePath).type === "void" ? "" : "(local.set $function_output ",
+                post: () => (findFunctionScope(scopePath).type === "void" ? "" : ")") + "(br $function_block)",
             },
             breakStmt: {
                 pre: () => "(br 0)",
@@ -211,16 +207,13 @@ export class CodeGenerator {
                 post: [() => ")", () => ""],
             },
             simpleExp: {
-                pre: () => "",
-                post: () => "",
+                order: { 0: ["(i32.or ", 0, 2, ")"] },
             },
             andExp: {
-                pre: () => "",
-                post: () => "",
+                order: { 0: ["(i32.and ", 0, 2, ")"] },
             },
             unaryRelExp: {
-                pre: () => "",
-                post: () => "",
+                order: { 0: ["(i32.xor ", 1, "    (i32.const 1))"] },
             },
             relExp: {
                 order: { 0: ["(", 1, 0, 2, ")"] },
@@ -316,13 +309,11 @@ export class CodeGenerator {
                 post: () => "",
             },
             constant: {
-                pre: (node) =>
-                    [
-                        `(i32.const ${indexer(node, 0).value})`,
-                        `(i32.const ${indexer(node, 0).value.charCodeAt(0)})`,
-                        `(i32.const ${indexer(node, 0).value === "true" ? 1 : 0
-                        })`,
-                    ][node.rule],
+                pre: (node) => [
+                    `(i32.const ${indexer(node, 0).value})`,
+                    `(i32.const ${indexer(node, 0).value.charCodeAt(0)})`,
+                    `(i32.const ${indexer(node, 0).value === "true" ? 1 : 0})`,
+                ][node.rule],
                 post: () => "",
             },
         };
@@ -397,6 +388,7 @@ export class CodeGenerator {
                                     );
                                     orderOutput.push(outputPart);
                                 } else {
+                                    console.log(node)
                                     throw new Error(`No part at index ${part}`);
                                 }
                             } else {

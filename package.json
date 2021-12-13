@@ -16,11 +16,7 @@
     },
     "scripts": {
         "grammar-gen": "nearleyc src/grammar.ne -o output/grammar.js",
-        "init-compile": "node local-src/index.js input/primes.gcupl",
-        "go": "npm run grammar-gen & npm run init-compile",
-        "compile": "node local-src/compile.js & npm run convert",
-        "full": "npm run go & npm run compile",
-        "convert": "wat2wasm output/output.wat -o output/output.wasm",
+        "go": "npm run grammar-gen",
         "build": "webpack",
         "start": "webpack serve --open"
     },

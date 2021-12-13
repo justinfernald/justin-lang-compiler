@@ -13,6 +13,7 @@ const lexer = moo.compile({
     gt: ">",
     neq: "!=",
     eq: "==",
+    not: "!",
     lparan: "(",
     rparan: ")",
     comma: ",",
@@ -175,7 +176,7 @@ decl -> varDecl {% (data) => ({type: "decl", rule: 0, ...ast(data)}) %}
     | funcDecl {% (data) => ({type: "decl", rule: 1, ...ast(data)}) %}
 
 # variable declaration
-varDecl -> typeSpec varDeclInit %scolon {% (data) => ({type: "varDecl", rule: 0, ...ast(data), symbol: symbol(data[0], data[1], ...data)}) %}
+varDecl -> typeSpec varDeclId %scolon {% (data) => ({type: "varDecl", rule: 0, ...ast(data), symbol: symbol(data[0], data[1], ...data)}) %}
 
 # scoped variable declaration
 scopedVarDecl -> typeSpec varDeclInit %scolon {% (data) => ({type: "scopedVarDecl", rule: 0, ...ast(data)}) %}

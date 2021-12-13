@@ -25,15 +25,15 @@ export class ScopeHandler {
     findSymbol = (id, scopes = this.scopePath) =>
         scopes.length
             ? scopes[scopes.length - 1].symbols.find(
-                  (symbol) => symbol.name === id
-              ) || this.findSymbol(id, scopes.slice(0, -1))
+                (symbol) => symbol.name === id
+            ) || this.findSymbol(id, scopes.slice(0, -1))
             : undefined;
 
     findScopeFromSymbol = (id, scopes = this.scopePath) =>
         scopes.length
             ? scopes[scopes.length - 1].symbols.find(
-                  (symbol) => symbol.name === id
-              )
+                (symbol) => symbol.name === id
+            )
                 ? scopes[scopes.length - 1]
                 : this.findScopeFromSymbol(id, scopes.slice(0, -1))
             : undefined;
@@ -41,7 +41,13 @@ export class ScopeHandler {
     findFunctionSymbol = (scopes = this.scopePath) =>
         scopes.length
             ? scopes[scopes.length - 1].symbols.find(
-                  (symbol) => symbol.function
-              ) || this.findFunctionSymbol(scopes.slice(0, -1))
+                (symbol) => symbol.function
+            ) || this.findFunctionSymbol(scopes.slice(0, -1))
+            : undefined;
+
+    findFunctionScope = (scopes = this.scopePath) =>
+        scopes.length
+            ? scopes[scopes.length - 1].functionSymbol
+            || this.findFunctionScope(scopes.slice(0, -1))
             : undefined;
 }
