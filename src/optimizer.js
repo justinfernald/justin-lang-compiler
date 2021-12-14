@@ -99,6 +99,12 @@ export class Optimizer {
             return undefined;
         };
 
+        const passExps = ["exp", "simpleExp", "andExp", "unaryRelExp", "relExp"];
+
+        if (node?.rule === 1 && passExps.includes(node?.type)) {
+            return this.algebraicUnrolling(node.parts[0])
+        }
+
         const operations = {
             sumExp: {
                 0: {
@@ -131,6 +137,8 @@ export class Optimizer {
                                 ],
                             };
                         } else {
+                            node.parts[0] = aUnrolled;
+                            node.parts[2] = bUnrolled;
                             return node;
                         }
                     },
@@ -167,6 +175,8 @@ export class Optimizer {
                                 ],
                             };
                         } else {
+                            node.parts[0] = aUnrolled;
+                            node.parts[2] = bUnrolled;
                             return node;
                         }
                     },
@@ -191,11 +201,40 @@ export class Optimizer {
                                     },
                                 ],
                             };
-                        else return node;
+                        else return aUnrolled;
                     },
                 },
             },
+            immutable: {
+                0: {
+                    pull: [1],
+                    run: ([a], node) => {
+                        const aUnrolled = this.algebraicUnrolling(a);
+
+                        const aResult = getConstantValue(aUnrolled);
+
+                        if (aResult !== undefined)
+                            return {
+                                type: "constant",
+                                rule: 0,
+                                parts: [
+                                    {
+                                        type: "number_literal",
+                                        value: aResult,
+                                    },
+                                ],
+                            };
+                        else return aUnrolled;
+                    }
+                }
+            }
         };
+
+        const recurse = (node) => {
+            if (node.parts)
+                for (let child of node.parts)
+                    this.algebraicUnrolling(child);
+        }
 
         if (operations[node.type]) {
             const operation = operations[node.type][node.rule];
@@ -208,8 +247,13 @@ export class Optimizer {
                     for (const [key, value] of Object.entries(result))
                         node[key] = value;
                 }
+            } else {
+                recurse(node);
             }
+        } else {
+            recurse(node);
         }
+
 
         return node;
     };
@@ -217,7 +261,8 @@ export class Optimizer {
     optimize = (node) => {
         this.deadCodeElimination(node);
         this.uselessCodeElimination(node);
-        this.algebraicUnrolling(node);
+        if (node.type === "simpleExp")
+            this.algebraicUnrolling(node);
 
         if (node.parts)
             for (let child of node.parts) {
