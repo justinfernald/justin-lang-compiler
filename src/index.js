@@ -65,7 +65,7 @@ const runCompilation = () => {
         irOutput = e;
         watOutput = e;
         binaryOutput = e;
-        // console.clear();
+        console.clear();
         console.error(e);
     }
 }

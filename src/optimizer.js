@@ -82,7 +82,7 @@ export class Optimizer {
                 { type: "immutable", rule: 2 },
             ];
 
-            if (node.type === "constant") {
+            if (node.type === "constant" && node.rule === 0) {
                 return indexer(node, 0).value;
             }
             if (
