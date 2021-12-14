@@ -22,7 +22,7 @@ export class CodeGenerator {
                             `(global $${globalArray.name} (mut i32) (i32.const ${this.memPointer}))`;
                         this.memPointer += globalArray.length;
                     }
-                    return `(module\n    (import "output" "int" (func $output (param i32)))\n    (import "output" "char" (func $output_char (param i32)))\n    (import "input" "int" (func $input (result i32)))\n    (import "input" "char" (func $input_char (result i32)))\n    (memory (import "js" "mem") 1)\n    (global $mem_pointer (mut i32) (i32.const ${this.memPointer}))${globalArrayOutput}`;
+                    return `(module\n  (import "output" "int" (func $output (param i32)))\n  (import "output" "char" (func $output_char (param i32)))\n  (import "input" "int" (func $input (result i32)))\n  (import "input" "char" (func $input_char (result i32)))\n  (memory (import "js" "mem") 1)\n  (global $mem_pointer (mut i32) (i32.const ${this.memPointer}))${globalArrayOutput}`;
                 },
                 post: () => ")",
             },
@@ -388,7 +388,6 @@ export class CodeGenerator {
                                     );
                                     orderOutput.push(outputPart);
                                 } else {
-                                    console.log(node)
                                     throw new Error(`No part at index ${part}`);
                                 }
                             } else {
@@ -531,7 +530,7 @@ export class CodeGenerator {
 
         let output = "";
         let spaces = "";
-        if (spacing) for (let i = 0; i < level; i++) spaces += "    ";
+        if (spacing) for (let i = 0; i < level; i++) spaces += "  ";
 
         if (node.pre) output += spaces + node.pre + (spacing ? "\n" : "");
 

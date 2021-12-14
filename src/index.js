@@ -33,7 +33,7 @@ window.addEventListener("load", () => {
     document.getElementById("run-button").onclick = () => {
         console.clear()
         document.getElementById("output").innerHTML = "";
-        exports.main();
+        setTimeout(exports.main);
     };
 
     document.getElementById("ir-button").onclick = () => {

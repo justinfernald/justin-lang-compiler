@@ -4,7 +4,6 @@ export class ASMGenerator {
     }
 
     build = (codeOutput, callback) => {
-        console.log(codeOutput)
         const module = this.w.parseWat("", codeOutput, {
             exceptions: false,
             multi_value: true,
@@ -18,11 +17,11 @@ export class ASMGenerator {
             output: {
                 int: (x) => {
                     console.log(x);
-                    setTimeout(() => document.getElementById("output").innerHTML += x + "<br>", 0);
+                    document.getElementById("output").innerHTML += x + "<br>";
                 },
                 char: (x) => {
                     console.log(x);
-                    setTimeout(() => document.getElementById("output").innerHTML += x + "<br>");
+                    document.getElementById("output").innerHTML += x + "<br>";
                 },
             },
             input: {
