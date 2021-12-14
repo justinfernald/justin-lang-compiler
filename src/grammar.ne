@@ -40,18 +40,15 @@ const lexer = moo.compile({
     or: "||",
     true: "true",
     false: "false",
-    // input: "input()",
-    // output: "output",
+    chare: /'\\.'/,
     charc: /'[^']'/,
-    // string: /"[^"]*"/,
+    string: /"(?:\\"|[^"])*?"/,
     comment: { // find all comments and removes them
         match: /#[^\n]*/,
-        // value: s => s.substring(1)
         value: s => s.substring(1)
     },
     number_literal: { // finds all number tokens
-        match: /[0-9]+(?:\.[0-9]+)?/,
-        // value: s => Number(s)
+        match: /[0-9]+(?:\.[0-9]+)?/
     },
     identifier: { // finds all identifiers for variables and functions
         match: /[a-zA-Z_][a-zA-Z_0-9]*/
@@ -337,6 +334,7 @@ argList -> argList %comma exp {% (data) => ({type: "argList", rule: 0, ...ast(da
 constant -> number {% (data) => ({type: "constant", rule: 0, ...ast(data)}) %}
     | charc {% (data) => ({type: "constant", rule: 1, ...ast(data)}) %}
     | boolv {% (data) => ({type: "constant", rule: 2, ...ast(data)}) %}
+    | string {% (data) => ({type: "constant", rule: 3, ...ast(data)}) %}
 
 # line comment
 line_comment -> %comment {% convertTokenId %}
@@ -350,6 +348,10 @@ boolv -> %true {% convertTokenId %}
 
 # charc
 charc -> %charc {% convertTokenId %}
+    | %chare {% convertTokenId %}
+
+# string
+string -> %string {% convertTokenId %}
 
 # identifier
 identifier -> %identifier {% convertTokenId %}

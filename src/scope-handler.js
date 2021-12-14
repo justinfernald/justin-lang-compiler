@@ -14,6 +14,24 @@ export class ScopeHandler {
                 function: true,
                 scope: { symbols: [{ type: "int", name: "x" }] },
             },
+            {
+                type: "char",
+                name: "input_char",
+                function: true,
+                scope: { symbols: [] },
+            },
+            {
+                type: "void",
+                name: "output_char",
+                function: true,
+                scope: { symbols: [{ type: "char", name: "x" }] },
+            },
+            {
+                type: "void",
+                name: "output_string",
+                function: true,
+                scope: { symbols: [{ type: "char[]", array: true, name: "x" }, { type: "int", name: "n" }] },
+            },
         ],
         scopes: [],
     };

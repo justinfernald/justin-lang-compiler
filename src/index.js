@@ -20,6 +20,8 @@ let irOutput = "";
 let watOutput = "";
 let binaryOutput = "";
 
+let debug = true;
+
 let exports;
 
 window.addEventListener("load", () => {
@@ -31,7 +33,8 @@ window.addEventListener("load", () => {
     }
 
     document.getElementById("run-button").onclick = () => {
-        console.clear()
+        if (!debug)
+            console.clear()
         document.getElementById("output").innerHTML = "";
         setTimeout(exports.main);
     };
@@ -65,7 +68,8 @@ const runCompilation = () => {
         irOutput = e;
         watOutput = e;
         binaryOutput = e;
-        console.clear();
+        if (!debug)
+            console.clear();
         console.error(e);
     }
 }
@@ -94,6 +98,9 @@ const compile = () => {
     const codeOutput = codeGenerator.codeTreeToString(codeTree);
 
     irOutput = codeOutput;
+    if (debug)
+        console.log(codeOutput);
+    window.codeOutput = codeOutput;
 
     document.getElementById("code-output").innerText = codeOutput;
 

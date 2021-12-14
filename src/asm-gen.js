@@ -21,12 +21,40 @@ export class ASMGenerator {
                 },
                 char: (x) => {
                     console.log(x);
-                    document.getElementById("output").innerHTML += x + "<br>";
+                    let c = String.fromCharCode(x);
+                    console.log(c);
+                    if (c === "\n")
+                        document.getElementById("output").innerHTML += "<br>";
+                    else
+                        document.getElementById("output").innerHTML += c;
                 },
             },
             input: {
                 int: () => Number.parseInt(window.prompt()),
-                char: () => window.prompt(),
+                char: () => {
+                    const v = window.prompt();
+                    if (v.length === 1) {
+                        return v.charCodeAt(0)
+                    } else if (v.length === 2) {
+                        if (v.charAt(0) !== "\\")
+                            return v.charCodeAt(0)
+
+                        const specials = {
+                            t: 9,
+                            n: 10,
+                            f: 12,
+                            r: 13,
+                            "\\": 92,
+                        }
+
+                        if (specials[v.charAt(1)]) {
+                            return specials[v.charAt(1)];
+                        }
+                        return v.charCodeAt(1)
+                    } else {
+                        return v.charCodeAt(0)
+                    }
+                }
             },
             js: {
                 mem: new WebAssembly.Memory({ initial: 1028 }),

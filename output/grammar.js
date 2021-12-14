@@ -44,18 +44,15 @@ const lexer = moo.compile({
     or: "||",
     true: "true",
     false: "false",
-    // input: "input()",
-    // output: "output",
+    chare: /'\\.'/,
     charc: /'[^']'/,
-    // string: /"[^"]*"/,
+    string: /"(?:\\"|[^"])*?"/,
     comment: { // find all comments and removes them
         match: /#[^\n]*/,
-        // value: s => s.substring(1)
         value: s => s.substring(1)
     },
     number_literal: { // finds all number tokens
-        match: /[0-9]+(?:\.[0-9]+)?/,
-        // value: s => Number(s)
+        match: /[0-9]+(?:\.[0-9]+)?/
     },
     identifier: { // finds all identifiers for variables and functions
         match: /[a-zA-Z_][a-zA-Z_0-9]*/
@@ -252,11 +249,14 @@ var grammar = {
     {"name": "constant", "symbols": ["number"], "postprocess": (data) => ({type: "constant", rule: 0, ...ast(data)})},
     {"name": "constant", "symbols": ["charc"], "postprocess": (data) => ({type: "constant", rule: 1, ...ast(data)})},
     {"name": "constant", "symbols": ["boolv"], "postprocess": (data) => ({type: "constant", rule: 2, ...ast(data)})},
+    {"name": "constant", "symbols": ["string"], "postprocess": (data) => ({type: "constant", rule: 3, ...ast(data)})},
     {"name": "line_comment", "symbols": [(lexer.has("comment") ? {type: "comment"} : comment)], "postprocess": convertTokenId},
     {"name": "number", "symbols": [(lexer.has("number_literal") ? {type: "number_literal"} : number_literal)], "postprocess": convertTokenId},
     {"name": "boolv", "symbols": [(lexer.has("true") ? {type: "true"} : true)], "postprocess": convertTokenId},
     {"name": "boolv", "symbols": [(lexer.has("false") ? {type: "false"} : false)], "postprocess": convertTokenId},
     {"name": "charc", "symbols": [(lexer.has("charc") ? {type: "charc"} : charc)], "postprocess": convertTokenId},
+    {"name": "charc", "symbols": [(lexer.has("chare") ? {type: "chare"} : chare)], "postprocess": convertTokenId},
+    {"name": "string", "symbols": [(lexer.has("string") ? {type: "string"} : string)], "postprocess": convertTokenId},
     {"name": "identifier", "symbols": [(lexer.has("identifier") ? {type: "identifier"} : identifier)], "postprocess": convertTokenId}
 ]
   , ParserStart: "program"

@@ -22,7 +22,39 @@ export class CodeGenerator {
                             `(global $${globalArray.name} (mut i32) (i32.const ${this.memPointer}))`;
                         this.memPointer += globalArray.length;
                     }
-                    return `(module\n  (import "output" "int" (func $output (param i32)))\n  (import "output" "char" (func $output_char (param i32)))\n  (import "input" "int" (func $input (result i32)))\n  (import "input" "char" (func $input_char (result i32)))\n  (memory (import "js" "mem") 1)\n  (global $mem_pointer (mut i32) (i32.const ${this.memPointer}))${globalArrayOutput}`;
+                    return `(module\n  (import "output" "int" (func $output (param i32)))\n  (import "output" "char" (func $output_char (param i32)))\n  (import "input" "int" (func $input (result i32)))\n  (import "input" "char" (func $input_char (result i32)))\n  (memory (import "js" "mem") 1)\n  (global $mem_pointer (mut i32) (i32.const ${this.memPointer}))${globalArrayOutput}
+    (func $output_string
+    (param $x i32)
+    (param $n i32)
+    
+    (local $function_output i32)(local $i i32) 
+    (block $function_block
+    (local.set $i
+      (i32.const 0)
+    )
+    (block $block_00105110 (loop $loop_00105110
+      (if
+      (
+        i32.lt_s
+        (local.get $i)
+        (local.get $n)
+      )
+      (then
+      (call $output_char
+        (i32.load (i32.add (local.get $x) (i32.mul (i32.const 4) (local.get $i))))
+      )
+      (local.set $i
+        (i32.add
+          (local.get $i)
+          (i32.const 1)
+        )
+      )
+      br $loop_00105110
+    ))))
+    )
+    (global.set $mem_pointer (i32.sub (global.get $mem_pointer) (i32.const 0)))
+    
+  )(export "output_string" (func $output_string))`;
                 },
                 post: () => ")",
             },
@@ -53,9 +85,81 @@ export class CodeGenerator {
             varDeclInit: {
                 pre: [
                     () => "",
-                    (node) => `(local.set $${indexer(node, 0, 0).value}`,
+                    (node) => {
+                        const symbol = findSymbol(indexer(node, 0, 0).value);
+                        const scope = findScopeFromSymbol(symbol);
+                        console.log(symbol)
+                        console.log(scope)
+
+                        if (symbol.array) {
+                            if (node.rule === 1) {
+                                // this is a bad way for doing this
+                                const string = indexer(node, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).value;
+                                const chars = string.substring(1, string.length - 1).split("");
+                                const newChars = [];
+                                let isEscaped = false;
+                                for (const char of chars) {
+
+
+
+                                    if (isEscaped) {
+                                        newChars.push("\\" + char);
+                                        isEscaped = false;
+                                    } else if (char === "\\") {
+                                        isEscaped = true;
+                                    } else {
+                                        newChars.push(char);
+                                    }
+                                }
+                                /*
+                                (i32.load (i32.add (${scope.name === "global" ? "global" : "local"
+                                }.get $${symbol.name
+                                }) (i32.mul (i32.const 4) ${indexValue})))
+                                */
+
+                                let output = "";
+                                console.log(newChars)
+                                for (let [i, char] of Object.entries(newChars)) {
+                                    const convertChar = (char) => {
+                                        if (char.length === 1) {
+                                            return char.charCodeAt(0)
+                                        } else {
+                                            const specials = {
+                                                t: 9,
+                                                n: 10,
+                                                f: 12,
+                                                r: 13,
+                                                "\\": 92,
+                                            }
+                                            if (specials[char.charAt(1)]) {
+                                                return specials[char.charAt(1)];
+                                            }
+                                            return v.charCodeAt(1)
+                                        }
+                                    }
+
+
+                                    output += `(i32.store (i32.add (local.get $${symbol.name}) (i32.mul (i32.const 4) (i32.const ${i}))) (i32.const ${convertChar(char)}))`;
+                                }
+                                return output;
+                            }
+                            return ""
+                        }
+
+
+                        return `(local.set $${indexer(node, 0, 0).value}`
+                    },
                 ],
-                post: [() => "", () => ")"],
+                post: [() => "", () => {
+                    const symbol = findSymbol(indexer(node, 0, 0).value);
+
+                    if (symbol.array) {
+                        return ""
+                    }
+
+
+                    return `)`
+                }],
             },
             varDeclId: {
                 pre: () => "",
@@ -187,8 +291,30 @@ export class CodeGenerator {
                     (node) => {
                         const symbol = findSymbol(indexer(node, 0, 0).value);
                         const scope = findScopeFromSymbol(symbol.name);
+                        console.log(symbol)
 
                         if (symbol.array) {
+                            const isString = (node) => {
+                                console.log(node)
+                                if (node.type === "string") return node.value;
+                                if (node.parts && node.parts.length === 1)
+                                    return isString(node.parts[0]);
+                                return false;
+                            }
+
+                            const string = isString(indexer(node, 2));
+                            if (string) {
+                                // this is a bad way for doing this
+                                const chars = string.substring(1, string.length - 1).split("");
+
+                                let output = "";
+                                for (let [i, char] of Object.entries(chars)) {
+                                    output += `(i32.store (i32.add (${scope.name === "global" ? "global" : "local"}.get $${symbol.name}) (i32.mul (i32.const 4) (i32.const ${i}))) (i32.const ${char.charCodeAt(0)}))`;
+                                }
+                                node.ignoreClose = true;
+                                return output;
+                            }
+
                             const indexValue = this.codeTreeToString(
                                 this.codeGenDFS(indexer(node, 0, 2)),
                                 0,
@@ -199,12 +325,13 @@ export class CodeGenerator {
                                 }) (i32.mul (i32.const 4) ${indexValue}))`;
                         }
 
+
                         return `(${scope.name === "global" ? "global" : "local"
                             }.set $${symbol.name}`;
                     },
                     () => "",
                 ],
-                post: [() => ")", () => ""],
+                post: [(node) => node.ignoreClose ? "" : ")", () => ""],
             },
             simpleExp: {
                 order: { 0: ["(i32.or ", 0, 2, ")"] },
@@ -273,7 +400,8 @@ export class CodeGenerator {
                     (node) => {
                         const symbol = findSymbol(indexer(node, 0, 0).value);
                         const scope = findScopeFromSymbol(symbol.name);
-                        if (symbol.array) {
+                        if (symbol.array && indexer(node, 0).rule === 1) {
+
                             const indexValue = this.codeTreeToString(
                                 this.codeGenDFS(indexer(node, 0, 2)),
                                 0,
@@ -311,8 +439,26 @@ export class CodeGenerator {
             constant: {
                 pre: (node) => [
                     `(i32.const ${indexer(node, 0).value})`,
-                    `(i32.const ${indexer(node, 0).value.charCodeAt(0)})`,
+                    `(i32.const ${(() => {
+                        const v = indexer(node, 0).value;
+                        if (v.length === 3) {
+                            return v.charCodeAt(1)
+                        } else {
+                            const specials = {
+                                t: 9,
+                                n: 10,
+                                f: 12,
+                                r: 13,
+                                "\\": 92,
+                            }
+                            if (specials[v.charAt(2)]) {
+                                return specials[v.charAt(2)];
+                            }
+                            return v.charCodeAt(2)
+                        }
+                    })()})`,
                     `(i32.const ${indexer(node, 0).value === "true" ? 1 : 0})`,
+                    ``,
                 ][node.rule],
                 post: () => "",
             },

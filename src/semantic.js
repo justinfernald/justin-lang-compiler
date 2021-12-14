@@ -171,7 +171,7 @@ export class Semantic {
                             getContext(node)
                         );
 
-                    return symbol.type;
+                    return symbol.type.substring(0, symbol.type.length - 2);
                 }
             }
 
@@ -242,12 +242,13 @@ export class Semantic {
                     );
                 }
 
+                console.log(args)
                 for (let i = 0; i < args.length; i++) {
                     const arg = args[i];
                     const param = params[i];
                     if (this.checkType(arg) !== param.type) {
                         throw new Error(
-                            `Type mismatch: ${arg.type} and ${param.type} | Should be ${param.type}` +
+                            `Type mismatch: ${this.checkType(arg)} and ${param.type} | Should be ${param.type}` +
                             getContext(node)
                         );
                     }
@@ -262,6 +263,8 @@ export class Semantic {
                     return "char";
                 } else if (node.rule === 2) {
                     return "bool";
+                } else if (node.rule === 3) {
+                    return "char[]";
                 }
             }
 
@@ -345,9 +348,30 @@ export class Semantic {
                 break;
             }
             case "parmTypeList": {
+                /*
+                if (indexer(node, 1, 0).rule === 0) {
+                    currentScope().symbols.push({
+                        type: indexer(node, 0, 0).value,
+                        name: indexer(node, 1, 0, 0).value,
+                    });
+                } else {
+                    const size = +indexer(node, 1, 0, 2).value;
+                    currentScope().symbols.push({
+                        type: indexer(node, 0, 0).value,
+                        name: indexer(node, 1, 0, 0).value,
+                        array: true,
+                        size,
+                        length: 4 * size,
+                    });
+                }
+                */
+
+                console.log(indexer(node, 1).rule === 0)
+
                 currentScope().symbols.push({
-                    type: indexer(node, 0, 0).value,
+                    type: indexer(node, 0, 0).value + (indexer(node, 1).rule === 0 ? "" : "[]"),
                     name: indexer(node, 1, 0).value,
+                    array: indexer(node, 1).rule === 0 ? false : true,
                 });
                 break;
             }
@@ -376,9 +400,7 @@ export class Semantic {
 
     semanticCheckFull = (node) => {
         let { currentScope, scopePath } = this.scopeHandler;
-        // TODO: need to make sure non-void function finish with return statement
         // TODO: need to do type checking for var decl statements
-        // TODO: disable non-constant expressions in globals
 
         let isFunctionDeclaration = false;
 
@@ -413,7 +435,6 @@ export class Semantic {
             }
         }
 
-        // if (node.type === "exp")
         this.checkType(node);
 
         if (node.scopeHead) {
@@ -439,7 +460,6 @@ export class Semantic {
     };
 
     hasDefiniteReturn = (node, hadCompound = false) => {
-        // if it is a select statement it must have a return for if and else part
         if (node.type === "selectStmt" && node.rule === 1) {
             return (
                 this.hasDefiniteReturn(indexer(node, 4)) &&
