@@ -9,6 +9,24 @@ export class Semantic {
         let { findSymbol } = this.scopeHandler;
 
         switch (node.type) {
+            case "varDeclInit": {
+                if (node.rule === 1) {
+                    const type1 = this.checkType(indexer(node, 0, 0));
+                    const type2 = this.checkType(indexer(node, 2));
+
+                    if (type1 !== type2) {
+                        if (!((type1 === "int" && type2 === "float") || (type2 === "int" && type1 === "float")))
+                            if (!((type1 === "int" && type2 === "char") || (type2 === "int" && type1 === "char")))
+                                throw new Error(
+                                    `Type mismatch: ${type1} and ${type2}` +
+                                    getContext(node)
+                                );
+                    }
+                    return type1;
+                }
+                break;
+            }
+
             case "exp": {
                 if (node.rule === 0) {
                     const type1 = this.checkType(indexer(node, 0));
@@ -178,7 +196,6 @@ export class Semantic {
                             getContext(node)
                         );
 
-                    console.log(symbol.type);
                     return symbol.type.substring(0, symbol.type.length - 2);
                 }
             }
@@ -261,7 +278,6 @@ export class Semantic {
                         if (this.checkType(args[0]) === "char[]" && this.checkType(args[1]) === "int") {
                             return symbol.type;
                         } else {
-                            console.log(this.checkType(args[0]), this.checkType(args[1]));
                             throw new Error(
                                 `Arguments wrong: should be int, char, or char[] with size as int` +
                                 getContext(node)
@@ -301,7 +317,6 @@ export class Semantic {
 
             case "constant": {
                 if (node.rule === 0) {
-                    console.log(node.parts[0].type);
                     return node.parts[0].type === "integer_literal" ? "int" : "float";
                 } else if (node.rule === 1) {
                     return "char";
@@ -447,7 +462,6 @@ export class Semantic {
 
     semanticCheckFull = (node) => {
         let { currentScope, scopePath } = this.scopeHandler;
-        // TODO: need to do type checking for var decl statements
 
         let isFunctionDeclaration = false;
 
