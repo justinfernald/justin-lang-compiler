@@ -141,7 +141,6 @@ export class Optimizer {
                                     ? (a, b) => a + b
                                     : (a, b) => a - b;
 
-                            console.log(aUnrolled, bUnrolled);
                             if (aUnrolled.semanticType === "float" || bUnrolled.semanticType === "float") {
                                 return {
                                     type: "constant",
@@ -201,7 +200,6 @@ export class Optimizer {
                                     ? (a, b) => a * b
                                     : (a, b) => a / b;
 
-                            console.log(aUnrolled, bUnrolled);
                             if (aUnrolled.semanticType === "float" || bUnrolled.semanticType === "float") {
                                 return {
                                     type: "constant",

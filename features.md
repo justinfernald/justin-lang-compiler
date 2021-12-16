@@ -12,6 +12,7 @@
 -   useless code removal
 -   algebraic unrolling
 -   while loop
+-   for loop
 -   if else statement
 -   break statements
 -   return statements

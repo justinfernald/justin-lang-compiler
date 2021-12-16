@@ -395,16 +395,24 @@ export class Semantic {
 
         switch (node.type) {
             case "varDecl": {
+                if (currentScope().symbols.find(symbol => symbol.name === indexer(node, 1, 0).value)) {
+                    throw new Error(
+                        `Variable ${indexer(node, 1, 0).value} already declared` +
+                        getContext(node)
+                    );
+                }
                 if (indexer(node, 1).rule === 0) {
                     currentScope().symbols.push({
                         type: indexer(node, 0, 0).value,
                         name: indexer(node, 1, 0).value,
+                        global: true
                     });
                 } else {
                     const size = +indexer(node, 1, 2).value;
                     currentScope().symbols.push({
                         type: indexer(node, 0, 0).value + "[]",
                         name: indexer(node, 1, 0).value,
+                        global: true,
                         array: true,
                         size,
                         length: 4 * size,
@@ -414,6 +422,12 @@ export class Semantic {
             }
 
             case "funcDecl": {
+                if (currentScope().symbols.find(symbol => symbol.name === indexer(node, 1).value)) {
+                    throw new Error(
+                        `Function ${indexer(node, 1).value} already declared` +
+                        getContext(node)
+                    );
+                }
                 currentScope().symbols.push({
                     type: indexer(node, 0, 0).value,
                     function: true,
@@ -456,7 +470,7 @@ export class Semantic {
     };
 
     semanticCheckFull = (node) => {
-        let { currentScope, scopePath } = this.scopeHandler;
+        let { currentScope, scopePath, findSymbol, findScopeFromSymbol } = this.scopeHandler;
 
         let isFunctionDeclaration = false;
 
@@ -472,6 +486,13 @@ export class Semantic {
                 break;
             }
             case "scopedVarDecl": {
+                const symbol = findSymbol(indexer(node, 1, 0, 0).value);
+                if (symbol && !symbol.global) {
+                    throw new Error(
+                        `Variable ${indexer(node, 1, 0, 0).value} already declared` +
+                        getContext(node)
+                    );
+                }
                 if (indexer(node, 1, 0).rule === 0) {
                     currentScope().symbols.push({
                         type: indexer(node, 0, 0).value,
