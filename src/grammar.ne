@@ -49,7 +49,7 @@ const lexer = moo.compile({
         value: s => s.substring(1)
     },
     float_literal: { // finds all float tokens
-        match: /[0-9]*.[0-9]+/
+        match: /[0-9]*\.[0-9]+/
     },
     integer_literal: { // finds all integer tokens
         match: /[0-9]+/

@@ -178,7 +178,8 @@ export class Semantic {
                             getContext(node)
                         );
 
-                    return symbol.type;
+                    console.log(symbol.type);
+                    return symbol.type.substring(0, symbol.type.length - 2);
                 }
             }
 
@@ -202,7 +203,7 @@ export class Semantic {
                         `Symbol ${node.value} not found` + getContext(node)
                     );
                 }
-                return symbol.type + (symbol.array ? "[]" : "");
+                return symbol.type// + (symbol.array ? "[]" : "");
             }
 
             case "call": {
@@ -260,6 +261,7 @@ export class Semantic {
                         if (this.checkType(args[0]) === "char[]" && this.checkType(args[1]) === "int") {
                             return symbol.type;
                         } else {
+                            console.log(this.checkType(args[0]), this.checkType(args[1]));
                             throw new Error(
                                 `Arguments wrong: should be int, char, or char[] with size as int` +
                                 getContext(node)
@@ -299,6 +301,7 @@ export class Semantic {
 
             case "constant": {
                 if (node.rule === 0) {
+                    console.log(node.parts[0].type);
                     return node.parts[0].type === "integer_literal" ? "int" : "float";
                 } else if (node.rule === 1) {
                     return "char";
@@ -373,7 +376,7 @@ export class Semantic {
                 } else {
                     const size = +indexer(node, 1, 2).value;
                     currentScope().symbols.push({
-                        type: indexer(node, 0, 0).value,
+                        type: indexer(node, 0, 0).value + "[]",
                         name: indexer(node, 1, 0).value,
                         array: true,
                         size,
@@ -468,7 +471,7 @@ export class Semantic {
                 } else {
                     const size = +indexer(node, 1, 0, 2).value;
                     currentScope().symbols.push({
-                        type: indexer(node, 0, 0).value,
+                        type: indexer(node, 0, 0).value + "[]",
                         name: indexer(node, 1, 0, 0).value,
                         array: true,
                         size,
