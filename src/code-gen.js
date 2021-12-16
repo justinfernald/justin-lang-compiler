@@ -243,7 +243,17 @@ export class CodeGenerator {
                 ],
             },
             returnStmt: {
-                pre: () => findFunctionScope(scopePath).type === "void" ? "" : "(local.set $function_output ",
+                pre: (node) => {
+                    const type = indexer(node, 1);
+                    console.log({ node, type })
+                    if (node.semanticType === "int" && type.semanticType === "float") {
+                        type.convertToInt = true;
+                    }
+                    if (node.semanticType === "float" && type.semanticType === "int") {
+                        type.convertToFloat = true;
+                    }
+                    return findFunctionScope(scopePath).type === "void" ? "" : "(local.set $function_output "
+                },
                 post: () => (findFunctionScope(scopePath).type === "void" ? "" : ")") + "(br $function_block)",
             },
             breakStmt: {
@@ -278,10 +288,39 @@ export class CodeGenerator {
                             if (string) {
                                 // this is a bad way for doing this
                                 const chars = string.substring(1, string.length - 1).split("");
-
+                                const newChars = [];
+                                let isEscaped = false;
+                                for (const char of chars) {
+                                    if (isEscaped) {
+                                        newChars.push("\\" + char);
+                                        isEscaped = false;
+                                    } else if (char === "\\") {
+                                        isEscaped = true;
+                                    } else {
+                                        newChars.push(char);
+                                    }
+                                }
                                 let output = "";
-                                for (let [i, char] of Object.entries(chars)) {
-                                    output += `(i32.store (i32.add (${scope.name === "global" ? "global" : "local"}.get $${symbol.name}) (i32.mul (i32.const 4) (i32.const ${i}))) (i32.const ${char.charCodeAt(0)}))`;
+                                for (let [i, char] of Object.entries(newChars)) {
+                                    const convertChar = (char) => {
+                                        if (char.length === 1) {
+                                            return char.charCodeAt(0)
+                                        } else {
+                                            const specials = {
+                                                t: 9,
+                                                n: 10,
+                                                f: 12,
+                                                r: 13,
+                                                "\\": 92,
+                                            }
+                                            if (specials[char.charAt(1)]) {
+                                                return specials[char.charAt(1)];
+                                            }
+                                            return v.charCodeAt(1)
+                                        }
+                                    }
+
+                                    output += `(i32.store (i32.add (${scope.name === "global" ? "global" : "local"}.get $${symbol.name}) (i32.mul (i32.const 4) (i32.const ${i}))) (i32.const ${convertChar(char)}))`;
                                 }
                                 node.ignoreClose = true;
                                 return output;
@@ -491,8 +530,8 @@ export class CodeGenerator {
                         }
                     };
 
+                    const args = getArgs(indexer(node, 2));
                     if (symbol.name === "output") {
-                        const args = getArgs(indexer(node, 2));
                         if (args.length === 1) {
                             const type = args[0].semanticType;
                             return `(call $output_${type}`;
@@ -500,6 +539,19 @@ export class CodeGenerator {
                             return `(call $output_string`;
                         }
                     }
+
+                    const params = symbol.scope.symbols;
+
+                    for (let i = 0; i < params.length; i++) {
+                        if (params[i].type === "int" && args[i].semanticType === "float") {
+                            args[i].convertToInt = true;
+                        }
+                        if (params[i].type === "float" && args[i].semanticType === "int") {
+                            args[i].convertToFloat = true;
+                        }
+                    }
+
+
                     return `(call $${indexer(node, 0).value}`
                 },
                 post: () => ")",

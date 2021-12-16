@@ -14,8 +14,6 @@ export class Semantic {
                     const type1 = this.checkType(indexer(node, 0));
                     const type2 = this.checkType(indexer(node, 2));
 
-                    console.log({ type1, type2 });
-
                     if (type1 !== type2) {
                         if (!((type1 === "int" && type2 === "float") || (type2 === "int" && type1 === "float")))
                             throw new Error(
@@ -249,7 +247,7 @@ export class Semantic {
                             return symbol.type;
                         } else {
                             throw new Error(
-                                `Type mismatch: ${this.checkType(args[0])} | Should be "int or char"` +
+                                `Type mismatch: ${this.checkType(args[0])} | Should be "int, float, or char"` +
                                 getContext(node)
                             );
                         }
@@ -281,10 +279,12 @@ export class Semantic {
                     const arg = args[i];
                     const param = params[i];
                     if (this.checkType(arg) !== param.type) {
-                        throw new Error(
-                            `Type mismatch: ${this.checkType(arg)} and ${param.type} | Should be ${param.type}` +
-                            getContext(node)
-                        );
+                        if (!(this.checkType(arg) === "int" && param.type === "float" || this.checkType(arg) === "float" && param.type === "int")) {
+                            throw new Error(
+                                `Type mismatch: ${this.checkType(arg)} and ${param.type} | Should be ${param.type}` +
+                                getContext(node)
+                            );
+                        }
                     }
                 }
                 return symbol.type;
@@ -334,12 +334,15 @@ export class Semantic {
 
                 const symbol = this.currentFunction;
                 if (symbol.type !== type) {
-                    throw new Error(
-                        `Type mismatch: ${type} | Should be ${symbol.type}` +
-                        getContext(node)
-                    );
+                    if (!((symbol.type === "int" && type === "float") || (symbol.type === "float" && type === "int"))) {
+                        throw new Error(
+                            `Type mismatch: ${type} | Should be ${symbol.type}` +
+                            getContext(node)
+                        );
+                    }
                 }
-                break;
+
+                return symbol.type;
             }
         }
     };
@@ -399,8 +402,6 @@ export class Semantic {
                     });
                 }
                 */
-
-                console.log(indexer(node, 1).rule === 0)
 
                 currentScope().symbols.push({
                     type: indexer(node, 0, 0).value + (indexer(node, 1).rule === 0 ? "" : "[]"),

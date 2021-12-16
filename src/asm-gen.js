@@ -20,8 +20,8 @@ export class ASMGenerator {
                     document.getElementById("output").innerHTML += x + "<br>";
                 },
                 float: (x) => {
-                    console.log(x);
-                    document.getElementById("output").innerHTML += x + "<br>";
+                    console.log(Math.round(x * 1e8) / 1e8);
+                    document.getElementById("output").innerHTML += Math.round(x * 1e5) / 1e5 + "<br>";
                 },
                 char: (x) => {
                     let c = String.fromCharCode(x);
