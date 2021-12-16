@@ -1,0 +1,13 @@
+void main() {
+  char x[10] = "hello";
+  toUpperCase(x, 10);
+  output(x, 10);
+}
+
+void toUpperCase(char x[], int size) {
+  int i = 0;
+  while (i < size) {
+    x[i] = x[i] - 32;
+    i = i + 1;
+  }
+}

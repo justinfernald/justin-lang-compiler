@@ -82,8 +82,27 @@ export class Optimizer {
                 { type: "immutable", rule: 2 },
             ];
 
-            if (node.type === "constant" && node.rule === 0) {
-                return indexer(node, 0).value;
+            if (node.type === "constant") {
+                if (node.rule === 0)
+                    return indexer(node, 0).value;
+                if (node.rule === 1) {
+                    const v = indexer(node, 0).value;
+                    if (v.length === 3) {
+                        return v.charCodeAt(1)
+                    } else {
+                        const specials = {
+                            t: 9,
+                            n: 10,
+                            f: 12,
+                            r: 13,
+                            "\\": 92,
+                        }
+                        if (specials[v.charAt(2)]) {
+                            return specials[v.charAt(2)];
+                        }
+                        return v.charCodeAt(2)
+                    }
+                }
             }
             if (
                 terminals.find(
@@ -121,21 +140,43 @@ export class Optimizer {
                                 indexer(node, 1, 0).type === "plus"
                                     ? (a, b) => a + b
                                     : (a, b) => a - b;
-                            return {
-                                type: "constant",
-                                rule: 0,
-                                parts: [
-                                    {
-                                        type: "integer_literal",
-                                        value:
-                                            "" +
-                                            op(
-                                                Number.parseInt(aResult),
-                                                Number.parseInt(bResult)
-                                            ),
-                                    },
-                                ],
-                            };
+
+                            console.log(aUnrolled, bUnrolled);
+                            if (aUnrolled.semanticType === "float" || bUnrolled.semanticType === "float") {
+                                return {
+                                    type: "constant",
+                                    rule: 0,
+                                    semanticType: "float",
+                                    parts: [
+                                        {
+                                            type: "float_literal",
+                                            value:
+                                                "" +
+                                                op(
+                                                    +aResult,
+                                                    +bResult
+                                                ),
+                                        },
+                                    ],
+                                };
+                            } else {
+                                return {
+                                    type: "constant",
+                                    rule: 0,
+                                    semanticType: "int",
+                                    parts: [
+                                        {
+                                            type: "integer_literal",
+                                            value:
+                                                "" +
+                                                op(
+                                                    Number.parseInt(aResult),
+                                                    Number.parseInt(bResult)
+                                                ),
+                                        },
+                                    ],
+                                };
+                            }
                         } else {
                             node.parts[0] = aUnrolled;
                             node.parts[2] = bUnrolled;
@@ -158,22 +199,44 @@ export class Optimizer {
                             const op =
                                 indexer(node, 1, 0).type === "multiply"
                                     ? (a, b) => a * b
-                                    : (a, b) => Number.parseInt(a / b);
-                            return {
-                                type: "constant",
-                                rule: 0,
-                                parts: [
-                                    {
-                                        type: "integer_literal",
-                                        value:
-                                            "" +
-                                            op(
-                                                Number.parseInt(aResult),
-                                                Number.parseInt(bResult)
-                                            ),
-                                    },
-                                ],
-                            };
+                                    : (a, b) => a / b;
+
+                            console.log(aUnrolled, bUnrolled);
+                            if (aUnrolled.semanticType === "float" || bUnrolled.semanticType === "float") {
+                                return {
+                                    type: "constant",
+                                    rule: 0,
+                                    semanticType: "float",
+                                    parts: [
+                                        {
+                                            type: "float_literal",
+                                            value:
+                                                "" +
+                                                op(
+                                                    +aResult,
+                                                    +bResult
+                                                ),
+                                        },
+                                    ],
+                                };
+                            } else {
+                                return {
+                                    type: "constant",
+                                    rule: 0,
+                                    semanticType: "int",
+                                    parts: [
+                                        {
+                                            type: "integer_literal",
+                                            value:
+                                                "" +
+                                                Number.parseInt(op(
+                                                    Number.parseInt(aResult),
+                                                    Number.parseInt(bResult)
+                                                )),
+                                        },
+                                    ],
+                                };
+                            }
                         } else {
                             node.parts[0] = aUnrolled;
                             node.parts[2] = bUnrolled;
@@ -190,17 +253,33 @@ export class Optimizer {
 
                         const aResult = getConstantValue(aUnrolled);
 
-                        if (aResult !== undefined)
-                            return {
-                                type: "constant",
-                                rule: 0,
-                                parts: [
-                                    {
-                                        type: "integer_literal",
-                                        value: "" + -Number.parseInt(aResult),
-                                    },
-                                ],
-                            };
+                        if (aResult !== undefined) {
+                            if (aUnrolled.semanticType === "float") {
+                                return {
+                                    type: "constant",
+                                    rule: 0,
+                                    semanticType: "float",
+                                    parts: [
+                                        {
+                                            type: "float_literal",
+                                            value: "" + -aResult,
+                                        },
+                                    ],
+                                };
+                            } else {
+                                return {
+                                    type: "constant",
+                                    rule: 0,
+                                    semanticType: "int",
+                                    parts: [
+                                        {
+                                            type: "integer_literal",
+                                            value: "" + -Number.parseInt(aResult),
+                                        },
+                                    ],
+                                };
+                            }
+                        }
                         else return aUnrolled;
                     },
                 },
@@ -214,16 +293,31 @@ export class Optimizer {
                         const aResult = getConstantValue(aUnrolled);
 
                         if (aResult !== undefined)
-                            return {
-                                type: "constant",
-                                rule: 0,
-                                parts: [
-                                    {
-                                        type: "integer_literal",
-                                        value: aResult,
-                                    },
-                                ],
-                            };
+                            if (aUnrolled.semanticType === "float") {
+                                return {
+                                    type: "constant",
+                                    rule: 0,
+                                    semanticType: "float",
+                                    parts: [
+                                        {
+                                            type: "integer_literal",
+                                            value: aResult,
+                                        },
+                                    ],
+                                };
+                            } else {
+                                return {
+                                    type: "constant",
+                                    rule: 0,
+                                    semanticType: "int",
+                                    parts: [
+                                        {
+                                            type: "integer_literal",
+                                            value: aResult,
+                                        },
+                                    ],
+                                };
+                            }
                         else return aUnrolled;
                     }
                 }
@@ -261,8 +355,8 @@ export class Optimizer {
     optimize = (node) => {
         this.deadCodeElimination(node);
         this.uselessCodeElimination(node);
-        // if (node.type === "simpleExp")
-        //     this.algebraicUnrolling(node);
+        if (node.type === "simpleExp")
+            this.algebraicUnrolling(node);
 
         if (node.parts)
             for (let child of node.parts) {
