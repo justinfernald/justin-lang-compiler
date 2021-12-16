@@ -1,3 +1,5 @@
+import { Semantic } from "./semantic";
+
 const { indexer, getLocalDecls } = require("./utils");
 
 export class CodeGenerator {
@@ -22,39 +24,7 @@ export class CodeGenerator {
                             `(global $${globalArray.name} (mut i32) (i32.const ${this.memPointer}))`;
                         this.memPointer += globalArray.length;
                     }
-                    return `(module\n  (import "output" "int" (func $output (param i32)))\n  (import "output" "char" (func $output_char (param i32)))\n  (import "input" "int" (func $input (result i32)))\n  (import "input" "char" (func $input_char (result i32)))\n  (memory (import "js" "mem") 1)\n  (global $mem_pointer (mut i32) (i32.const ${this.memPointer}))${globalArrayOutput}
-    (func $output_string
-    (param $x i32)
-    (param $n i32)
-    
-    (local $function_output i32)(local $i i32) 
-    (block $function_block
-    (local.set $i
-      (i32.const 0)
-    )
-    (block $block_00105110 (loop $loop_00105110
-      (if
-      (
-        i32.lt_s
-        (local.get $i)
-        (local.get $n)
-      )
-      (then
-      (call $output_char
-        (i32.load (i32.add (local.get $x) (i32.mul (i32.const 4) (local.get $i))))
-      )
-      (local.set $i
-        (i32.add
-          (local.get $i)
-          (i32.const 1)
-        )
-      )
-      br $loop_00105110
-    ))))
-    )
-    (global.set $mem_pointer (i32.sub (global.get $mem_pointer) (i32.const 0)))
-    
-  )(export "output_string" (func $output_string))`;
+                    return `(module\n  (import "output" "int" (func $output_int (param i32)))\n  (import "output" "float" (func $output_float (param f32)))\n  (import "output" "char" (func $output_char (param i32)))\n  (import "input" "int" (func $input (result i32)))\n  (import "input" "char" (func $input_char (result i32)))\n  (memory (import "js" "mem") 1)\n  (global $mem_pointer (mut i32) (i32.const ${this.memPointer}))${globalArrayOutput}\n  (func $output_string (param $x i32) (param $n i32) (local $function_output i32) (local $i i32) (block $function_block (local.set $i (i32.const 0)) (block $block_00105110 (loop $loop_00105110 (if (i32.lt_s (local.get $i) (local.get $n)) (then (call $output_char (i32.load (i32.add (local.get $x) (i32.mul (i32.const 4) (local.get $i))))) (local.set $i (i32.add (local.get $i) (i32.const 1)))br $loop_00105110 ))))) (global.set $mem_pointer (i32.sub (global.get $mem_pointer) (i32.const 0))))(export "output_string" (func $output_string))`;
                 },
                 post: () => ")",
             },
@@ -87,9 +57,6 @@ export class CodeGenerator {
                     () => "",
                     (node) => {
                         const symbol = findSymbol(indexer(node, 0, 0).value);
-                        const scope = findScopeFromSymbol(symbol);
-                        console.log(symbol)
-                        console.log(scope)
 
                         if (symbol.array) {
                             if (node.rule === 1) {
@@ -99,9 +66,6 @@ export class CodeGenerator {
                                 const newChars = [];
                                 let isEscaped = false;
                                 for (const char of chars) {
-
-
-
                                     if (isEscaped) {
                                         newChars.push("\\" + char);
                                         isEscaped = false;
@@ -111,14 +75,8 @@ export class CodeGenerator {
                                         newChars.push(char);
                                     }
                                 }
-                                /*
-                                (i32.load (i32.add (${scope.name === "global" ? "global" : "local"
-                                }.get $${symbol.name
-                                }) (i32.mul (i32.const 4) ${indexValue})))
-                                */
 
                                 let output = "";
-                                console.log(newChars)
                                 for (let [i, char] of Object.entries(newChars)) {
                                     const convertChar = (char) => {
                                         if (char.length === 1) {
@@ -145,7 +103,15 @@ export class CodeGenerator {
                             }
                             return ""
                         }
+                        const type = indexer(node, 2);
 
+                        if (symbol.type === "int" && type.semanticType === "float") {
+                            type.convertToInt = true;
+                        }
+
+                        if (symbol.type === "float" && type.semanticType === "int") {
+                            type.convertToFloat = true;
+                        }
 
                         return `(local.set $${indexer(node, 0, 0).value}`
                     },
@@ -156,7 +122,6 @@ export class CodeGenerator {
                     if (symbol.array) {
                         return ""
                     }
-
 
                     return `)`
                 }],
@@ -185,7 +150,7 @@ export class CodeGenerator {
                         let localDeclOutput = "(local $function_output i32)";
                         let localDeclArrayOutput = "";
                         for (const decl of localDecls) {
-                            localDeclOutput += `(local $${decl.name} i32)`;
+                            localDeclOutput += `(local $${decl.name} ${(decl.type === "float" && !decl.array) ? 'f' : 'i'}32)`;
                             if (decl.array) {
                                 localDeclArrayOutput += `(local.set $${decl.name} (global.get $mem_pointer))(global.set $mem_pointer (i32.add (global.get $mem_pointer) (i32.const ${decl.length})))`;
                             }
@@ -193,7 +158,6 @@ export class CodeGenerator {
 
                         return localDeclOutput + " " + localDeclArrayOutput;
                     },
-
                     "(block $function_block",
                     5,
                     ")",
@@ -227,7 +191,7 @@ export class CodeGenerator {
                 post: () => "",
             },
             parmTypeList: {
-                pre: (node) => `(param $${indexer(node, 1, 0).value} i32)`,
+                pre: (node) => `(param $${indexer(node, 1, 0).value} ${findSymbol(indexer(node, 1, 0).value).type === "float" ? 'f' : 'i'}32)`,
                 post: () => "",
             },
             parmIdList: {
@@ -291,11 +255,19 @@ export class CodeGenerator {
                     (node) => {
                         const symbol = findSymbol(indexer(node, 0, 0).value);
                         const scope = findScopeFromSymbol(symbol.name);
-                        console.log(symbol)
+
+                        const type = indexer(node, 2);
+
+                        if (symbol.type === "int" && type.semanticType === "float") {
+                            type.convertToInt = true;
+                        }
+
+                        if (symbol.type === "float" && type.semanticType === "int") {
+                            type.convertToFloat = true;
+                        }
 
                         if (symbol.array) {
                             const isString = (node) => {
-                                console.log(node)
                                 if (node.type === "string") return node.value;
                                 if (node.parts && node.parts.length === 1)
                                     return isString(node.parts[0]);
@@ -320,10 +292,12 @@ export class CodeGenerator {
                                 0,
                                 false
                             );
-                            return `(i32.store (i32.add (${scope.name === "global" ? "global" : "local"
+                            return `(${symbol.type === "float" ? 'f' : 'i'}32.store (i32.add (${scope.name === "global" ? "global" : "local"
                                 }.get $${symbol.name
                                 }) (i32.mul (i32.const 4) ${indexValue}))`;
                         }
+
+
 
 
                         return `(${scope.name === "global" ? "global" : "local"
@@ -343,26 +317,65 @@ export class CodeGenerator {
                 order: { 0: ["(i32.xor ", 1, "    (i32.const 1))"] },
             },
             relExp: {
-                order: { 0: ["(", 1, 0, 2, ")"] },
+                order: {
+                    0: ["(", (node) => {
+                        const type1 = indexer(node, 0)
+                        const type2 = indexer(node, 2)
+
+                        let isFloat = false;
+                        if (type1.semanticType === "float" || type2.semanticType === "float") {
+                            isFloat = true;
+                            if (type1.semanticType === "int") {
+                                type1.convertToFloat = true;
+                            }
+                            if (type2.semanticType === "int") {
+                                type2.convertToFloat = true;
+                            }
+                        }
+
+                        const op = [{
+                            lte: "le_s",
+                            lt: "lt_s",
+                            gte: "ge_s",
+                            gt: "gt_s",
+                            eq: "eq",
+                            neq: "ne",
+                        }, {
+                            lte: "le",
+                            lt: "lt",
+                            gte: "ge",
+                            gt: "gt",
+                            eq: "eq",
+                            neq: "ne",
+                        }][+isFloat][indexer(node, 1, 0).type];
+                        return `${isFloat ? 'f' : 'i'}32.${op}`;
+                    }, 0, 2, ")"]
+                },
             },
             relOp: {
-                pre: (node) =>
-                    "i32." +
-                    {
-                        lte: "le_s",
-                        lt: "lt_s",
-                        gte: "ge_s",
-                        gt: "gt_s",
-                        eq: "eq",
-                        neq: "ne",
-                    }[indexer(node, 0).type],
+                pre: () => "",
                 post: () => "",
             },
             sumExp: {
                 pre: [
-                    (node) =>
-                        `(i32.${indexer(node, 1, 0).type === "plus" ? "add" : "sub"
-                        }`,
+                    (node) => {
+                        const type1 = indexer(node, 0)
+                        const type2 = indexer(node, 2)
+
+                        console.log({ type1, type2 })
+
+                        let isFloat = false;
+                        if (type1.semanticType === "float" || type2.semanticType === "float") {
+                            isFloat = true;
+                            if (type1.semanticType === "int") {
+                                type1.convertToFloat = true;
+                            }
+                            if (type2.semanticType === "int") {
+                                type2.convertToFloat = true;
+                            }
+                        }
+                        return `(${isFloat ? 'f' : 'i'}32.${indexer(node, 1, 0).type === "plus" ? "add" : "sub"} `
+                    },
                     () => "",
                 ],
                 post: [() => ")", () => ""],
@@ -373,11 +386,28 @@ export class CodeGenerator {
             },
             mulExp: {
                 pre: [
-                    (node) =>
-                        `(i32.${indexer(node, 1, 0).type === "multiply"
+                    (node) => {
+                        const type1 = indexer(node, 0)
+                        const type2 = indexer(node, 2)
+
+                        console.log({ type1, type2 })
+
+                        let isFloat = false;
+                        if (type1.semanticType === "float" || type2.semanticType === "float") {
+                            isFloat = true;
+                            if (type1.semanticType === "int") {
+                                type1.convertToFloat = true;
+                            }
+                            if (type2.semanticType === "int") {
+                                type2.convertToFloat = true;
+                            }
+                        }
+
+                        return `(${isFloat ? 'f' : 'i'}32.${indexer(node, 1, 0).type === "multiply"
                             ? "mul"
-                            : "div_s"
-                        }`,
+                            : (isFloat ? "div" : "div_s")
+                            }`
+                    },
                     () => "",
                 ],
                 post: [() => ")", () => ""],
@@ -387,7 +417,18 @@ export class CodeGenerator {
                 post: () => "",
             },
             unaryExp: {
-                pre: [() => "(i32.sub (i32.const 0)", () => ""],
+                pre: [() => {
+                    const type = indexer(node, 1)
+
+                    console.log({ type })
+
+                    let isFloat = false;
+                    if (type.semanticType === "float") {
+                        isFloat = true;
+                    }
+
+                    return `(${isFloat ? 'f' : 'i'}32.sub (${isFloat ? 'f' : 'i'}32.const 0)`
+                }, () => ""],
                 post: [() => ")", () => ""],
             },
             unaryop: {
@@ -400,6 +441,9 @@ export class CodeGenerator {
                     (node) => {
                         const symbol = findSymbol(indexer(node, 0, 0).value);
                         const scope = findScopeFromSymbol(symbol.name);
+
+                        const type = indexer(node, 0);
+
                         if (symbol.array && indexer(node, 0).rule === 1) {
 
                             const indexValue = this.codeTreeToString(
@@ -407,9 +451,9 @@ export class CodeGenerator {
                                 0,
                                 false
                             );
-                            return `(i32.load (i32.add (${scope.name === "global" ? "global" : "local"
+                            return `(${type.semanticType === "float" ? 'f' : 'i'}32.load(i32.add(${scope.name === "global" ? "global" : "local"
                                 }.get $${symbol.name
-                                }) (i32.mul (i32.const 4) ${indexValue})))`;
+                                })(i32.mul(i32.const 4) ${indexValue})))`;
                         }
                         return `(${scope.name === "global" ? "global" : "local"
                             }.get $${symbol.name})`;
@@ -425,7 +469,39 @@ export class CodeGenerator {
                 post: () => "",
             },
             call: {
-                pre: (node) => `(call $${indexer(node, 0).value}`,
+                pre: (node) => {
+                    const symbol = findSymbol(indexer(node, 0).value);
+
+                    const getArgs = (node) => {
+                        if (node.type === "args") {
+                            if (node.rule === 0) {
+                                const argsTree = indexer(node, 0);
+                                return getArgs(argsTree);
+                            } else {
+                                return [];
+                            }
+                        }
+                        if (node.rule === 0) {
+                            const argsTree = indexer(node, 0);
+                            const arg = indexer(node, 2);
+                            return [...getArgs(argsTree), arg];
+                        } else if (node.rule === 1) {
+                            const arg = indexer(node, 0);
+                            return [arg];
+                        }
+                    };
+
+                    if (symbol.name === "output") {
+                        const args = getArgs(indexer(node, 2));
+                        if (args.length === 1) {
+                            const type = args[0].semanticType;
+                            return `(call $output_${type}`;
+                        } else if (args.length === 2) {
+                            return `(call $output_string`;
+                        }
+                    }
+                    return `(call $${indexer(node, 0).value}`
+                },
                 post: () => ")",
             },
             args: {
@@ -438,7 +514,8 @@ export class CodeGenerator {
             },
             constant: {
                 pre: (node) => [
-                    `(i32.const ${indexer(node, 0).value})`,
+                    `(${node.parts[0].type === "integer_literal" ? 'i' : 'f'}32.const ${indexer(node, 0).value
+                    })`,
                     `(i32.const ${(() => {
                         const v = indexer(node, 0).value;
                         if (v.length === 3) {
@@ -507,7 +584,7 @@ export class CodeGenerator {
                                     );
                                     orderOutput.push(outputPart);
                                 } else {
-                                    throw new Error(`No part at index ${part}`);
+                                    throw new Error(`No part at index ${part} `);
                                 }
                             } else {
                                 orderOutput.push(part);
@@ -534,7 +611,7 @@ export class CodeGenerator {
                                     );
                                     orderOutput.push(outputPart);
                                 } else {
-                                    throw new Error(`No part at index ${part}`);
+                                    throw new Error(`No part at index ${part} `);
                                 }
                             } else {
                                 orderOutput.push(part);
@@ -553,7 +630,7 @@ export class CodeGenerator {
                                 );
                                 orderOutput.push(outputPart);
                             } else {
-                                throw new Error(`No part at index ${part}`);
+                                throw new Error(`No part at index ${part} `);
                             }
                         } else {
                             orderOutput.push(part);
@@ -573,7 +650,7 @@ export class CodeGenerator {
                                 );
                                 orderOutput.push(outputPart);
                             } else {
-                                throw new Error(`No part at index ${part}`);
+                                throw new Error(`No part at index ${part} `);
                             }
                         } else {
                             orderOutput.push(part);
@@ -647,6 +724,14 @@ export class CodeGenerator {
 
         if (node.scopeHead) scopePath.pop();
 
+        if (node.convertToFloat) {
+            output.pre = "(f32.convert_s/i32 " + output.pre;
+            output.post = output.post + ")";
+        }
+        if (node.convertToInt) {
+            output.pre = "(i32.trunc_s/f32 " + output.pre;
+            output.post = output.post + ")";
+        }
         return output;
     };
 

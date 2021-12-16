@@ -19,8 +19,11 @@ export class ASMGenerator {
                     console.log(x);
                     document.getElementById("output").innerHTML += x + "<br>";
                 },
-                char: (x) => {
+                float: (x) => {
                     console.log(x);
+                    document.getElementById("output").innerHTML += x + "<br>";
+                },
+                char: (x) => {
                     let c = String.fromCharCode(x);
                     console.log(c);
                     if (c === "\n")
@@ -31,6 +34,7 @@ export class ASMGenerator {
             },
             input: {
                 int: () => Number.parseInt(window.prompt()),
+                float: () => Number.parseFloat(window.prompt()),
                 char: () => {
                     const v = window.prompt();
                     if (v.length === 1) {

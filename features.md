@@ -1,0 +1,21 @@
+# Features
+
+-   types
+    -   int
+    -   float
+    -   char
+    -   bool
+    -   string\*
+    -   arrays
+-   recursion
+-   dead code removal
+-   useless code removal
+-   algebraic unrolling
+-   while loop
+-   if else statement
+-   break statements
+-   return statements
+-   variables
+-   type errors
+-   syntax errors
+-   auto casting float and ints

@@ -126,7 +126,7 @@ export class Optimizer {
                                 rule: 0,
                                 parts: [
                                     {
-                                        type: "number_literal",
+                                        type: "integer_literal",
                                         value:
                                             "" +
                                             op(
@@ -164,7 +164,7 @@ export class Optimizer {
                                 rule: 0,
                                 parts: [
                                     {
-                                        type: "number_literal",
+                                        type: "integer_literal",
                                         value:
                                             "" +
                                             op(
@@ -196,7 +196,7 @@ export class Optimizer {
                                 rule: 0,
                                 parts: [
                                     {
-                                        type: "number_literal",
+                                        type: "integer_literal",
                                         value: "" + -Number.parseInt(aResult),
                                     },
                                 ],
@@ -219,7 +219,7 @@ export class Optimizer {
                                 rule: 0,
                                 parts: [
                                     {
-                                        type: "number_literal",
+                                        type: "integer_literal",
                                         value: aResult,
                                     },
                                 ],
@@ -261,8 +261,8 @@ export class Optimizer {
     optimize = (node) => {
         this.deadCodeElimination(node);
         this.uselessCodeElimination(node);
-        if (node.type === "simpleExp")
-            this.algebraicUnrolling(node);
+        // if (node.type === "simpleExp")
+        //     this.algebraicUnrolling(node);
 
         if (node.parts)
             for (let child of node.parts) {

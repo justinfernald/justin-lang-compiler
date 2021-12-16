@@ -28,6 +28,7 @@ const lexer = moo.compile({
     divide: "/",
     scolon: ";",
     int: "int",
+    float: "float",
     char: "char",
     bool: "bool",
     voidd: "void",
@@ -47,8 +48,11 @@ const lexer = moo.compile({
         match: /#[^\n]*/,
         value: s => s.substring(1)
     },
-    number_literal: { // finds all number tokens
-        match: /[0-9]+(?:\.[0-9]+)?/
+    float_literal: { // finds all float tokens
+        match: /[0-9]*.[0-9]+/
+    },
+    integer_literal: { // finds all integer tokens
+        match: /[0-9]+/
     },
     identifier: { // finds all identifiers for variables and functions
         match: /[a-zA-Z_][a-zA-Z_0-9]*/
@@ -195,6 +199,7 @@ typeSpec -> %int {% (data) => ({type: "typeSpec", rule: 0, ...ast(data)}) %}
     | %char {% (data) => ({type: "typeSpec", rule: 1, ...ast(data)}) %}
     | %bool {% (data) => ({type: "typeSpec", rule: 2, ...ast(data)}) %}
     | %voidd {% (data) => ({type: "typeSpec", rule: 3, ...ast(data)}) %}
+    | %float {% (data) => ({type: "typeSpec", rule: 4, ...ast(data)}) %}
 
 # function declaration
 funcDecl -> typeSpec identifier %lparan parms %rparan compoundStmt {% (data) => ({type: "funcDecl", rule: 0, ...ast(data, true, "function")}) %}
@@ -340,7 +345,8 @@ constant -> number {% (data) => ({type: "constant", rule: 0, ...ast(data)}) %}
 line_comment -> %comment {% convertTokenId %}
 
 # number
-number -> %number_literal {% convertTokenId %}
+number -> %integer_literal {% convertTokenId %}
+    | %float_literal {% convertTokenId %}
 
 # boolean
 boolv -> %true {% convertTokenId %}

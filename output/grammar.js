@@ -32,6 +32,7 @@ const lexer = moo.compile({
     divide: "/",
     scolon: ";",
     int: "int",
+    float: "float",
     char: "char",
     bool: "bool",
     voidd: "void",
@@ -51,8 +52,11 @@ const lexer = moo.compile({
         match: /#[^\n]*/,
         value: s => s.substring(1)
     },
-    number_literal: { // finds all number tokens
-        match: /[0-9]+(?:\.[0-9]+)?/
+    float_literal: { // finds all float tokens
+        match: /[0-9]*.[0-9]+/
+    },
+    integer_literal: { // finds all integer tokens
+        match: /[0-9]+/
     },
     identifier: { // finds all identifiers for variables and functions
         match: /[a-zA-Z_][a-zA-Z_0-9]*/
@@ -179,6 +183,7 @@ var grammar = {
     {"name": "typeSpec", "symbols": [(lexer.has("char") ? {type: "char"} : char)], "postprocess": (data) => ({type: "typeSpec", rule: 1, ...ast(data)})},
     {"name": "typeSpec", "symbols": [(lexer.has("bool") ? {type: "bool"} : bool)], "postprocess": (data) => ({type: "typeSpec", rule: 2, ...ast(data)})},
     {"name": "typeSpec", "symbols": [(lexer.has("voidd") ? {type: "voidd"} : voidd)], "postprocess": (data) => ({type: "typeSpec", rule: 3, ...ast(data)})},
+    {"name": "typeSpec", "symbols": [(lexer.has("float") ? {type: "float"} : float)], "postprocess": (data) => ({type: "typeSpec", rule: 4, ...ast(data)})},
     {"name": "funcDecl", "symbols": ["typeSpec", "identifier", (lexer.has("lparan") ? {type: "lparan"} : lparan), "parms", (lexer.has("rparan") ? {type: "rparan"} : rparan), "compoundStmt"], "postprocess": (data) => ({type: "funcDecl", rule: 0, ...ast(data, true, "function")})},
     {"name": "parms", "symbols": ["parmList"], "postprocess": (data) => ({type: "parms", rule: 0, ...ast(data)})},
     {"name": "parms", "symbols": [], "postprocess": (data) => ({type: "parms", rule: 1, ...ast(data)})},
@@ -251,7 +256,8 @@ var grammar = {
     {"name": "constant", "symbols": ["boolv"], "postprocess": (data) => ({type: "constant", rule: 2, ...ast(data)})},
     {"name": "constant", "symbols": ["string"], "postprocess": (data) => ({type: "constant", rule: 3, ...ast(data)})},
     {"name": "line_comment", "symbols": [(lexer.has("comment") ? {type: "comment"} : comment)], "postprocess": convertTokenId},
-    {"name": "number", "symbols": [(lexer.has("number_literal") ? {type: "number_literal"} : number_literal)], "postprocess": convertTokenId},
+    {"name": "number", "symbols": [(lexer.has("integer_literal") ? {type: "integer_literal"} : integer_literal)], "postprocess": convertTokenId},
+    {"name": "number", "symbols": [(lexer.has("float_literal") ? {type: "float_literal"} : float_literal)], "postprocess": convertTokenId},
     {"name": "boolv", "symbols": [(lexer.has("true") ? {type: "true"} : true)], "postprocess": convertTokenId},
     {"name": "boolv", "symbols": [(lexer.has("false") ? {type: "false"} : false)], "postprocess": convertTokenId},
     {"name": "charc", "symbols": [(lexer.has("charc") ? {type: "charc"} : charc)], "postprocess": convertTokenId},

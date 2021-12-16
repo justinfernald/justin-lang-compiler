@@ -3,16 +3,36 @@ export class ScopeHandler {
         name: "global",
         symbols: [
             {
-                type: "int",
-                name: "input",
-                function: true,
-                scope: { symbols: [] },
-            },
-            {
                 type: "void",
                 name: "output",
                 function: true,
+                scope: { symbols: [{ type: "int|float|char|char[]", name: "x" }, { type: "int", name: "n" }] },
+            },
+            {
+                type: "int",
+                name: "input_int",
+                function: true,
+                scope: { symbols: [] },
+            },
+
+            {
+                type: "void",
+                name: "output_int",
+                function: true,
                 scope: { symbols: [{ type: "int", name: "x" }] },
+            },
+            {
+                type: "float",
+                name: "input_float",
+                function: true,
+                scope: { symbols: [] },
+            },
+
+            {
+                type: "void",
+                name: "output_float",
+                function: true,
+                scope: { symbols: [{ type: "float", name: "x" }] },
             },
             {
                 type: "char",
