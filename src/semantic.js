@@ -339,12 +339,24 @@ export class Semantic {
             }
 
             case "iterStmt": {
-                const type = this.checkType(indexer(node, 2));
-                if (type !== "bool") {
-                    throw new Error(
-                        `Type mismatch: ${type} | Should be bool` +
-                        getContext(node)
-                    );
+                if (node.rule === 0) {
+                    const type = this.checkType(indexer(node, 2));
+                    if (type !== "bool") {
+                        throw new Error(
+                            `Type mismatch: ${type} | Should be bool` +
+                            getContext(node)
+                        );
+                    }
+                } else if (node.rule === 1) {
+                    this.semanticCheckFull(indexer(node, 2))
+                    indexer(node, 2).ignore = true;
+                    const type = this.checkType(indexer(node, 3));
+                    if (type !== "bool") {
+                        throw new Error(
+                            `Type mismatch: ${type} | Should be bool` +
+                            getContext(node)
+                        );
+                    }
                 }
                 break;
             }
@@ -400,6 +412,7 @@ export class Semantic {
                 }
                 break;
             }
+
             case "funcDecl": {
                 currentScope().symbols.push({
                     type: indexer(node, 0, 0).value,
@@ -412,24 +425,6 @@ export class Semantic {
                 break;
             }
             case "parmTypeList": {
-                /*
-                if (indexer(node, 1, 0).rule === 0) {
-                    currentScope().symbols.push({
-                        type: indexer(node, 0, 0).value,
-                        name: indexer(node, 1, 0, 0).value,
-                    });
-                } else {
-                    const size = +indexer(node, 1, 0, 2).value;
-                    currentScope().symbols.push({
-                        type: indexer(node, 0, 0).value,
-                        name: indexer(node, 1, 0, 0).value,
-                        array: true,
-                        size,
-                        length: 4 * size,
-                    });
-                }
-                */
-
                 currentScope().symbols.push({
                     type: indexer(node, 0, 0).value + (indexer(node, 1).rule === 0 ? "" : "[]"),
                     name: indexer(node, 1, 0).value,
@@ -515,7 +510,7 @@ export class Semantic {
         }
 
         if (node.parts)
-            for (const part of node.parts) this.semanticCheckFull(part);
+            for (const part of node.parts) if (!part.ignore) this.semanticCheckFull(part);
 
         if (node.scopeHead) scopePath.pop();
     };

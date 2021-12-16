@@ -1,5 +1,5 @@
 void main() {
-  char x[10] = "hello";
+  char x[10] = "hEllo";
   toUpperCase(x, 10);
   output(x, 10);
 }
@@ -7,7 +7,8 @@ void main() {
 void toUpperCase(char x[], int size) {
   int i = 0;
   while (i < size) {
-    x[i] = x[i] - 32;
+    if (x[i] >= 'a' && x[i] <= 'z')
+      x[i] = x[i] - 32;
     i = i + 1;
   }
 }

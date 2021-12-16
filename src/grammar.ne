@@ -33,6 +33,7 @@ const lexer = moo.compile({
     bool: "bool",
     voidd: "void",
     whilee: "while",
+    forr: "for",
     elsee: "else",
     iff: "if",
     breakk: "break",
@@ -251,6 +252,7 @@ selectStmt -> %iff %lparan simpleExp %rparan stmt {% (data) => ({type: "selectSt
 
 # iteration statement
 iterStmt -> %whilee %lparan simpleExp %rparan stmt {% (data) => ({type: "iterStmt", rule: 0, ...ast(data, true, "while")}) %}
+    | %forr %lparan scopedVarDecl simpleExp %scolon exp %rparan stmt {% (data) => ({type: "iterStmt", rule: 1, ...ast(data, true, "for")}) %}
 
 # return statement
 returnStmt -> %returnn %scolon {% (data) => ({type: "returnStmt", rule: 0, ...ast(data)}) %}

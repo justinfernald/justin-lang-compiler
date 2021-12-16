@@ -229,18 +229,32 @@ export class CodeGenerator {
                 },
             },
             iterStmt: {
-                order: [
-                    (node) =>
-                        `(block $block_${node.index.join(
-                            ""
-                        )} (loop $loop_${node.index.join("")}`,
-                    "(if",
-                    2,
-                    "(then",
-                    4,
-                    (node) => `br $loop_${node.index.join("")}`,
-                    "))))",
-                ],
+                order: {
+                    0: [
+                        (node) =>
+                            `(block $block_${node.index.join("")} (loop $loop_${node.index.join("")}`,
+                        "(if",
+                        2,
+                        "(then",
+                        4,
+                        (node) => `br $loop_${node.index.join("")}`,
+                        "))))",
+                    ],
+                    1: [
+                        (node) =>
+                            `(block $block_${node.index.join("")}`,
+                        2,
+                        (node) =>
+                            `(loop $loop_${node.index.join("")}`,
+                        "(if",
+                        3,
+                        "(then",
+                        7,
+                        5,
+                        (node) => `br $loop_${node.index.join("")}`,
+                        "))))",
+                    ]
+                },
             },
             returnStmt: {
                 pre: (node) => {
