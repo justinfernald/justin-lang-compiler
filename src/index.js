@@ -20,7 +20,7 @@ let irOutput = "";
 let watOutput = "";
 let binaryOutput = "";
 
-let debug = true;
+let debug = false;
 
 let exports;
 
@@ -36,7 +36,11 @@ window.addEventListener("load", () => {
         if (!debug)
             console.clear()
         document.getElementById("output").innerHTML = "";
-        setTimeout(exports.main);
+        setTimeout(() => {
+            console.time("RUN");
+            exports.main()
+            console.timeEnd("RUN");
+        });
     };
 
     document.getElementById("ir-button").onclick = () => {
@@ -62,7 +66,9 @@ window.addEventListener("load", () => {
 
 const runCompilation = () => {
     try {
+        console.time("COMPILE");
         compile();
+        console.timeEnd("COMPILE");
     } catch (e) {
         document.getElementById("code-output").innerText = e;
         irOutput = e;
@@ -74,6 +80,8 @@ const runCompilation = () => {
     }
 }
 
+
+// runs the whole compilation process.
 const compile = () => {
     if (!w) return;
     const input = document.getElementById("input").value;
@@ -82,11 +90,17 @@ const compile = () => {
 
     addASTIndex(ast);
 
+    // inits a scope handler
     let scopeHandler = new ScopeHandler();
     let { scope, scopePath } = scopeHandler;
 
+    // inits a semantic analyzer
     let semantic = new Semantic(scopeHandler);
+
+    // inits an optimizer
     let optimizer = new Optimizer(scopeHandler);
+
+    // inits an code generator
     let codeGenerator = new CodeGenerator(scopeHandler);
 
     semantic.run(ast);
@@ -94,7 +108,10 @@ const compile = () => {
 
     if (scopePath.length !== 1) throw Error("Scope Path not right");
 
+    // creates code tree from ast
     const codeTree = codeGenerator.codeGenDFS(ast, scope);
+
+    // gets code output from code tree
     const codeOutput = codeGenerator.codeTreeToString(codeTree);
 
     irOutput = codeOutput;
@@ -104,6 +121,7 @@ const compile = () => {
 
     document.getElementById("code-output").innerText = codeOutput;
 
+    // builds out the assembly
     const asmGenerator = new ASMGenerator(w);
     ({ watOutput, binaryOutput } = asmGenerator.build(
         codeOutput,

@@ -1,3 +1,4 @@
+// gets local decls in a scope
 export const getLocalDecls = (scope, skip = false) => {
     const output = skip
         ? []
@@ -14,6 +15,8 @@ export const getLocalDecls = (scope, skip = false) => {
     return output;
 };
 
+
+// adds indices to scope
 export const addIndex = (node, index = [0]) => {
     node.index = index;
     if (node.scopes) {
@@ -23,6 +26,8 @@ export const addIndex = (node, index = [0]) => {
     }
 };
 
+
+// adds indices to ast
 export const addASTIndex = (node, index = [0]) => {
     node.index = index;
     if (node.parts) {
@@ -32,21 +37,26 @@ export const addASTIndex = (node, index = [0]) => {
     }
 };
 
+// easier way to index through a node's children
 export const indexer = (node, ...indices) =>
     indices.length === 0
         ? node
         : indexer(node.parts[indices[0]], ...indices.slice(1));
 
+// find terminal for a node
 export const findTerminal = (node) => {
     if (node.value) return node;
     return findTerminal(node.parts[0]);
 };
 
+
+// get the last terminal for a node
 export const findLastTerminal = (node) => {
     if (node.value) return node;
     return findLastTerminal(node.parts[node.parts.length - 1]);
 };
 
+// get the context of a node
 export const getContext = (node) => {
     const startTerminal = findTerminal(node);
     const endTerminal = findLastTerminal(node);
@@ -71,6 +81,7 @@ export const getContext = (node) => {
     );
 };
 
+// unused
 export const getStatementType = (node) => {
 
 } 

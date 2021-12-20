@@ -5,10 +5,8 @@ void main() {
 }
 
 void toUpperCase(char x[], int size) {
-  int i = 0;
-  while (i < size) {
+  for (int i = 0; i < size; i = i + 1) {
     if (x[i] >= 'a' && x[i] <= 'z')
       x[i] = x[i] - 32;
-    i = i + 1;
   }
 }

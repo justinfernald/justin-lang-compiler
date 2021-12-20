@@ -2,6 +2,7 @@ import { Semantic } from "./semantic";
 
 const { indexer, getLocalDecls } = require("./utils");
 
+// this object is the code generator
 export class CodeGenerator {
     constructor(scopeHandler) {
         this.scopeHandler = scopeHandler;
@@ -9,12 +10,17 @@ export class CodeGenerator {
 
     memPointer = 0;
 
+    // using dfs this will generate the code
     codeGenDFS = (node, scope) => {
         let { currentScope, scopePath, findSymbol, findScopeFromSymbol, findFunctionScope } =
             this.scopeHandler;
 
+        // this defines what actions should be take for each type of rule in the ast
+        // the format is setup for either pre post or order.
+        // pre post will set the starting and ending and the children will go in typical order from the ast
+        // order allows you to swap around the typical order however you would like
         const terminals = {
-            program: {
+            program: { // this is to handle the node from the ast of program
                 pre: () => {
                     const globalArrays = scope.symbols.filter((x) => x.array);
                     let globalArrayOutput = "";
@@ -28,31 +34,32 @@ export class CodeGenerator {
                 },
                 post: () => ")",
             },
-            declList: {
+            declList: { // this is to handle the node from the ast of declList
                 pre: () => "",
                 post: () => "",
             },
-            decl: {
+            decl: { // this is to handle the node from the ast of decl
                 pre: () => "",
                 post: () => "",
             },
-            varDecl: {
-                pre: (node) =>
-                    findSymbol(indexer(node, 1, 0).value).array
+            varDecl: { // this is to handle the node from the ast of varDecl
+                pre: (node) => {
+                    return findSymbol(indexer(node, 1, 0).value).array
                         ? ""
                         : `(global $${indexer(node, 1, 0).value
-                        } (mut i32) (i32.const 0))`,
+                        } (mut ${indexer(node, 0, 0).value === "float" ? 'f' : 'i'}32) (${indexer(node, 0, 0).value === "float" ? 'f' : 'i'}32.const 0))`
+                },
                 post: () => "",
             },
-            scopedVarDecl: {
+            scopedVarDecl: { // this is to handle the node from the ast of scopedVarDecl
                 pre: () => "",
                 post: () => "",
             },
-            varDeclList: {
+            varDeclList: { // this is to handle the node from the ast of varDeclList
                 pre: () => "",
                 post: () => "",
             },
-            varDeclInit: {
+            varDeclInit: { // this is to handle the node from the ast of varDeclInit
                 pre: [
                     () => "",
                     (node) => {
@@ -95,7 +102,7 @@ export class CodeGenerator {
                                             return v.charCodeAt(1)
                                         }
                                     }
-
+                                    console.log(symbol.type)
 
                                     output += `(i32.store (i32.add (local.get $${symbol.name}) (i32.mul (i32.const 4) (i32.const ${i}))) (i32.const ${convertChar(char)}))`;
                                 }
@@ -126,28 +133,28 @@ export class CodeGenerator {
                     return `)`
                 }],
             },
-            varDeclId: {
+            varDeclId: { // this is to handle the node from the ast of varDeclId
                 pre: () => "",
                 post: () => "",
             },
-            typeSpec: {
+            typeSpec: { // this is to handle the node from the ast of typeSpec
                 pre: () => "",
                 post: () => "",
             },
-            funcDecl: {
+            funcDecl: { // this is to handle the node from the ast of funcDecl
                 order: (node) => [
                     (node) => `(func $${indexer(node, 1).value}`,
                     3,
                     (node) =>
                         indexer(node, 0, 0).value === "void"
                             ? ""
-                            : "(result i32)",
+                            : `(result ${indexer(node, 0, 0).value === "float" ? 'f' : 'i'}32)`,
                     (node) => {
                         const localDecls = getLocalDecls(
                             findSymbol(indexer(node, 1).value).scope,
                             true
                         );
-                        let localDeclOutput = "(local $function_output i32)";
+                        let localDeclOutput = `(local $function_output ${indexer(node, 0, 0).value === "float" ? 'f' : 'i'}32)`;
                         let localDeclArrayOutput = "";
                         for (const decl of localDecls) {
                             localDeclOutput += `(local $${decl.name} ${(decl.type === "float" && !decl.array) ? 'f' : 'i'}32)`;
@@ -182,54 +189,54 @@ export class CodeGenerator {
                     }))\n`,
                 ],
             },
-            parms: {
+            parms: { // this is to handle the node from the ast of parms
                 pre: () => "",
                 post: () => "",
             },
-            parmList: {
+            parmList: { // this is to handle the node from the ast of parmList
                 pre: () => "",
                 post: () => "",
             },
-            parmTypeList: {
+            parmTypeList: { // this is to handle the node from the ast of parmTypeList
                 pre: (node) => `(param $${indexer(node, 1, 0).value} ${findSymbol(indexer(node, 1, 0).value).type === "float" ? 'f' : 'i'}32)`,
                 post: () => "",
             },
-            parmIdList: {
+            parmIdList: { // this is to handle the node from the ast of parmIdList
                 pre: () => "",
                 post: () => "",
             },
-            parmId: {
+            parmId: { // this is to handle the node from the ast of parmId
                 pre: () => "",
                 post: () => "",
             },
-            stmt: {
+            stmt: { // this is to handle the node from the ast of stmt
                 pre: () => "",
                 post: () => "",
             },
-            expStmt: {
+            expStmt: { // this is to handle the node from the ast of expStmt
                 pre: () => "",
                 post: () => "",
             },
-            compoundStmt: {
+            compoundStmt: { // this is to handle the node from the ast of compoundStmt
                 pre: () => "",
                 post: () => "",
             },
-            localDecls: {
+            localDecls: { // this is to handle the node from the ast of localDecls
                 pre: () => "",
                 post: () => "",
             },
-            stmtList: {
+            stmtList: { // this is to handle the node from the ast of stmtList
                 pre: () => "",
                 post: () => "",
             },
-            selectStmt: {
-                order: {
+            selectStmt: { // this is to handle the node from the ast of selectStmt
+                order: { // this is to handle the node from the ast of order
                     0: ["(if", 2, "(then", 4, "))"],
                     1: ["(if", 2, "(then", 4, ")(else", 6, "))"],
                 },
             },
-            iterStmt: {
-                order: {
+            iterStmt: { // this is to handle the node from the ast of iterStmt
+                order: { // this is to handle the node from the ast of order
                     0: [
                         (node) =>
                             `(block $block_${node.index.join("")} (loop $loop_${node.index.join("")}`,
@@ -256,10 +263,9 @@ export class CodeGenerator {
                     ]
                 },
             },
-            returnStmt: {
+            returnStmt: { // this is to handle the node from the ast of returnStmt
                 pre: (node) => {
                     const type = indexer(node, 1);
-                    console.log({ node, type })
                     if (node.semanticType === "int" && type.semanticType === "float") {
                         type.convertToInt = true;
                     }
@@ -270,11 +276,11 @@ export class CodeGenerator {
                 },
                 post: () => (findFunctionScope(scopePath).type === "void" ? "" : ")") + "(br $function_block)",
             },
-            breakStmt: {
+            breakStmt: { // this is to handle the node from the ast of breakStmt
                 pre: () => "(br 0)",
                 post: () => "",
             },
-            exp: {
+            exp: { // this is to handle the node from the ast of exp
                 pre: [
                     (node) => {
                         const symbol = findSymbol(indexer(node, 0, 0).value);
@@ -287,6 +293,14 @@ export class CodeGenerator {
                         }
 
                         if (symbol.type === "float" && type.semanticType === "int") {
+                            type.convertToFloat = true;
+                        }
+
+                        if (symbol.type === "int[]" && type.semanticType === "float") {
+                            type.convertToInt = true;
+                        }
+
+                        if (symbol.type === "float[]" && type.semanticType === "int") {
                             type.convertToFloat = true;
                         }
 
@@ -345,13 +359,11 @@ export class CodeGenerator {
                                 0,
                                 false
                             );
-                            return `(${symbol.type === "float" ? 'f' : 'i'}32.store (i32.add (${scope.name === "global" ? "global" : "local"
+
+                            return `(${symbol.type === "float[]" ? 'f' : 'i'}32.store (i32.add (${scope.name === "global" ? "global" : "local"
                                 }.get $${symbol.name
                                 }) (i32.mul (i32.const 4) ${indexValue}))`;
                         }
-
-
-
 
                         return `(${scope.name === "global" ? "global" : "local"
                             }.set $${symbol.name}`;
@@ -360,16 +372,16 @@ export class CodeGenerator {
                 ],
                 post: [(node) => node.ignoreClose ? "" : ")", () => ""],
             },
-            simpleExp: {
+            simpleExp: { // this is to handle the node from the ast of simpleExp
                 order: { 0: ["(i32.or ", 0, 2, ")"] },
             },
-            andExp: {
+            andExp: { // this is to handle the node from the ast of andExp
                 order: { 0: ["(i32.and ", 0, 2, ")"] },
             },
-            unaryRelExp: {
+            unaryRelExp: { // this is to handle the node from the ast of unaryRelExp
                 order: { 0: ["(i32.xor ", 1, "    (i32.const 1))"] },
             },
-            relExp: {
+            relExp: { // this is to handle the node from the ast of relExp
                 order: {
                     0: ["(", (node) => {
                         const type1 = indexer(node, 0)
@@ -405,17 +417,15 @@ export class CodeGenerator {
                     }, 0, 2, ")"]
                 },
             },
-            relOp: {
+            relOp: { // this is to handle the node from the ast of relOp
                 pre: () => "",
                 post: () => "",
             },
-            sumExp: {
+            sumExp: { // this is to handle the node from the ast of sumExp
                 pre: [
                     (node) => {
                         const type1 = indexer(node, 0)
                         const type2 = indexer(node, 2)
-
-                        console.log({ type1, type2 })
 
                         let isFloat = false;
                         if (type1.semanticType === "float" || type2.semanticType === "float") {
@@ -433,17 +443,15 @@ export class CodeGenerator {
                 ],
                 post: [() => ")", () => ""],
             },
-            sumop: {
+            sumop: { // this is to handle the node from the ast of sumop
                 pre: () => "",
                 post: () => "",
             },
-            mulExp: {
+            mulExp: { // this is to handle the node from the ast of mulExp
                 pre: [
                     (node) => {
                         const type1 = indexer(node, 0)
                         const type2 = indexer(node, 2)
-
-                        console.log({ type1, type2 })
 
                         let isFloat = false;
                         if (type1.semanticType === "float" || type2.semanticType === "float") {
@@ -465,15 +473,13 @@ export class CodeGenerator {
                 ],
                 post: [() => ")", () => ""],
             },
-            mulop: {
+            mulop: { // this is to handle the node from the ast of mulop
                 pre: () => "",
                 post: () => "",
             },
-            unaryExp: {
+            unaryExp: { // this is to handle the node from the ast of unaryExp
                 pre: [() => {
                     const type = indexer(node, 1)
-
-                    console.log({ type })
 
                     let isFloat = false;
                     if (type.semanticType === "float") {
@@ -484,11 +490,11 @@ export class CodeGenerator {
                 }, () => ""],
                 post: [() => ")", () => ""],
             },
-            unaryop: {
+            unaryop: { // this is to handle the node from the ast of unaryop
                 pre: () => "",
                 post: () => "",
             },
-            factor: {
+            factor: { // this is to handle the node from the ast of factor
                 pre: [
                     () => "",
                     (node) => {
@@ -514,14 +520,14 @@ export class CodeGenerator {
                 ],
                 post: [() => "", () => ""],
             },
-            mutable: {
+            mutable: { // this is to handle the node from the ast of mutable
                 order: ["", ""],
             },
-            immutable: {
+            immutable: { // this is to handle the node from the ast of immutable
                 pre: () => "",
                 post: () => "",
             },
-            call: {
+            call: { // this is to handle the node from the ast of call
                 pre: (node) => {
                     const symbol = findSymbol(indexer(node, 0).value);
 
@@ -570,15 +576,15 @@ export class CodeGenerator {
                 },
                 post: () => ")",
             },
-            args: {
+            args: { // this is to handle the node from the ast of args
                 pre: () => "",
                 post: () => "",
             },
-            argList: {
+            argList: { // this is to handle the node from the ast of argList
                 pre: () => "",
                 post: () => "",
             },
-            constant: {
+            constant: { // this is to handle the node from the ast of constant
                 pre: (node) => [
                     `(${node.parts[0].type === "integer_literal" ? 'i' : 'f'}32.const ${indexer(node, 0).value
                     })`,
@@ -801,6 +807,7 @@ export class CodeGenerator {
         return output;
     };
 
+    // reduces the code tree such that nesting is reduced by flattening
     reduceCodeTree = (tree) => {
         if (tree?.pre?.length > 0 || tree?.post?.length > 0)
             return {
@@ -817,6 +824,7 @@ export class CodeGenerator {
         return tree;
     };
 
+    // converts the code tree to a string by traversing it then adding prettier indentation
     codeTreeToString = (node, level = 0, spacing = true) => {
         node = this.reduceCodeTree(node);
         if (Array.isArray(node))

@@ -6,18 +6,68 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>WASM Runner</title>
         <script src="bundle.js"></script>
-        <script src="main.js"></script>
         <style>
-            #content {
+            .split {
                 width: 100%;
                 height: 100%;
                 position: absolute;
                 top: 0;
                 left: 0;
-                padding: 30px;
+                padding: 15px;
+                box-sizing: border-box;
+                display: flex;
+            }
+
+            .split > div {
+                position: relative;
+            }
+
+            #code-area {
+                flex: 0.5;
+            }
+
+            #run-area {
+                flex: 1;
+            }
+
+            #input {
+                box-sizing: border-box;
+                padding: 10px;
+                margin-top: 16px;
+                margin-bottom: 12px;
+                flex: 1;
+                position: relative;
+                width: 100%;
+                resize: none;
+                white-space: pre;
+                overflow-wrap: normal;
+                overflow-x: auto;
+            }
+
+            .content {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 15px;
                 box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
+            }
+
+            #run-buttons {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            #view-buttons {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            #view-buttons > div {
+                margin-left: 5px;
             }
 
             .button-wrap {
@@ -26,21 +76,55 @@
                 align-items: center;
             }
 
-            #output {
+            #output,
+            #code-output {
                 flex: 1;
                 border: 1px solid #ccc;
-                min-height: 50px;
                 overflow: auto;
                 padding: 10px;
                 box-sizing: border-box;
             }
         </style>
-    <script defer src="bundle.js"></script></head>
+    </head>
     <body>
-        <textarea name="input" id="input" cols="30" rows="10"></textarea>
-        <div id="content">
-            <div class="button-wrap"><button id="run-button">RUN</button></div>
-            <pre id="output"></pre>
+        <div class="split">
+            <div id="code-area">
+                <div class="content">
+                    <div>Compiles after unfocusing from input.</div>
+                    <textarea
+                        name="input"
+                        id="input"
+                        data-gramm="false"
+                        data-gramm_editor="false"
+                        data-enable-grammarly="false"
+                    ></textarea>
+                </div>
+            </div>
+            <div id="run-area">
+                <div class="content">
+                    <div id="run-buttons">
+                        <div class="left">
+                            <div class="button-wrap">
+                                <button id="run-button">Run</button>
+                            </div>
+                        </div>
+                        <div id="view-buttons" class="right">
+                            <div class="button-wrap">
+                                <button id="ir-button">View IR</button>
+                            </div>
+                            <div class="button-wrap">
+                                <button id="wat-button">View WAT</button>
+                            </div>
+                            <div class="button-wrap">
+                                <button id="binary-button">View Binary</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <pre id="code-output"></pre>
+                    <pre id="output"></pre>
+                </div>
+            </div>
         </div>
     </body>
 </html>

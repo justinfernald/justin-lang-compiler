@@ -1,0 +1,28 @@
+
+/* Find the root using Newton-Raphson method
+   x[n+1] = x[n] - F(x[n])/F'(x[n])
+   The root of the polynomial below is ~5.316
+*/
+
+float F(float x) {
+    float result;
+    result = x^2 - 4.0*x - 7.0;
+    return result;
+}
+
+float F_derivative(float x){
+    float result;
+    result = 2.0*x - 4.0;
+}
+
+void main(){
+    float x[5];
+    int i;
+    x[0] = 5; /* guess, to start calculations */
+    
+    i = 0;
+    while (i < 10){
+        x[n+1] = x[n] - F(x[n])/F_derivative(x[n]);
+        write 'x'; write i+1; write '='; write x[n+1]; writeln;
+    }
+}

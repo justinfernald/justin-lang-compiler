@@ -1,0 +1,11 @@
+int result;
+
+int func(int num1, int num2){
+    result = (num1 + num2)*(num1 - num2);
+    return result;
+}
+
+void main(){
+    result = func(5,1000000);
+    write result;
+}

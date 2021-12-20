@@ -5,11 +5,12 @@ export class Semantic {
         this.scopeHandler = scopeHandler;
     }
 
+    // checks the type on a specific node to make sure children match to what build up to the node along with return node type if applicable
     checkType = (node) => {
         let { findSymbol } = this.scopeHandler;
 
         switch (node.type) {
-            case "varDeclInit": {
+            case "varDeclInit": { // this part is the handle the node of varDeclInit from the ast to do semantic check
                 if (node.rule === 1) {
                     const type1 = this.checkType(indexer(node, 0, 0));
                     const type2 = this.checkType(indexer(node, 2));
@@ -27,7 +28,7 @@ export class Semantic {
                 break;
             }
 
-            case "exp": {
+            case "exp": { // this part is the handle the node of exp from the ast to do semantic check
                 if (node.rule === 0) {
                     const type1 = this.checkType(indexer(node, 0));
                     const type2 = this.checkType(indexer(node, 2));
@@ -45,7 +46,7 @@ export class Semantic {
                     return this.checkType(indexer(node, 0));
                 }
             }
-            case "simpleExp": {
+            case "simpleExp": { // this part is the handle the node of simpleExp from the ast to do semantic check
                 if (node.rule === 0) {
                     const type1 = this.checkType(indexer(node, 0));
                     const type2 = this.checkType(indexer(node, 2));
@@ -63,7 +64,7 @@ export class Semantic {
                 }
             }
 
-            case "andExp": {
+            case "andExp": { // this part is the handle the node of andExp from the ast to do semantic check
                 if (node.rule === 0) {
                     const type1 = this.checkType(indexer(node, 0));
                     const type2 = this.checkType(indexer(node, 2));
@@ -81,7 +82,7 @@ export class Semantic {
                 }
             }
 
-            case "unaryRelExp": {
+            case "unaryRelExp": { // this part is the handle the node of unaryRelExp from the ast to do semantic check
                 if (node.rule === 0) {
                     const type = this.checkType(indexer(node, 1));
                     if (type !== "bool")
@@ -97,7 +98,7 @@ export class Semantic {
                 }
             }
 
-            case "relExp": {
+            case "relExp": { // this part is the handle the node of relExp from the ast to do semantic check
                 if (node.rule === 0) {
                     const type1 = this.checkType(indexer(node, 0));
                     const type2 = this.checkType(indexer(node, 2));
@@ -116,7 +117,7 @@ export class Semantic {
                 }
             }
 
-            case "sumExp": {
+            case "sumExp": { // this part is the handle the node of sumExp from the ast to do semantic check
                 if (node.rule === 0) {
                     const type1 = this.checkType(indexer(node, 0));
                     const type2 = this.checkType(indexer(node, 2));
@@ -137,7 +138,7 @@ export class Semantic {
                 }
             }
 
-            case "mulExp": {
+            case "mulExp": { // this part is the handle the node of mulExp from the ast to do semantic check
                 if (node.rule === 0) {
                     const type1 = this.checkType(indexer(node, 0));
                     const type2 = this.checkType(indexer(node, 2));
@@ -156,7 +157,7 @@ export class Semantic {
                 }
             }
 
-            case "unaryExp": {
+            case "unaryExp": { // this part is the handle the node of unaryExp from the ast to do semantic check
                 if (node.rule === 0) {
                     const type = this.checkType(indexer(node, 1));
                     if (type !== "int" && type !== "float" && type !== "char")
@@ -172,7 +173,7 @@ export class Semantic {
                 }
             }
 
-            case "factor": {
+            case "factor": { // this part is the handle the node of factor from the ast to do semantic check
                 if (node.rule === 0) {
                     const type = this.checkType(indexer(node, 0));
                     return type;
@@ -182,7 +183,7 @@ export class Semantic {
                 }
             }
 
-            case "mutable": {
+            case "mutable": { // this part is the handle the node of mutable from the ast to do semantic check
                 if (node.rule === 0) {
                     const type = this.checkType(indexer(node, 0));
                     return type;
@@ -200,7 +201,7 @@ export class Semantic {
                 }
             }
 
-            case "immutable": {
+            case "immutable": { // this part is the handle the node of immutable from the ast to do semantic check
                 if (node.rule === 0) {
                     const type = this.checkType(indexer(node, 1));
                     return type;
@@ -213,7 +214,7 @@ export class Semantic {
                 }
             }
 
-            case "identifier": {
+            case "identifier": { // this part is the handle the node of identifier from the ast to do semantic check
                 const symbol = findSymbol(node.value);
                 if (!symbol) {
                     throw new Error(
@@ -223,7 +224,7 @@ export class Semantic {
                 return symbol.type// + (symbol.array ? "[]" : "");
             }
 
-            case "call": {
+            case "call": { // this part is the handle the node of call from the ast to do semantic check
                 const symbol = findSymbol(indexer(node, 0).value);
                 if (!symbol) {
                     throw new Error(
@@ -315,7 +316,7 @@ export class Semantic {
                 return symbol.type;
             }
 
-            case "constant": {
+            case "constant": { // this part is the handle the node of constant from the ast to do semantic check
                 if (node.rule === 0) {
                     return node.parts[0].type === "integer_literal" ? "int" : "float";
                 } else if (node.rule === 1) {
@@ -327,7 +328,7 @@ export class Semantic {
                 }
             }
 
-            case "selectStmt": {
+            case "selectStmt": { // this part is the handle the node of selectStmt from the ast to do semantic check
                 const type = this.checkType(indexer(node, 2));
                 if (type !== "bool") {
                     throw new Error(
@@ -338,7 +339,7 @@ export class Semantic {
                 break;
             }
 
-            case "iterStmt": {
+            case "iterStmt": { // this part is the handle the node of iterStmt from the ast to do semantic check
                 if (node.rule === 0) {
                     const type = this.checkType(indexer(node, 2));
                     if (type !== "bool") {
@@ -361,7 +362,7 @@ export class Semantic {
                 break;
             }
 
-            case "returnStmt": {
+            case "returnStmt": { // this part is the handle the node of returnStmt from the ast to do semantic check
                 let type;
                 if (node.rule === 0) {
                     type = "void";
@@ -388,13 +389,14 @@ export class Semantic {
 
     currentFunction = null;
 
+    // first check for global scope variables and functions
     semanticCheckInit = (node) => {
         let { currentScope, scopePath } = this.scopeHandler;
 
         let isFunctionDeclaration = false;
 
         switch (node.type) {
-            case "varDecl": {
+            case "varDecl": { // this part is the handle the node of varDecl from the ast to do semantic check
                 if (currentScope().symbols.find(symbol => symbol.name === indexer(node, 1, 0).value)) {
                     throw new Error(
                         `Variable ${indexer(node, 1, 0).value} already declared` +
@@ -421,7 +423,7 @@ export class Semantic {
                 break;
             }
 
-            case "funcDecl": {
+            case "funcDecl": { // this part is the handle the node of funcDecl from the ast to do semantic check
                 if (currentScope().symbols.find(symbol => symbol.name === indexer(node, 1).value)) {
                     throw new Error(
                         `Function ${indexer(node, 1).value} already declared` +
@@ -438,7 +440,7 @@ export class Semantic {
                     currentScope().symbols[currentScope().symbols.length - 1];
                 break;
             }
-            case "parmTypeList": {
+            case "parmTypeList": { // this part is the handle the node of parmTypeList from the ast to do semantic check
                 currentScope().symbols.push({
                     type: indexer(node, 0, 0).value + (indexer(node, 1).rule === 0 ? "" : "[]"),
                     name: indexer(node, 1, 0).value,
@@ -469,13 +471,14 @@ export class Semantic {
         if (isFunctionDeclaration) scopePath.pop();
     };
 
+    // full check for dfs inside functions
     semanticCheckFull = (node) => {
         let { currentScope, scopePath, findSymbol, findScopeFromSymbol } = this.scopeHandler;
 
         let isFunctionDeclaration = false;
 
         switch (node.type) {
-            case "funcDecl": {
+            case "funcDecl": { // this part is the handle the node of funcDecl from the ast to do semantic check
                 isFunctionDeclaration = true;
                 this.currentFunction = currentScope().symbols.find(
                     (x) => x.name === indexer(node, 1).value
@@ -485,7 +488,7 @@ export class Semantic {
                     throw new Error("Function should return a value");
                 break;
             }
-            case "scopedVarDecl": {
+            case "scopedVarDecl": { // this part is the handle the node of scopedVarDecl from the ast to do semantic check
                 const symbol = findSymbol(indexer(node, 1, 0, 0).value);
                 if (symbol && !symbol.global) {
                     throw new Error(
@@ -536,6 +539,7 @@ export class Semantic {
         if (node.scopeHead) scopePath.pop();
     };
 
+    // checks to make sure function does return value
     hasDefiniteReturn = (node, hadCompound = false) => {
         if (node.type === "selectStmt" && node.rule === 1) {
             return (
@@ -560,10 +564,12 @@ export class Semantic {
         return false;
     }
 
+    // same as hasdefinitereturn
     ensureReturn = (node) => {
         return this.hasDefiniteReturn(node);
     }
 
+    // runs the semantic analyzer on a node
     run = (node) => {
         this.semanticCheckInit(node);
         this.semanticCheckFull(node);

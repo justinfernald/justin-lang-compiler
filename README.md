@@ -1,8 +1,12 @@
-# Project 1 (AST)
+# Compiler Project
 
 CST-405
 
 By Justin Fernald
+
+View demo at: https://justinfernald.github.io/compiler-build/
+There you can input the code from the test-files folder with the files with that names with mod at the end.
+Also recommended to have DevTools console open. Hit F12 with browser open and click console.
 
 # Setup
 
@@ -10,11 +14,7 @@ Be on latest version of NPM
 
 `npm install`
 
-`npm install -g wat2wasm`
-
-`npm run build`
-
-`node src/index.js [file name]`
+`npm run start`
 
 # Documentation
 
@@ -78,3 +78,43 @@ This is a context free grammar such that you can define grammars and then pass i
 Feature not fully implemented in handling of epsilons as it works for some scenarios.
 
 Currently using Nearley library to do more CFG
+
+# Semantic
+
+Semantic analyses is a very important step for compilers as it is similar to another check in the grammar as it enforces correct usage of operations on types along with type alignment. This is done by recursive steps by finding the types in expressions and traversing children to make sure types match. Along with that definitions will be added to make sure some values to allow auto changing like floats and ints and still be added together while not the same type. Features noted below.
+
+# Code generator
+
+The code generator is the most important compilation step as without it, you have nothing. This shouldn't take away from the other parts as many are still needed. The code generator will use the data from the semantic analyzer / the symbol table and the ast and interate through the ast and generate corresponding code. Features noted below.
+
+# Optimization
+
+Optimization is the least needed part in compilation to have it work, but it great as it will increase performance by many factors. Take for example the recursive fibonacci sequence. Without optimization, that process is complexity, O(2^n). That means without optimization, doing fib of (100) is practically impossible. But with optimization such as pure function memoization, it can be decreased to a complexity of O(n). Optimizations are listed below.
+
+# Features
+
+-   types
+    -   int
+    -   float
+    -   char
+    -   bool
+    -   string\*
+    -   arrays - applies for every type
+-   recursion
+-   optimizations
+    -   dead code removal
+    -   useless code removal
+    -   algebraic unrolling
+    -   constant spreading
+    -   loop unrolling
+    -   pure function detection for optimization
+-   while loop
+-   for loop
+-   if else statement
+-   break statements
+-   return statements
+-   variables
+-   type errors
+-   syntax errors
+-   auto casting float and ints
+-   allowing for char manipulation with ints

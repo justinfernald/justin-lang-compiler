@@ -1,0 +1,29 @@
+float a;
+float b;
+float c;
+float x;
+float y;
+
+void orderapair(){
+    float temp;
+
+    if (x > y) {
+        temp = x;
+        x = y;
+        y = temp;
+    }
+}
+
+void main(){
+    a = 5;
+    b = 12;
+    c = 4;
+
+    x = a; y = b; orderapair(); a = x; b = y;
+    x = b; y = c; orderapair(); b = x; c = y;
+    x = a; y = b; orderapair(); a = x; b = y;
+
+    write 'a'; write '='; write a; writeln;
+    write 'b'; write '='; write b; writeln;
+    write 'c'; write '='; write c; writeln;
+}

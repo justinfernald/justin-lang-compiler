@@ -6,11 +6,15 @@
     -   char
     -   bool
     -   string\*
-    -   arrays
+    -   arrays - applies for every type
 -   recursion
--   dead code removal
--   useless code removal
--   algebraic unrolling
+-   optimizations
+    -   dead code removal
+    -   useless code removal
+    -   algebraic unrolling
+    -   constant spreading
+    -   loop unrolling
+    -   pure function detection for optimization
 -   while loop
 -   for loop
 -   if else statement

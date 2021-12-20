@@ -1,10 +1,13 @@
 import { indexer } from "./utils";
 
+
+// object for code optimizer
 export class Optimizer {
     constructor(scopeHandler) {
         this.scopeHandler = scopeHandler;
     }
 
+    // removes all dead code
     removeDeadCode(node, init = false) {
         // issue in nested return will remove everything after it even if not in same scope
         if (!init && node.type === "compoundStmt") return false;
@@ -39,11 +42,15 @@ export class Optimizer {
         return false;
     }
 
+
+    // removed dead code
     deadCodeElimination = (node) => {
         if (node.type === 'compoundStmt')
             this.removeDeadCode(node, true);
     };
 
+
+    // checks for useful statements
     containsUsefulStatement(node) {
         const usefulStatements = [
             { type: "exp", rule: [0] },
@@ -63,6 +70,8 @@ export class Optimizer {
         return false;
     }
 
+
+    // removes useless code
     uselessCodeElimination = (node) => {
         if (node.parts)
             node.parts = node.parts.filter(
@@ -72,8 +81,12 @@ export class Optimizer {
             );
     };
 
+
+    // unrolls algebra
     algebraicUnrolling = (node) => {
+        // used to get constant value
         const getConstantValue = (node) => {
+            // this is used to keep pulling to next part in ast to get to value
             const terminals = [
                 { type: "sumExp", rule: 1 },
                 { type: "mulExp", rule: 1 },
@@ -118,12 +131,14 @@ export class Optimizer {
             return undefined;
         };
 
+        // used to ignore these expressions and continue optimization
         const passExps = ["exp", "simpleExp", "andExp", "unaryRelExp", "relExp"];
 
         if (node?.rule === 1 && passExps.includes(node?.type)) {
             return this.algebraicUnrolling(node.parts[0])
         }
 
+        // listing of all handled optimization operations for algebra
         const operations = {
             sumExp: {
                 0: {

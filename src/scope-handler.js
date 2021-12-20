@@ -1,4 +1,6 @@
+// scope handler object
 export class ScopeHandler {
+    // sets initial scope
     scope = {
         name: "global",
         symbols: [
@@ -56,10 +58,14 @@ export class ScopeHandler {
         scopes: [],
     };
 
+    // set inital scope path
     scopePath = [this.scope];
 
+    // function to get current scope
     currentScope = () => this.scopePath[this.scopePath.length - 1];
 
+
+    // function to find symbol from id
     findSymbol = (id, scopes = this.scopePath) =>
         scopes.length
             ? scopes[scopes.length - 1].symbols.find(
@@ -67,6 +73,7 @@ export class ScopeHandler {
             ) || this.findSymbol(id, scopes.slice(0, -1))
             : undefined;
 
+    // function to find scope from symbol
     findScopeFromSymbol = (id, scopes = this.scopePath) =>
         scopes.length
             ? scopes[scopes.length - 1].symbols.find(
@@ -76,6 +83,7 @@ export class ScopeHandler {
                 : this.findScopeFromSymbol(id, scopes.slice(0, -1))
             : undefined;
 
+    // function to fund function symbol closest to scope path
     findFunctionSymbol = (scopes = this.scopePath) =>
         scopes.length
             ? scopes[scopes.length - 1].symbols.find(
@@ -83,6 +91,7 @@ export class ScopeHandler {
             ) || this.findFunctionSymbol(scopes.slice(0, -1))
             : undefined;
 
+    // finds a function's scope
     findFunctionScope = (scopes = this.scopePath) =>
         scopes.length
             ? scopes[scopes.length - 1].functionSymbol
