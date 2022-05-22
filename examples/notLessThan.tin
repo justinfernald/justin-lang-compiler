@@ -1,0 +1,11 @@
+void main() {
+    int num = 10;
+    char msg[15];
+    if (num !< 5) {
+      msg = "not less than 5";
+      output(msg, 15);
+    } else {
+      msg = "less than 5";
+      output(msg, 11);
+    }
+}
