@@ -1,3 +1,5 @@
+I did this project for a class. I went a little over the top for some stuff for the scope of the class, but whatever this was a cool project. This project is a compiler that takes a C style language and converts it to WebAssembly. And you can run this all in the browser, since this is all written in JavaScript.
+
 # Compiler Project
 
 CST-405
@@ -24,7 +26,7 @@ The purpose of this assignment was to start to enforce rules on how the tokens w
 
 ### Grammar Rules Done
 
-Most of the grammar rules were done for the "C--" language. The rules that are incomplete are arrays and also for loops, which might be disregarded depending on time. The grammar rules have a lot of safety built in, like enforcing non-left recursion and non-ambiguity, along with no stmts with operations outside of functions.
+Most of the grammar rules were done for the "Justin" language. The rules that are incomplete are arrays and also for loops, which might be disregarded depending on time. The grammar rules have a lot of safety built in, like enforcing non-left recursion and non-ambiguity, along with no stmts with operations outside of functions.
 
 ### Key Part of Code
 
