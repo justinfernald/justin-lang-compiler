@@ -20,7 +20,7 @@ let irOutput = "";
 let watOutput = "";
 let binaryOutput = "";
 
-let debug = false;
+let debug = true;
 
 let exports;
 
@@ -88,11 +88,16 @@ const compile = () => {
 
     const ast = buildAST(input);
 
+    if (debug)
+        console.log("build:", ast);
     addASTIndex(ast);
 
     // inits a scope handler
     let scopeHandler = new ScopeHandler();
     let { scope, scopePath } = scopeHandler;
+
+    if (debug)
+        console.log("scope:", scope);
 
     // inits a semantic analyzer
     let semantic = new Semantic(scopeHandler);
@@ -104,7 +109,11 @@ const compile = () => {
     let codeGenerator = new CodeGenerator(scopeHandler);
 
     semantic.run(ast);
+    if (debug)
+        console.log("post-semantic:", ast);
     optimizer.optimize(ast);
+    if (debug)
+        console.log("post-optimize:", ast);
 
     if (scopePath.length !== 1) throw Error("Scope Path not right");
 
