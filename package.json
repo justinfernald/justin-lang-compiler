@@ -18,12 +18,14 @@
         "grammar-gen": "nearleyc src/grammar.ne -o output/grammar.js",
         "go": "npm run grammar-gen",
         "build": "webpack",
-        "start": "webpack serve --open"
+        "start": "webpack serve --open",
+        "deploy": "gh-pages -b build -d dist"
     },
     "author": "Justin Fernald",
     "license": "ISC",
     "private": true,
     "devDependencies": {
+        "gh-pages": "^4.0.0",
         "html-webpack-plugin": "^5.5.0",
         "prettier": "2.5.1",
         "webpack": "^5.65.0",
