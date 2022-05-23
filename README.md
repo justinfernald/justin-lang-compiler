@@ -6,7 +6,7 @@ CST-405
 
 By Justin Fernald
 
-View demo at: https://justinfernald.github.io/compiler-build/
+View demo at: [https://justinfernald.github.io/justin-lang-compiler](https://justinfernald.github.io/justin-lang-compiler)
 There you can input the code from the test-files folder with the files with that names with mod at the end.
 Also recommended to have DevTools console open. Hit F12 with browser open and click console.
 
