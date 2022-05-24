@@ -11,7 +11,7 @@ const moo = require("moo");
 // list out all terminal tokens
 const lexer = moo.compile({
     ws: {match: /\s+/, lineBreaks: true},
-    lte: /(?:==)|(?:!>)/,
+    lte: /(?:<=)|(?:!>)/,
     lt: "<",
     gte: /(?:>=)|(?:!<)/,
     gt: ">",
